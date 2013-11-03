@@ -22,10 +22,8 @@
 package com.flickr.api.entities;
 
 import java.io.Serializable;
-import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.flickr.api.utils.JSONUtils;
 
 /**
  *
@@ -84,10 +82,31 @@ public class Photo implements IdentifiedObject, Serializable {
      * 
      * @return The image URL
      */
-    public Image getUrl() {
+    public Image getImage() {
         return url;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Photo other = (Photo) obj;
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
     @Override
     public String toString() {
         return title;

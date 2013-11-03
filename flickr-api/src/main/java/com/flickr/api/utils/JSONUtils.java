@@ -11,10 +11,6 @@ import org.json.JSONObject;
 public class JSONUtils
 {
 
-    static {
-        dateFormat = DateFormat.getInstance();
-    }
-
     private JSONUtils()
     {
     }
@@ -34,7 +30,7 @@ public class JSONUtils
         }
     }
 
-    private static DateFormat dateFormat;
+    private static DateFormat dateFormat = DateFormat.getInstance();
 
     /**
      * Get a date from a String.
@@ -46,8 +42,10 @@ public class JSONUtils
     {
         try {
             return dateFormat.parse(s);
+            
         } catch (ParseException ex) {
-            throw new UnsupportedOperationException(ex.getMessage(), ex);
+            long date = Long.parseLong(s);
+            return new Date(date * 1000);
         }
     }
     

@@ -74,7 +74,7 @@ public class Image implements Serializable {
      */
     public static final String ORIGINAL = "0";
     private final String prefix;
-
+    
     Image(String farm, String server, String primary, String secret) {
         prefix = MessageFormat.format("http://farm{0}.static.flickr.com/{1}/{2}_{3}_", farm, server, primary, secret);
     }
@@ -92,7 +92,7 @@ public class Image implements Serializable {
                 id,
                 json.getString("secret"));
     }
-
+    
     /**
      * Get the image URL with the given size
      *

@@ -26,15 +26,15 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.flickr.api.utils.JSONUtils;
+import com.flickr.api.utils.URLUtils;
 
 /**
  *
  * @author Fabien Barbero
  */
 public class UserInfo implements BasicUser, Serializable {
-    
+
     private static final long serialVersionUID = -5126309551528400272L;
-    
     private String id;
     private int isPro;
     private String userName;
@@ -43,6 +43,7 @@ public class UserInfo implements BasicUser, Serializable {
     private URL photosUrl;
     private URL profileUrl;
     private UserPhotosInfo photosInfo;
+    private URL avatar;
 
     UserInfo(JSONObject json) throws JSONException {
         id = json.getString("nsid");
@@ -53,11 +54,21 @@ public class UserInfo implements BasicUser, Serializable {
         photosUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "photosurl"));
         profileUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "profileurl"));
         photosInfo = new UserPhotosInfo(json.getJSONObject("photos"));
+
+        if (json.has("iconfarm") && json.has("iconserver")) {
+            avatar = URLUtils.fromString("http://farm" + json.getString("iconfarm") + ".staticflickr.com/" + json.getString("iconserver") + "/buddyicons/" + id + ".jpg");
+        } else {
+            avatar = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
+        }
     }
 
     @Override
     public String getId() {
         return id;
+    }
+
+    public URL getAvatar() {
+        return avatar;
     }
 
     /**

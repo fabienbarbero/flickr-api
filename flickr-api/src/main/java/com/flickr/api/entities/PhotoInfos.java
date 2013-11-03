@@ -21,6 +21,7 @@
  */
 package com.flickr.api.entities;
 
+import com.flickr.api.utils.JSONUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -41,20 +42,18 @@ public class PhotoInfos {
     private PhotoUsage usage;
     private int comments;
     private List<PhotoTag> tags;
-    private PhotoLocation location;
 
     PhotoInfos(JSONObject json) throws JSONException {
         owner = new Owner(json.getJSONObject("owner"));
-        title = json.getString("title");
-        description = json.getString("description");
+        title = JSONUtils.getContent(json, "title");
+        description = JSONUtils.getContent(json, "description");
         visibility = new PhotoVisibility(json.getJSONObject("visibility"));
         dates = new PhotoDates(json.getJSONObject("dates"));
         usage = new PhotoUsage(json.getJSONObject("usage"));
-        comments = json.getInt("comments");
-        location = new PhotoLocation(json.getJSONObject("location"));
+        comments = JSONUtils.getIntegerContent(json, "comments");
 
         tags = new ArrayList<PhotoTag>();
-        JSONArray array = json.getJSONArray("tags");
+        JSONArray array = json.getJSONObject("tags").getJSONArray("tag");
         for (int i = 0; i < array.length(); i++) {
             tags.add(new PhotoTag(array.getJSONObject(i)));
         }
@@ -85,15 +84,6 @@ public class PhotoInfos {
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Get the location of the photo.
-     *
-     * @return The location.
-     */
-    public PhotoLocation getLocation() {
-        return location;
     }
 
     /**

@@ -40,6 +40,7 @@ public class PhotoTag implements IdentifiedObject {
         id = json.getString("id");
         author = json.getString("author");
         raw = json.getString("raw");
+        tag = json.getString("_content");
     }
 
     public String getAuthor() {

@@ -22,12 +22,12 @@
 package com.flickr.api.photos;
 
 import com.flickr.api.FlickrServiceException;
+import com.flickr.api.entities.BasicUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoAccess;
 import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoSize;
-import com.flickr.api.entities.User;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ public interface PhotosService {
      * @return                          The photos of the contacts.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    List<Photo> getContactsPhotos() throws FlickrServiceException;
+    Paginated<Photo> getContactsPhotos() throws FlickrServiceException;
     
     /**
      * Fetch a list of recent photos from the calling users' contacts.
@@ -52,7 +52,7 @@ public interface PhotosService {
      * @return                          The photos of the contacts.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    List<Photo> getContactsPhotos(int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException;
+    Paginated<Photo> getContactsPhotos(int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException;
     
     /**
      * Fetch a list of recent public photos from a users' contacts.
@@ -60,7 +60,7 @@ public interface PhotosService {
      * @return                          The photos of the contacts
      * @throws FlickrServiceException   Error getting the photos.
      */
-    List<Photo> getContactsPublicPhotos(User user) throws FlickrServiceException;
+    Paginated<Photo> getContactsPublicPhotos(BasicUser user) throws FlickrServiceException;
     
     /**
      * Fetch a list of recent public photos from a users' contacts.
@@ -72,7 +72,7 @@ public interface PhotosService {
      * @return                          The photos of the contacts.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    List<Photo> getContactsPublicPhotos(User user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException;
+    Paginated<Photo> getContactsPublicPhotos(BasicUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException;
     
     /**
      * Get information about a photo.

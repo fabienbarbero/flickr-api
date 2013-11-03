@@ -21,7 +21,6 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.ErrorResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 

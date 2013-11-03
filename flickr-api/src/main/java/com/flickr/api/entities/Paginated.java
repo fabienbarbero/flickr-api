@@ -40,7 +40,11 @@ public abstract class Paginated<T> implements Iterable<T>{
     protected Paginated(JSONObject json) throws JSONException {
         page = json.getInt("page");
         pages = json.getInt("pages");
-        perpage = json.getInt("perpage");
+        if(json.has("per_page")) {
+            perpage = json.getInt("per_page");
+        } else {
+            perpage = json.getInt("perpage");
+        }
         total = json.getInt("total");
     }
 
