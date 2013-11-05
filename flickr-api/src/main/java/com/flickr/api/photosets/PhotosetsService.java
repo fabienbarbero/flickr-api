@@ -22,7 +22,7 @@
 package com.flickr.api.photosets;
 
 import com.flickr.api.FlickrServiceException;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.Photoset;
@@ -47,7 +47,7 @@ public interface PhotosetsService {
      * @return                          The list of photosets.
      * @throws FlickrServiceException   Error getting the sets.
      */
-    Paginated<Photoset> getPhotosets(BasicUser user, int perPage, int page) throws FlickrServiceException;
+    Paginated<Photoset> getPhotosets(BaseUser user, int perPage, int page) throws FlickrServiceException;
     
     /**
      * Get the list of photos in a set.

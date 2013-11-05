@@ -25,7 +25,7 @@ package com.flickr.api.entities;
  *
  * @author Fabien Barbero
  */
-public interface IdentifiedObject {
+public interface IdObject {
     
     /**
      * Get the identifier.

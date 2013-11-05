@@ -28,7 +28,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Contact implements BasicUser {
+public class Contact implements BaseUser {
 
     private String id;
     private String username;

@@ -22,7 +22,7 @@
 package com.flickr.api.people;
 
 import com.flickr.api.FlickrServiceException;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.User;
@@ -56,7 +56,7 @@ public interface PeopleService {
      * @return                          The informations.
      * @throws FlickrServiceException 
      */
-    UserInfo getUserInfo(BasicUser user) throws FlickrServiceException;
+    UserInfo getUserInfo(BaseUser user) throws FlickrServiceException;
     
     /**
      * Return photos from the given user's photostream.
@@ -67,7 +67,7 @@ public interface PeopleService {
      * @return                          The photos.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    Paginated<Photo> getUserPhotos(BasicUser user, int perPage, int page) throws FlickrServiceException;
+    Paginated<Photo> getUserPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException;
     
     /**
      * Get a list of public photos for the given user.
@@ -77,7 +77,7 @@ public interface PeopleService {
      * @return                          The photos.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    Paginated<Photo> getUserPublicPhotos(BasicUser user, int perPage, int page) throws FlickrServiceException;
+    Paginated<Photo> getUserPublicPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException;
     
     /**
      * Returns a list of photos containing a particular Flickr member.
@@ -88,6 +88,6 @@ public interface PeopleService {
      * @return                          The photos.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    Paginated<Photo> getUserPhotosOf(BasicUser user, BasicUser owner, int perPage, int page) throws FlickrServiceException;
+    Paginated<Photo> getUserPhotosOf(BaseUser user, BaseUser owner, int perPage, int page) throws FlickrServiceException;
     
 }

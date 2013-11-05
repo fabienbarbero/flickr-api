@@ -30,7 +30,7 @@ import com.flickr.api.utils.JSONUtils;
 public class LoginResponse extends ServerResponse
 {
     
-    private BasicUser identifier;
+    private BaseUser identifier;
 
     @Override
     protected void readObject(JSONObject json) throws JSONException
@@ -38,12 +38,12 @@ public class LoginResponse extends ServerResponse
         identifier = new LoginUser(json.getJSONObject("user"));
     }
 
-    public BasicUser getIdentifier()
+    public BaseUser getIdentifier()
     {
         return identifier;
     }
     
-    private static class LoginUser implements BasicUser {
+    private static class LoginUser implements BaseUser {
 
         private String username;
         private String id;

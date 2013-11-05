@@ -22,7 +22,7 @@
 package com.flickr.api.photos;
 
 import com.flickr.api.FlickrServiceException;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoAccess;
@@ -60,7 +60,7 @@ public interface PhotosService {
      * @return                          The photos of the contacts
      * @throws FlickrServiceException   Error getting the photos.
      */
-    Paginated<Photo> getContactsPublicPhotos(BasicUser user) throws FlickrServiceException;
+    Paginated<Photo> getContactsPublicPhotos(BaseUser user) throws FlickrServiceException;
     
     /**
      * Fetch a list of recent public photos from a users' contacts.
@@ -72,7 +72,7 @@ public interface PhotosService {
      * @return                          The photos of the contacts.
      * @throws FlickrServiceException   Error getting the photos.
      */
-    Paginated<Photo> getContactsPublicPhotos(BasicUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException;
+    Paginated<Photo> getContactsPublicPhotos(BaseUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException;
     
     /**
      * Get information about a photo.

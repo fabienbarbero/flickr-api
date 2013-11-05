@@ -22,7 +22,7 @@
 package com.flickr.api.favorites;
 
 import com.flickr.api.FlickrServiceException;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 
@@ -42,7 +42,7 @@ public interface FavoritesService {
      * @return The favorite photos
      * @throws FlickrServiceException Error getting the photos
      */
-    Paginated<Photo> getFavorites(BasicUser user, int perPage, int page) throws FlickrServiceException;
+    Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException;
 
     /**
      * Returns a list of favorite public photos for the given user.
@@ -53,5 +53,5 @@ public interface FavoritesService {
      * @return The favorite photos
      * @throws FlickrServiceException Error getting the photos
      */
-    Paginated<Photo> getPublicFavorites(BasicUser user, int perPage, int page) throws FlickrServiceException;
+    Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException;
 }

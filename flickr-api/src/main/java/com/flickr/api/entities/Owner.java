@@ -28,7 +28,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Owner implements BasicUser {
+public class Owner implements BaseUser {
 
     private String id;
     private String username;

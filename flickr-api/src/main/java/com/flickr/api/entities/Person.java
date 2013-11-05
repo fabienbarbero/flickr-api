@@ -30,7 +30,7 @@ import com.flickr.api.utils.JSONUtils;
  *
  * @author Fabien Barbero
  */
-public class Person implements BasicUser {
+public class Person implements BaseUser {
 
     private String id;
     private String username;

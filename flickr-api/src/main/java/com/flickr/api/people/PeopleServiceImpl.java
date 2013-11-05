@@ -26,7 +26,7 @@ import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrErrorCode;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedPhotosResponse;
 import com.flickr.api.entities.Photo;
@@ -76,14 +76,14 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
     }
 
     @Override
-    public UserInfo getUserInfo(BasicUser user) throws FlickrServiceException {
+    public UserInfo getUserInfo(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getInfo");
         args.put("user_id", user.getId());
         return doGet(args, UserInfoResponse.class).getUserInfo();
     }
 
     @Override
-    public Paginated<Photo> getUserPhotos(BasicUser user, int perPage, int page) throws FlickrServiceException {
+    public Paginated<Photo> getUserPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotos");
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
@@ -92,7 +92,7 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
     }
 
     @Override
-    public Paginated<Photo> getUserPublicPhotos(BasicUser user, int perPage, int page) throws FlickrServiceException {
+    public Paginated<Photo> getUserPublicPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPublicPhotos");
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
@@ -101,7 +101,7 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
     }
 
     @Override
-    public Paginated<Photo> getUserPhotosOf(BasicUser user, BasicUser owner, int perPage, int page) throws FlickrServiceException {
+    public Paginated<Photo> getUserPhotosOf(BaseUser user, BaseUser owner, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotosOf");
         args.put("user_id", user.getId());
         args.put("owner_id", owner.getId());

@@ -30,6 +30,8 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 
 /**
+ * Class used to build a REST request with the valid arguments. Each command must provide the valid method defined in
+ * the Flickr API web page.
  *
  * @author Fabien Barbero
  */
@@ -37,6 +39,11 @@ public final class CommandArguments {
 
     private final Map<String, String> args;
 
+    /**
+     * Create a new command
+     *
+     * @param method The method name
+     */
     public CommandArguments(String method) {
 
         args = new TreeMap<String, String>();
@@ -46,7 +53,7 @@ public final class CommandArguments {
         put("format", "json");
         put("nojsoncallback", "1");
     }
-    
+
     public CommandArguments() {
         this(null);
     }
@@ -74,10 +81,10 @@ public final class CommandArguments {
             args.put(key, "0");
         }
     }
-    
+
     public String toURI(String baseURI, String apiKey) {
         put("api_key", apiKey);
-        
+
         StringBuilder builder = new StringBuilder();
         List<Map.Entry<String, String>> entries = new ArrayList<Map.Entry<String, String>>(args.entrySet());
         for (int i = 0; i < entries.size(); i++) {
@@ -88,12 +95,12 @@ public final class CommandArguments {
         }
         return baseURI + "?" + builder.toString();
     }
-    
+
     public MultipartEntity getPostEntity(String apiKey) {
         put("api_key", apiKey);
-        
+
         MultipartEntity entity = new MultipartEntity();
-        for(Map.Entry<String, String> entry : args.entrySet()) {
+        for (Map.Entry<String, String> entry : args.entrySet()) {
             try {
                 entity.addPart(entry.getKey(), new StringBody(entry.getValue()));
             } catch (UnsupportedEncodingException ex) {
@@ -102,5 +109,4 @@ public final class CommandArguments {
         }
         return entity;
     }
-
 }

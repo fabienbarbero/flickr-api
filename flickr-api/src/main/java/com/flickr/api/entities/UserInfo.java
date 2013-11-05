@@ -32,7 +32,7 @@ import com.flickr.api.utils.URLUtils;
  *
  * @author Fabien Barbero
  */
-public class UserInfo implements BasicUser, Serializable {
+public class UserInfo implements BaseUser, Serializable {
 
     private static final long serialVersionUID = -5126309551528400272L;
     private String id;

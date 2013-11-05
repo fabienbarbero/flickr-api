@@ -29,7 +29,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class User implements BasicUser, Serializable {
+public class User implements BaseUser, Serializable {
 
     private static final long serialVersionUID = -1178719861430017441L;
     

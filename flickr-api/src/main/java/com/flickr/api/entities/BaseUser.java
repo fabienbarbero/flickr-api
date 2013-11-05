@@ -22,7 +22,7 @@
 package com.flickr.api.entities;
 
 
-public interface BasicUser extends IdentifiedObject
+public interface BaseUser extends IdObject
 {
     
     String getRealName();

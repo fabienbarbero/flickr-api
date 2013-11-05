@@ -26,7 +26,7 @@ import java.util.List;
 import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedPhotosResponse;
 import com.flickr.api.entities.Photo;
@@ -64,14 +64,14 @@ public class PhotosServiceImpl extends FlickrService implements PhotosService {
     }
 
     @Override
-    public Paginated<Photo> getContactsPublicPhotos(BasicUser user) throws FlickrServiceException {
+    public Paginated<Photo> getContactsPublicPhotos(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos");
         args.put("user_id", user.getId());
         return doGet(args, PaginatedPhotosResponse.class).getPhotos();
     }
 
     @Override
-    public Paginated<Photo> getContactsPublicPhotos(BasicUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
+    public Paginated<Photo> getContactsPublicPhotos(BaseUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos");
         args.put("user_id", user.getId());
         args.put("count", count);

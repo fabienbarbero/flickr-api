@@ -26,7 +26,7 @@ import com.flickr.api.utils.JSONUtils;
  * 
  * @author Fabien Barbero
  */
-public class Photoset implements IdentifiedObject, Serializable
+public class Photoset implements IdObject, Serializable
 {
     private static final long serialVersionUID = 545748673399L;
 

@@ -25,7 +25,7 @@ import com.flickr.api.entities.Contact;
 import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedContactsResponse;
 import com.flickr.api.FlickrService;
@@ -49,7 +49,7 @@ public class ContactsServiceImpl extends FlickrService implements ContactsServic
     }
 
     @Override
-    public Paginated<Contact> getPublicContacts(BasicUser user, int perPage, int page) throws FlickrServiceException {
+    public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getPublicList");
         args.put("per_page", perPage);
         args.put("page", page);

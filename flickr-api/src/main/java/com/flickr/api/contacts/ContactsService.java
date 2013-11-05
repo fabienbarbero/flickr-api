@@ -23,7 +23,7 @@ package com.flickr.api.contacts;
 
 import com.flickr.api.entities.Contact;
 import com.flickr.api.FlickrServiceException;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 
 /**
@@ -49,6 +49,6 @@ public interface ContactsService {
      * @return                          The contacts.
      * @throws FlickrServiceException   Error getting the contacts.
      */
-    Paginated<Contact> getPublicContacts(BasicUser user, int perPage, int page) throws FlickrServiceException;
+    Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException;
     
 }

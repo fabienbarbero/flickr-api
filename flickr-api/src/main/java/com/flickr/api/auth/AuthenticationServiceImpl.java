@@ -24,7 +24,7 @@ package com.flickr.api.auth;
 import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.LoginResponse;
 import com.flickr.api.entities.UserInfo;
 import com.flickr.api.FlickrService;
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl extends FlickrService implements Authenti
     public UserInfo authenticate() throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.test.login");
         LoginResponse response = doGet(args, LoginResponse.class);
-        BasicUser identifier = response.getIdentifier();
+        BaseUser identifier = response.getIdentifier();
 
         return peopleService.getUserInfo(identifier);
     }

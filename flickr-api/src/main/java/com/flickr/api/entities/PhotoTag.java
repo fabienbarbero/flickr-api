@@ -28,7 +28,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoTag implements IdentifiedObject {
+public class PhotoTag implements IdObject {
 
     private String id;
     private String author;

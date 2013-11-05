@@ -29,7 +29,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Photo implements IdentifiedObject, Serializable {
+public class Photo implements IdObject, Serializable {
     private static final long serialVersionUID = 5438438431425L;
 
     private String id;

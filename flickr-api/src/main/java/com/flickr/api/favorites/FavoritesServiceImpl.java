@@ -25,7 +25,7 @@ import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrService;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.BasicUser;
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedPhotosResponse;
 import com.flickr.api.entities.Photo;
@@ -41,7 +41,7 @@ public class FavoritesServiceImpl extends FlickrService implements FavoritesServ
     }
 
     @Override
-    public Paginated<Photo> getFavorites(BasicUser user, int perPage, int page) throws FlickrServiceException {
+    public Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.favorites.getList");
         args.put("per_page", perPage);
         args.put("page", page);
@@ -51,7 +51,7 @@ public class FavoritesServiceImpl extends FlickrService implements FavoritesServ
     }
 
     @Override
-    public Paginated<Photo> getPublicFavorites(BasicUser user, int perPage, int page) throws FlickrServiceException {
+    public Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.favorites.getPublicList");
         args.put("per_page", perPage);
         args.put("page", page);
