@@ -35,7 +35,6 @@ public class Contact implements BaseUser {
     private int friend;
     private int family;
     private int ignored;
-    private String location;
 
     Contact(JSONObject json) throws JSONException {
         id = json.getString("nsid");
@@ -43,7 +42,6 @@ public class Contact implements BaseUser {
         friend = json.getInt("friend");
         family = json.getInt("family");
         ignored = json.getInt("ignored");
-        location = json.getString("location");
     }
 
     /**
@@ -71,15 +69,6 @@ public class Contact implements BaseUser {
      */
     public boolean isIgnored() {
         return ignored == 1;
-    }
-
-    /**
-     * Get the location of the contact.
-     *
-     * @return The location.
-     */
-    public String getLocation() {
-        return location;
     }
 
     @Override

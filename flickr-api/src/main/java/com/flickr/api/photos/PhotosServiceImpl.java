@@ -35,6 +35,7 @@ import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoInfosResponse;
 import com.flickr.api.entities.PhotoSize;
 import com.flickr.api.entities.PhotoSizesResponse;
+import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -43,8 +44,8 @@ import com.flickr.api.entities.PhotoSizesResponse;
 public class PhotosServiceImpl extends FlickrService implements PhotosService {
 
 
-    public PhotosServiceImpl(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    public PhotosServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+        super(oauthHandler, client);
     }
 
     @Override

@@ -37,12 +37,12 @@ public abstract class FlickrService
     public static final int MAX_PER_PAGE = Integer.MAX_VALUE;
     
     private static final String URL_PREFIX = "http://api.flickr.com/services/rest/";
-    private static HttpClient client = new DefaultHttpClient();
-    
+    private final HttpClient client;
     private final OAuthHandler oauth;
     
-    protected FlickrService(OAuthHandler oauth) {
+    protected FlickrService(OAuthHandler oauth, HttpClient client) {
         this.oauth = oauth;
+        this.client = client;
     }
 
     protected final <T extends ServerResponse> T doGet(CommandArguments args, Class<T> clazz) throws FlickrServiceException

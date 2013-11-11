@@ -34,6 +34,7 @@ import com.flickr.api.entities.User;
 import com.flickr.api.entities.UserInfo;
 import com.flickr.api.entities.UserInfoResponse;
 import com.flickr.api.entities.UserResponse;
+import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -41,8 +42,8 @@ import com.flickr.api.entities.UserResponse;
  */
 public class PeopleServiceImpl extends FlickrService implements PeopleService {
 
-    public PeopleServiceImpl(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    public PeopleServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+        super(oauthHandler, client);
     }
 
     @Override

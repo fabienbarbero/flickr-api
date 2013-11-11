@@ -29,6 +29,7 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedPhotosResponse;
 import com.flickr.api.entities.Photo;
+import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -36,8 +37,8 @@ import com.flickr.api.entities.Photo;
  */
 public class FavoritesServiceImpl extends FlickrService implements FavoritesService {
     
-    public FavoritesServiceImpl(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    public FavoritesServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+        super(oauthHandler, client);
     }
 
     @Override

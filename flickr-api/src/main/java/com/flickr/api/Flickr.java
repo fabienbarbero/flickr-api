@@ -40,6 +40,14 @@ import java.util.HashMap;
 import java.util.Map;
 import oauth.signpost.OAuth;
 import oauth.signpost.exception.OAuthException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 
 /**
  * This class is the entry point of the API.
@@ -71,13 +79,19 @@ public final class Flickr {
     public Flickr(String apiKey, String apiSecret, File configurationFile) {
         props = new FlickrProperties(configurationFile);
         oauthHandler = new OAuthHandler(props, apiKey, apiSecret);
+        
+        // HttpClient configuration
+        HttpParams params = new BasicHttpParams();
+        SchemeRegistry registry = new SchemeRegistry();
+        registry.register(new Scheme("http", new PlainSocketFactory(), 80));
+        HttpClient client = new DefaultHttpClient(new ThreadSafeClientConnManager(params, registry), params);
 
-        contactsService = new ContactsServiceImpl(oauthHandler);
-        peoplesService = new PeopleServiceImpl(oauthHandler);
-        photosService = new PhotosServiceImpl(oauthHandler);
-        photosetsService = new PhotosetsServiceImpl(oauthHandler);
-        favoritesService = new FavoritesServiceImpl(oauthHandler);
-        authenticationService = new AuthenticationServiceImpl(oauthHandler, peoplesService);
+        contactsService = new ContactsServiceImpl(oauthHandler, client);
+        peoplesService = new PeopleServiceImpl(oauthHandler, client);
+        photosService = new PhotosServiceImpl(oauthHandler, client);
+        photosetsService = new PhotosetsServiceImpl(oauthHandler, client);
+        favoritesService = new FavoritesServiceImpl(oauthHandler, client);
+        authenticationService = new AuthenticationServiceImpl(oauthHandler, client, peoplesService);
     }
 
     /**

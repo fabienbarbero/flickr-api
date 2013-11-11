@@ -29,6 +29,7 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedContactsResponse;
 import com.flickr.api.FlickrService;
+import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -36,8 +37,8 @@ import com.flickr.api.FlickrService;
  */
 public class ContactsServiceImpl extends FlickrService implements ContactsService {
 
-    public ContactsServiceImpl(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    public ContactsServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+        super(oauthHandler, client);
     }
 
     @Override

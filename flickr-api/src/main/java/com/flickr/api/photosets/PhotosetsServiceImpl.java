@@ -32,6 +32,7 @@ import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.Photoset;
 import com.flickr.api.entities.PhotosetResponse;
 import com.flickr.api.entities.PhotosetsResponse;
+import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -39,8 +40,8 @@ import com.flickr.api.entities.PhotosetsResponse;
  */
 public class PhotosetsServiceImpl extends FlickrService implements PhotosetsService {
     
-    public PhotosetsServiceImpl(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    public PhotosetsServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+        super(oauthHandler, client);
     }
 
     @Override
