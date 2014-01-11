@@ -43,7 +43,7 @@ public class ContactsServiceImpl extends FlickrService implements ContactsServic
 
     @Override
     public Paginated<Contact> getContacts(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.contacts.getList");
+        CommandArguments args = new CommandArguments("flickr.contacts.getList", true);
         args.put("per_page", perPage);
         args.put("page", page);
         return doGet(args, PaginatedContactsResponse.class).getContacts();
@@ -51,7 +51,7 @@ public class ContactsServiceImpl extends FlickrService implements ContactsServic
 
     @Override
     public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.contacts.getPublicList");
+        CommandArguments args = new CommandArguments("flickr.contacts.getPublicList", false);
         args.put("per_page", perPage);
         args.put("page", page);
         return doGet(args, PaginatedContactsResponse.class).getContacts();

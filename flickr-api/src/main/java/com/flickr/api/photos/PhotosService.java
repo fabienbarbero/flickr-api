@@ -25,7 +25,7 @@ import com.flickr.api.FlickrServiceException;
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotoAccess;
+import com.flickr.api.entities.PhotoPermissions;
 import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoSize;
 import java.util.List;
@@ -88,7 +88,7 @@ public interface PhotosService {
      * @return                          The permission of the photo.
      * @throws FlickrServiceException   Error getting permission.
      */
-    PhotoAccess getPermission(Photo photo) throws FlickrServiceException;
+    PhotoPermissions getPermission(Photo photo) throws FlickrServiceException;
     
     /**
      * Returns a list of the latest public photos uploaded to flickr.

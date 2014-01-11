@@ -30,7 +30,7 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedPhotosResponse;
 import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotoAccess;
+import com.flickr.api.entities.PhotoPermissions;
 import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoInfosResponse;
 import com.flickr.api.entities.PhotoSize;
@@ -50,13 +50,13 @@ public class PhotosServiceImpl extends FlickrService implements PhotosService {
 
     @Override
     public Paginated<Photo> getContactsPhotos() throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos");
+        CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos", true);
         return doGet(args, PaginatedPhotosResponse.class).getPhotos();
     }
 
     @Override
     public Paginated<Photo> getContactsPhotos(int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos");
+        CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos", true);
         args.put("count", count);
         args.put("just_friends", justFriends);
         args.put("single_photo", singlePhoto);
@@ -66,14 +66,14 @@ public class PhotosServiceImpl extends FlickrService implements PhotosService {
 
     @Override
     public Paginated<Photo> getContactsPublicPhotos(BaseUser user) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos");
+        CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos", false);
         args.put("user_id", user.getId());
         return doGet(args, PaginatedPhotosResponse.class).getPhotos();
     }
 
     @Override
     public Paginated<Photo> getContactsPublicPhotos(BaseUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos");
+        CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos", false);
         args.put("user_id", user.getId());
         args.put("count", count);
         args.put("just_friends", justFriends);
@@ -84,20 +84,21 @@ public class PhotosServiceImpl extends FlickrService implements PhotosService {
 
     @Override
     public PhotoInfos getInfos(Photo photo) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getInfo");
+        CommandArguments args = new CommandArguments("flickr.photos.getInfo", false);
         args.put("photo_id", photo.getId());
         return doGet(args, PhotoInfosResponse.class).getInfos();
     }
 
     @Override
-    public PhotoAccess getPermission(Photo photo) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getPerms");
-        return doGet(args, PhotoAccess.class);
+    public PhotoPermissions getPermission(Photo photo) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.getPerms", true);
+        args.put("photo_id", photo.getId());
+        return doGet(args, PhotoPermissions.class);
     }
 
     @Override
     public Paginated<Photo> getRecent(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getRecent");
+        CommandArguments args = new CommandArguments("flickr.photos.getRecent", false);
         args.put("per_page", perPage);
         args.put("page", page);
         Paginated<Photo> photos = doGet(args, PaginatedPhotosResponse.class).getPhotos();
@@ -106,7 +107,7 @@ public class PhotosServiceImpl extends FlickrService implements PhotosService {
 
     @Override
     public List<PhotoSize> getSizes(Photo photo) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.getSizes");
+        CommandArguments args = new CommandArguments("flickr.photos.getSizes", false);
         args.put("photo_id", photo.getId());
         List<PhotoSize> sizes = doGet(args, PhotoSizesResponse.class).getSizes();
         return sizes;
@@ -114,7 +115,7 @@ public class PhotosServiceImpl extends FlickrService implements PhotosService {
     
     @Override
     public Paginated<Photo> getRecentlyUpdated(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photos.recentlyUpdated");
+        CommandArguments args = new CommandArguments("flickr.photos.recentlyUpdated", true);
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("extras", "date_upload");

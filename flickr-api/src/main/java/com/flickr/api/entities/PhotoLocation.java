@@ -21,6 +21,7 @@
  */
 package com.flickr.api.entities;
 
+import com.flickr.api.utils.JSONUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,20 +31,22 @@ import org.json.JSONObject;
  */
 public class PhotoLocation {
 
-    private String locality;
-    private String county;
-    private String region;
-    private String country;
-    private double latitude;
-    private double longitude;
-    private int accuracy;
-    private int context;
+    private final String locality;
+    private final String county;
+    private final String region;
+    private final String country;
+    private final double latitude;
+    private final double longitude;
+    private final int accuracy;
+    private final int context;
+    private final String neighbourhood;
 
     PhotoLocation(JSONObject json) throws JSONException {
-        locality = json.getString("locality");
-        county = json.getString("county");
-        region = json.getString("region");
-        country = json.getString("country");
+        locality = JSONUtils.getContent(json, "locality");
+        county = JSONUtils.getContent(json, "county");
+        region = JSONUtils.getContent(json, "region");
+        country = JSONUtils.getContent(json, "country");
+        neighbourhood = JSONUtils.getContent(json, "neighbourhood");
         latitude = json.getDouble("latitude");
         longitude = json.getDouble("longitude");
         accuracy = json.getInt("accuracy");
@@ -64,5 +67,17 @@ public class PhotoLocation {
 
     public String getRegion() {
         return region;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public String getNeighbourhood() {
+        return neighbourhood;
     }
 }

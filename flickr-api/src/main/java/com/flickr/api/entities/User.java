@@ -55,4 +55,17 @@ public class User implements BaseUser, Serializable {
     public String getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) {
+            return false;
+        }
+        if(obj instanceof User) {
+            User user = (User) obj;
+            return id.equals(user.id);
+        }
+        return false;
+    }
+    
 }

@@ -33,13 +33,13 @@ import com.flickr.api.utils.JSONUtils;
 public class PhotoDates {
 
     private Date posted;
-    private String taken;
+    private Date taken;
     private int takengranularity;
     private Date lastupdate;
 
     PhotoDates(JSONObject json) throws JSONException {
         posted = JSONUtils.dateFromString(json.getString("posted"));
-        taken = json.getString("taken");
+        taken = JSONUtils.dateFromString(json.getString("taken"));
         takengranularity = json.getInt("takengranularity");
         lastupdate = JSONUtils.dateFromString(json.getString("lastupdate"));
     }
@@ -57,7 +57,7 @@ public class PhotoDates {
         return posted;
     }
 
-    public String getTakenDate() {
+    public Date getTakenDate() {
         return taken;
     }
 }

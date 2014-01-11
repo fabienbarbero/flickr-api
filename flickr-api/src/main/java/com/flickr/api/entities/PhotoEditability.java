@@ -1,16 +1,16 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
+ * Copyright (C) 2014 Fabien Barbero
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
+ * in the Software without restriction, including without limitation the rights 
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,42 +26,23 @@ import org.json.JSONObject;
 
 /**
  *
- * @author Fabien Barbero
+ * @author fabien
  */
-public class PhotoTag implements IdObject {
+public class PhotoEditability {
 
-    private String id;
-    private String author;
-    private String raw;
-    // FIXME
-    private String tag;
+    private final boolean canAddMedata;
+    private final boolean canComment;
 
-    PhotoTag(JSONObject json) throws JSONException {
-        id = json.getString("id");
-        author = json.getString("author");
-        raw = json.getString("raw");
-        tag = json.getString("_content");
+    PhotoEditability(JSONObject json) throws JSONException {
+        canAddMedata = json.getInt("canaddmeta") == 1;
+        canComment = json.getInt("cancomment") == 1;
     }
 
-    public String getAuthorId() {
-        return author;
+    public boolean canAddMedata() {
+        return canAddMedata;
     }
 
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    public String getRaw() {
-        return raw;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    @Override
-    public String toString() {
-        return raw;
+    public boolean canComment() {
+        return canComment;
     }
 }

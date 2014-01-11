@@ -30,25 +30,23 @@ import org.json.JSONObject;
  */
 public class PhotoVisibility {
 
-    private int ispublic;
-    private int isfriend;
-    private int isfamily;
+    private int isPublic;
+    private int isFriend;
+    private int isFamily;
 
     PhotoVisibility(JSONObject json) throws JSONException {
-        ispublic = json.getInt("ispublic");
-        isfriend = json.getInt("isfriend");
-        isfamily = json.getInt("isfamily");
+        isPublic = json.getInt("ispublic");
+        isFriend = json.getInt("isfriend");
+        isFamily = json.getInt("isfamily");
     }
 
     /**
-     * Indicates if the photo has been taken by a member of the family of th
-     * user.
+     * Indicates if the photo has been taken by a member of the family of th user.
      *
-     * @return true if the photo has been taken by a member of the family of th
-     * user.
+     * @return true if the photo has been taken by a member of the family of th user.
      */
     public boolean isFamily() {
-        return isfamily == 1;
+        return isFamily == 1;
     }
 
     /**
@@ -57,7 +55,7 @@ public class PhotoVisibility {
      * @return true if the photo has been taken by a friend.
      */
     public boolean isFriend() {
-        return isfriend == 1;
+        return isFriend == 1;
     }
 
     /**
@@ -66,6 +64,6 @@ public class PhotoVisibility {
      * @return true if the photo is public.
      */
     public boolean isPublic() {
-        return ispublic == 1;
+        return isPublic == 1;
     }
 }

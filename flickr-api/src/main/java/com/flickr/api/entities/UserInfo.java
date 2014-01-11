@@ -37,9 +37,9 @@ public class UserInfo implements BaseUser, Serializable {
     private static final long serialVersionUID = -5126309551528400272L;
     private String id;
     private int isPro;
+    private String description;
     private String userName;
     private String realName;
-    private String location;
     private URL photosUrl;
     private URL profileUrl;
     private UserPhotosInfo photosInfo;
@@ -48,9 +48,9 @@ public class UserInfo implements BaseUser, Serializable {
     UserInfo(JSONObject json) throws JSONException {
         id = json.getString("nsid");
         isPro = json.getInt("ispro");
+        description = JSONUtils.getContent(json, "description");
         userName = JSONUtils.getContent(json, "username");
         realName = JSONUtils.getContent(json, "realname");
-        location = JSONUtils.getContent(json, "location");
         photosUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "photosurl"));
         profileUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "profileurl"));
         photosInfo = new UserPhotosInfo(json.getJSONObject("photos"));
@@ -81,12 +81,12 @@ public class UserInfo implements BaseUser, Serializable {
     }
 
     /**
-     * Get the location of the user.
+     * Get the user description
      *
-     * @return The location.
+     * @return The description
      */
-    public String getLocation() {
-        return location;
+    public String getDescription() {
+        return description;
     }
 
     /**

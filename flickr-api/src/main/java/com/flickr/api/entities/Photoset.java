@@ -21,6 +21,7 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.flickr.api.utils.JSONUtils;
+import java.util.Date;
 
 /**
  * 
@@ -30,32 +31,32 @@ public class Photoset implements IdObject, Serializable
 {
     private static final long serialVersionUID = 545748673399L;
 
-    private String id;
-    private String secret;
-    private String server;
-    private int photos;
-    private String farm;
-    private String owner;
-    private String primary;
-    private String title;
-    private String description;
-    private int countViews;
-    private Image primaryPhoto;
+    private final String id;
+    private final int photos;
+    private final String owner;
+    private final String title;
+    private final String description;
+    private final int countViews;
+    private final Image primaryPhoto;
+    private final boolean canComment;
+    private final int commentCount;
+    private final Date creationDate;
+    private final Date updateDate;
 
     Photoset(JSONObject json)
         throws JSONException
     {
         id = json.getString("id");
-        secret = json.getString("secret");
-        server = json.getString("server");
         photos = json.getInt("photos");
-        farm = json.getString("farm");
         owner = json.optString("owner");
-        primary = json.getString("primary");
         title = JSONUtils.getContent(json, "title");
         description = JSONUtils.getContent(json, "description");
         countViews = json.getInt("count_views");
-        primaryPhoto = new Image(farm, server, primary, secret);
+        primaryPhoto = new Image(json.getString("farm"), json.getString("server"), json.getString("primary"), json.getString("secret"));
+        canComment = json.getInt("can_comment") == 1;
+        commentCount = json.getInt("count_comments");
+        creationDate = JSONUtils.dateFromString(json.getString("date_create"));
+        updateDate = JSONUtils.dateFromString(json.getString("date_update"));
     }
 
     @Override
@@ -64,6 +65,22 @@ public class Photoset implements IdObject, Serializable
         return id;
     }
 
+    public boolean canComment() {
+        return canComment;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+    
     /**
      * Get the number of photos in the set.
      * 

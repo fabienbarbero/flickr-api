@@ -21,6 +21,8 @@
  */
 package com.flickr.api.entities;
 
+import com.flickr.api.utils.URLUtils;
+import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,18 +32,35 @@ import org.json.JSONObject;
  */
 public class Contact implements BaseUser {
 
-    private String id;
-    private String username;
-    private int friend;
-    private int family;
-    private int ignored;
+    private final String id;
+    private final String username;
+    private final String location;
+    private final int friend;
+    private final int family;
+    private final int ignored;
+    private final URL avatar;
 
     Contact(JSONObject json) throws JSONException {
         id = json.getString("nsid");
         username = json.getString("username");
+        location = json.optString("location", null);
         friend = json.getInt("friend");
         family = json.getInt("family");
         ignored = json.getInt("ignored");
+        
+        if (json.has("iconfarm") && json.has("iconserver")) {
+            avatar = URLUtils.fromString("http://farm" + json.getString("iconfarm") + ".staticflickr.com/" + json.getString("iconserver") + "/buddyicons/" + id + ".jpg");
+        } else {
+            avatar = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
+        }
+    }
+
+    /**
+     * Get the contact avatar
+     * @return The avatar
+     */
+    public URL getAvatar() {
+        return avatar;
     }
 
     /**
@@ -81,6 +100,14 @@ public class Contact implements BaseUser {
         return username;
     }
 
+    /**
+     * Get the location of the contact
+     * @return The location or null
+     */
+    public String getLocation() {
+        return location;
+    }
+    
     @Override
     public String getId() {
         return id;

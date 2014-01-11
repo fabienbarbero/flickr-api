@@ -30,31 +30,31 @@ import org.json.JSONObject;
  */
 public class PhotoUsage {
 
-    private int candownload;
-    private int canblog;
-    private int canprint;
-    private int canshare;
+    private final int canDownload;
+    private final int canBlog;
+    private final int canPrint;
+    private final int canShare;
 
     PhotoUsage(JSONObject json) throws JSONException {
-        candownload = json.getInt("candownload");
-        canblog = json.getInt("canblog");
-        canprint = json.getInt("canprint");
-        canshare = json.getInt("canshare");
+        canDownload = json.getInt("candownload");
+        canBlog = json.getInt("canblog");
+        canPrint = json.getInt("canprint");
+        canShare = json.getInt("canshare");
     }
 
     public boolean canBlog() {
-        return canblog == 1;
+        return canBlog == 1;
     }
 
     public boolean canDownload() {
-        return candownload == 1;
+        return canDownload == 1;
     }
 
     public boolean canPrint() {
-        return canprint == 1;
+        return canPrint == 1;
     }
 
     public boolean canShare() {
-        return canshare == 1;
+        return canShare == 1;
     }
 }

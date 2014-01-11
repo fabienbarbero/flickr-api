@@ -43,7 +43,7 @@ public class FavoritesServiceImpl extends FlickrService implements FavoritesServ
 
     @Override
     public Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.favorites.getList");
+        CommandArguments args = new CommandArguments("flickr.favorites.getList", true);
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("user_id", user.getId());
@@ -53,7 +53,7 @@ public class FavoritesServiceImpl extends FlickrService implements FavoritesServ
 
     @Override
     public Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.favorites.getPublicList");
+        CommandArguments args = new CommandArguments("flickr.favorites.getPublicList", false);
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("user_id", user.getId());

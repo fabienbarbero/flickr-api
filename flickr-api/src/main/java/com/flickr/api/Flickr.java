@@ -35,12 +35,18 @@ import com.flickr.api.photos.PhotosServiceImpl;
 import com.flickr.api.photosets.PhotosetsService;
 import com.flickr.api.photosets.PhotosetsServiceImpl;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oauth.signpost.OAuth;
 import oauth.signpost.exception.OAuthException;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -51,7 +57,7 @@ import org.apache.http.params.HttpParams;
 
 /**
  * This class is the entry point of the API.
- * 
+ *
  * @author Fabien Barbero
  */
 public final class Flickr {
@@ -67,6 +73,7 @@ public final class Flickr {
     private final PhotosetsService photosetsService;
     private final AuthenticationService authenticationService;
     private final FavoritesService favoritesService;
+    private final DefaultHttpClient client;
 
     /**
      * Create a new Flickr instance
@@ -79,12 +86,12 @@ public final class Flickr {
     public Flickr(String apiKey, String apiSecret, File configurationFile) {
         props = new FlickrProperties(configurationFile);
         oauthHandler = new OAuthHandler(props, apiKey, apiSecret);
-        
+
         // HttpClient configuration
         HttpParams params = new BasicHttpParams();
         SchemeRegistry registry = new SchemeRegistry();
         registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-        HttpClient client = new DefaultHttpClient(new ThreadSafeClientConnManager(params, registry), params);
+        client = new DefaultHttpClient(new ThreadSafeClientConnManager(params, registry), params);
 
         contactsService = new ContactsServiceImpl(oauthHandler, client);
         peoplesService = new PeopleServiceImpl(oauthHandler, client);
@@ -198,5 +205,15 @@ public final class Flickr {
      */
     public FavoritesService getFavoritesService() {
         return favoritesService;
+    }
+
+    public InputStream openStream(URL url) throws IOException {
+        try {
+            HttpGet request = new HttpGet(url.toURI());
+            return client.execute(request).getEntity().getContent();
+            
+        } catch (URISyntaxException ex) {
+            throw new IOException(ex.getMessage(), ex);
+        }
     }
 }

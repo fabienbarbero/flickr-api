@@ -23,81 +23,66 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 import com.flickr.api.utils.IOUtils;
 
 /**
- * 
+ *
  * @author Fabien Barbero
  */
-public abstract class FlickrService
-{
-    
+public abstract class FlickrService {
+
     public static final int MAX_PER_PAGE = Integer.MAX_VALUE;
-    
     private static final String URL_PREFIX = "http://api.flickr.com/services/rest/";
     private final HttpClient client;
     private final OAuthHandler oauth;
-    
+
     protected FlickrService(OAuthHandler oauth, HttpClient client) {
         this.oauth = oauth;
         this.client = client;
     }
 
-    protected final <T extends ServerResponse> T doGet(CommandArguments args, Class<T> clazz) throws FlickrServiceException
-    {
+    protected final <T extends ServerResponse> T doGet(CommandArguments args, Class<T> clazz) throws FlickrServiceException {
         HttpGet request = new HttpGet(args.toURI(URL_PREFIX, oauth.getConsumer().getConsumerKey()));
         return doRequest(args, clazz, request);
     }
 
-    protected final <T extends ServerResponse> T doPost(CommandArguments args, Class<T> clazz) throws FlickrServiceException
-    {
+    protected final <T extends ServerResponse> T doPost(CommandArguments args, Class<T> clazz) throws FlickrServiceException {
         HttpPost request = new HttpPost(URL_PREFIX);
         request.setEntity(args.getPostEntity(oauth.getConsumer().getConsumerKey()));
         return doRequest(args, clazz, request);
     }
-    
-    private <T extends ServerResponse> T doRequest(CommandArguments args, Class<T> clazz, HttpUriRequest request) throws FlickrServiceException
-    {
+
+    private <T extends ServerResponse> T doRequest(CommandArguments args, Class<T> clazz, HttpUriRequest request) throws FlickrServiceException {
         InputStream is = null;
         try {
-            oauth.getConsumer().sign(request);
+            if (args.isSign()) {
+                oauth.getConsumer().sign(request);
+            }
             HttpResponse response = client.execute(request);
-            
+
             is = response.getEntity().getContent();
             String result = IOUtils.toString(is, "UTF-8");
             JSONObject json = new JSONObject(result);
-            
-            if(Flickr.debug) {
+
+            if (Flickr.debug) {
                 try {
                     System.out.println("Server response for method " + args.getMethod() + " (" + request.getURI() + ")\n" + json.toString(2));
                 } catch (Exception ignored) {
                 }
             }
-            
+
             T instance = clazz.newInstance();
-            instance.read(json);
-            
-            checkResponse(instance, args);
-            
+            instance.read(json, args.getMethod());
+
             return instance;
-            
-        } catch(FlickrServiceException ex) {
+
+        } catch (FlickrServiceException ex) {
             throw ex;
-        } catch(Exception ex ) {
+        } catch (Exception ex) {
             throw new FlickrServiceException("Server request error", ex);
         } finally {
             IOUtils.closeQuietly(is);
-        }
-    }
-
-    private void checkResponse(ServerResponse response, CommandArguments args) throws FlickrServiceException
-    {
-        if (response.getStatus() == ServerResponse.ResponseStatus.fail) {
-            FlickrErrorCode errorCode = FlickrErrorCode.fromCode(response.getError().getCode());
-            throw new FlickrServiceException("Error calling method '" + args.getMethod() + "' ("
-                                             + response.getError().getMessage() + ")", errorCode);
         }
     }
 

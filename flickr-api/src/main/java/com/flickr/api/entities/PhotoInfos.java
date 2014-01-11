@@ -23,6 +23,7 @@ package com.flickr.api.entities;
 
 import com.flickr.api.utils.JSONUtils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,14 +35,21 @@ import org.json.JSONObject;
  */
 public class PhotoInfos {
 
-    private Owner owner;
-    private String title;
-    private String description;
-    private PhotoVisibility visibility;
-    private PhotoDates dates;
-    private PhotoUsage usage;
-    private int comments;
-    private List<PhotoTag> tags;
+    private final Owner owner;
+    private final String title;
+    private final String description;
+    private final PhotoVisibility visibility;
+    private final PhotoDates dates;
+    private final PhotoUsage usage;
+    private final Date uploadedDate;
+    private final int comments;
+    private final int views;
+    private final List<PhotoTag> tags;
+    private final PhotoEditability editability;
+    private final PhotoEditability publicEditability;
+    private final boolean isFavorite;
+    private final String license;
+    private final PhotoLocation location;
 
     PhotoInfos(JSONObject json) throws JSONException {
         owner = new Owner(json.getJSONObject("owner"));
@@ -51,6 +59,13 @@ public class PhotoInfos {
         dates = new PhotoDates(json.getJSONObject("dates"));
         usage = new PhotoUsage(json.getJSONObject("usage"));
         comments = JSONUtils.getIntegerContent(json, "comments");
+        uploadedDate = JSONUtils.dateFromString(json.getString("dateuploaded"));
+        editability = new PhotoEditability(json.getJSONObject("editability"));
+        publicEditability = new PhotoEditability(json.getJSONObject("publiceditability"));
+        isFavorite = json.getInt("isfavorite") == 1;
+        license = json.getString("license");
+        location = new PhotoLocation(json.getJSONObject("location"));
+        views = json.getInt("views");
 
         tags = new ArrayList<PhotoTag>();
         JSONArray array = json.getJSONObject("tags").getJSONArray("tag");
@@ -64,7 +79,7 @@ public class PhotoInfos {
      *
      * @return The number of comments.
      */
-    public int getComments() {
+    public int getCommentsCount() {
         return comments;
     }
 
@@ -97,6 +112,34 @@ public class PhotoInfos {
 
     public List<PhotoTag> getTags() {
         return tags;
+    }
+
+    public PhotoEditability getEditability() {
+        return editability;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public PhotoLocation getLocation() {
+        return location;
+    }
+
+    public PhotoEditability getPublicEditability() {
+        return publicEditability;
+    }
+
+    public Date getUploadedDate() {
+        return uploadedDate;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
     /**

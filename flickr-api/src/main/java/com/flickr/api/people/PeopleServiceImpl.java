@@ -49,7 +49,7 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
     @Override
     public User findByEmail(String email) throws FlickrServiceException {
         try {
-            CommandArguments args = new CommandArguments("flickr.people.findByEmail");
+            CommandArguments args = new CommandArguments("flickr.people.findByEmail", false);
             args.put("find_email", email);
             return doGet(args, UserResponse.class).getUser();
         } catch (FlickrServiceException ex) {
@@ -64,7 +64,7 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
     @Override
     public User findByUserName(String userName) throws FlickrServiceException {
         try {
-            CommandArguments args = new CommandArguments("flickr.people.findByUsername");
+            CommandArguments args = new CommandArguments("flickr.people.findByUsername", false);
             args.put("username", userName);
             return doGet(args, UserResponse.class).getUser();
         } catch (FlickrServiceException ex) {
@@ -78,14 +78,14 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
 
     @Override
     public UserInfo getUserInfo(BaseUser user) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.people.getInfo");
+        CommandArguments args = new CommandArguments("flickr.people.getInfo", false);
         args.put("user_id", user.getId());
         return doGet(args, UserInfoResponse.class).getUserInfo();
     }
 
     @Override
     public Paginated<Photo> getUserPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.people.getPhotos");
+        CommandArguments args = new CommandArguments("flickr.people.getPhotos", false);
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
         args.put("page", page);
@@ -94,7 +94,7 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
 
     @Override
     public Paginated<Photo> getUserPublicPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.people.getPublicPhotos");
+        CommandArguments args = new CommandArguments("flickr.people.getPublicPhotos", false);
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
         args.put("page", page);
@@ -103,7 +103,7 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
 
     @Override
     public Paginated<Photo> getUserPhotosOf(BaseUser user, BaseUser owner, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.people.getPhotosOf");
+        CommandArguments args = new CommandArguments("flickr.people.getPhotosOf", false);
         args.put("user_id", user.getId());
         args.put("owner_id", owner.getId());
         args.put("per_page", perPage);

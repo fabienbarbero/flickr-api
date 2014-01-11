@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl extends FlickrService implements Authenti
 
     @Override
     public UserInfo authenticate() throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.test.login");
+        CommandArguments args = new CommandArguments("flickr.test.login", true);
         LoginResponse response = doGet(args, LoginResponse.class);
         BaseUser identifier = response.getIdentifier();
 

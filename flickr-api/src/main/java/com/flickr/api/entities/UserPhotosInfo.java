@@ -34,12 +34,13 @@ import com.flickr.api.utils.JSONUtils;
 public class UserPhotosInfo implements Serializable {
 
     private static final long serialVersionUID = 5602104420678151276L;
-    
     private Date firstDate;
+    private Date firstDateTaken;
     private int count;
 
     UserPhotosInfo(JSONObject json) throws JSONException {
-        firstDate = JSONUtils.dateFromString2(JSONUtils.getContent(json, "firstdate"));
+        firstDate = JSONUtils.dateFromString(JSONUtils.getContent(json, "firstdate"));
+        firstDateTaken = JSONUtils.dateFromString(JSONUtils.getContent(json, "firstdatetaken"));
         count = JSONUtils.getIntegerContent(json, "count");
     }
 
@@ -59,5 +60,9 @@ public class UserPhotosInfo implements Serializable {
      */
     public Date getFirstDate() {
         return firstDate;
+    }
+
+    public Date getFirstDateTaken() {
+        return firstDateTaken;
     }
 }

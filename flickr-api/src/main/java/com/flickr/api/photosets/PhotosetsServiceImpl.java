@@ -46,7 +46,7 @@ public class PhotosetsServiceImpl extends FlickrService implements PhotosetsServ
 
     @Override
     public Photoset getPhotosetById(String id) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getInfo");
+        CommandArguments args = new CommandArguments("flickr.photosets.getInfo", false);
         args.put("photoset_id", id);
         Photoset set = doGet(args, PhotosetResponse.class).getPhotoset();
         return set;
@@ -54,7 +54,7 @@ public class PhotosetsServiceImpl extends FlickrService implements PhotosetsServ
 
     @Override
     public Paginated<Photoset> getPhotosets(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getList");
+        CommandArguments args = new CommandArguments("flickr.photosets.getList", false);
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
         args.put("page", page);
@@ -64,7 +64,7 @@ public class PhotosetsServiceImpl extends FlickrService implements PhotosetsServ
 
     @Override
     public Paginated<Photo> getPhotos(Photoset photoset, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getPhotos");
+        CommandArguments args = new CommandArguments("flickr.photosets.getPhotos", false);
         args.put("photoset_id", photoset.getId());
         args.put("per_page", perPage);
         args.put("page", page);

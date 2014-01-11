@@ -25,39 +25,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
+ *
  * @author Fabien Barbero
  */
 public abstract class ServerResponse {
 
-    private ErrorResponse err;
-    
-    private ResponseStatus status;
-    
     protected ServerResponse() {
     }
-    
-    final ErrorResponse getError() {
-        return err;
-    }
 
-    final ResponseStatus getStatus() {
-        return status;
-    }
-    
-    enum ResponseStatus {
-    
-        fail,
-        ok;
-    
-    }
-    
-    final void read(JSONObject json) throws JSONException {
-        err = new ErrorResponse(json);
-        status = ResponseStatus.valueOf(json.getString("stat"));
+    final void read(JSONObject json, String method) throws JSONException, FlickrServiceException {
+        ResponseStatus status = ResponseStatus.valueOf(json.getString("stat"));
+        
+        if(status == ResponseStatus.fail) {
+            FlickrErrorCode code = FlickrErrorCode.fromCode(json.optInt("code"));
+            String message = json.optString("message");
+            throw new FlickrServiceException("Error calling method '" + method + "' (" + message + ")", code);
+        }
+        
         readObject(json);
     }
-    
+
     protected abstract void readObject(JSONObject json) throws JSONException;
-    
+
+    private enum ResponseStatus {
+
+        fail,
+        ok;
+    }
 }

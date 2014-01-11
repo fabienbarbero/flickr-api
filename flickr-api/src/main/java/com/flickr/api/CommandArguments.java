@@ -38,14 +38,16 @@ import org.apache.http.entity.mime.content.StringBody;
 public final class CommandArguments {
 
     private final Map<String, String> args;
+    private final boolean sign;
 
     /**
      * Create a new command
      *
      * @param method The method name
      */
-    public CommandArguments(String method) {
+    public CommandArguments(String method, boolean sign) {
 
+        this.sign = sign;
         args = new TreeMap<String, String>();
         if (method != null) {
             put("method", method);
@@ -54,10 +56,11 @@ public final class CommandArguments {
         put("nojsoncallback", "1");
     }
 
-    public CommandArguments() {
-        this(null);
-    }
 
+    public boolean isSign() {
+        return sign;
+    }
+    
     public String getMethod() {
         return args.get("method");
     }
