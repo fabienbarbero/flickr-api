@@ -21,19 +21,14 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.auth.AuthenticationService;
-import com.flickr.api.auth.AuthenticationServiceImpl;
-import com.flickr.api.contacts.ContactsService;
-import com.flickr.api.contacts.ContactsServiceImpl;
-import com.flickr.api.entities.UserInfo;
-import com.flickr.api.favorites.FavoritesService;
-import com.flickr.api.favorites.FavoritesServiceImpl;
-import com.flickr.api.people.PeopleService;
-import com.flickr.api.people.PeopleServiceImpl;
-import com.flickr.api.photos.PhotosService;
-import com.flickr.api.photos.PhotosServiceImpl;
-import com.flickr.api.photosets.PhotosetsService;
-import com.flickr.api.photosets.PhotosetsServiceImpl;
+import com.flickr.api.services.AuthenticationService;
+import com.flickr.api.services.ContactsService;
+import com.flickr.api.entities.UserInfos;
+import com.flickr.api.services.FavoritesService;
+import com.flickr.api.services.PeopleService;
+import com.flickr.api.services.PhotosService;
+import com.flickr.api.services.PhotosetsService;
+import com.flickr.api.services.StatsService;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,8 +37,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import oauth.signpost.OAuth;
 import oauth.signpost.exception.OAuthException;
 import org.apache.http.client.methods.HttpGet;
@@ -73,6 +66,7 @@ public final class Flickr {
     private final PhotosetsService photosetsService;
     private final AuthenticationService authenticationService;
     private final FavoritesService favoritesService;
+    private final StatsService statsService;
     private final DefaultHttpClient client;
 
     /**
@@ -80,7 +74,8 @@ public final class Flickr {
      *
      * @param apiKey The flickr API key
      * @param apiSecret The flickr API secret
-     * @param configurationFile The configuration file used to store the OAuth data. At the beginning, this file
+     * @param configurationFile The configuration file used to store the OAuth
+     * data. At the beginning, this file
      * <b>must</b> not exists.
      */
     public Flickr(String apiKey, String apiSecret, File configurationFile) {
@@ -93,12 +88,13 @@ public final class Flickr {
         registry.register(new Scheme("http", new PlainSocketFactory(), 80));
         client = new DefaultHttpClient(new ThreadSafeClientConnManager(params, registry), params);
 
-        contactsService = new ContactsServiceImpl(oauthHandler, client);
-        peoplesService = new PeopleServiceImpl(oauthHandler, client);
-        photosService = new PhotosServiceImpl(oauthHandler, client);
-        photosetsService = new PhotosetsServiceImpl(oauthHandler, client);
-        favoritesService = new FavoritesServiceImpl(oauthHandler, client);
-        authenticationService = new AuthenticationServiceImpl(oauthHandler, client, peoplesService);
+        contactsService = new ContactsService(oauthHandler, client);
+        peoplesService = new PeopleService(oauthHandler, client);
+        photosService = new PhotosService(oauthHandler, client);
+        photosetsService = new PhotosetsService(oauthHandler, client);
+        favoritesService = new FavoritesService(oauthHandler, client);
+        authenticationService = new AuthenticationService(oauthHandler, client, peoplesService);
+        statsService = new StatsService(oauthHandler, client);
     }
 
     /**
@@ -113,8 +109,9 @@ public final class Flickr {
     /**
      * Get the authorization URL used to allow the access to the application
      *
-     * @param callbackUrl The callback URL where the user will be redirected when he will grant the access of the
-     * application (see {@link Flickr#verifyToken(java.lang.String) }).
+     * @param callbackUrl The callback URL where the user will be redirected
+     * when he will grant the access of the application (see {@link Flickr#verifyToken(java.lang.String)
+     * }).
      * @return The authorization URL to open in the browser
      * @throws OAuthException Error getting the URL
      */
@@ -158,7 +155,7 @@ public final class Flickr {
      * @return The user informations
      * @throws FlickrServiceException Authentication error
      */
-    public UserInfo authenticate() throws FlickrServiceException {
+    public UserInfos authenticate() throws FlickrServiceException {
         return authenticationService.authenticate();
     }
 
@@ -199,6 +196,15 @@ public final class Flickr {
     }
 
     /**
+     * Get the stats service
+     *
+     * @return The service
+     */
+    public StatsService getStatsService() {
+        return statsService;
+    }
+
+    /**
      * Get the favorites services
      *
      * @return The service
@@ -211,7 +217,7 @@ public final class Flickr {
         try {
             HttpGet request = new HttpGet(url.toURI());
             return client.execute(request).getEntity().getContent();
-            
+
         } catch (URISyntaxException ex) {
             throw new IOException(ex.getMessage(), ex);
         }

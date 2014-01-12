@@ -32,10 +32,10 @@ import org.json.JSONObject;
  */
 public abstract class Paginated<T> implements Iterable<T> {
 
-    private int page;
-    private int pages;
-    private int perpage;
-    private int total;
+    private final int page;
+    private final int pages;
+    private final int perpage;
+    private final int total;
 
     protected Paginated(JSONObject json) throws JSONException {
         page = json.getInt("page");

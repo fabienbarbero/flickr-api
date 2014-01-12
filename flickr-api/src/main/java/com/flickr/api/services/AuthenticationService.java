@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.auth;
+package com.flickr.api.services;
 
 import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.LoginResponse;
-import com.flickr.api.entities.UserInfo;
+import com.flickr.api.entities.UserInfos;
 import com.flickr.api.FlickrService;
-import com.flickr.api.people.PeopleService;
+import com.flickr.api.services.PeopleService;
 import org.apache.http.client.HttpClient;
 
 /**
@@ -37,17 +37,16 @@ import org.apache.http.client.HttpClient;
  *
  * @author Fabien Barbero
  */
-public class AuthenticationServiceImpl extends FlickrService implements AuthenticationService {
+public final class AuthenticationService extends FlickrService {
 
     private final PeopleService peopleService;
 
-    public AuthenticationServiceImpl(OAuthHandler oauthHandler, HttpClient client, PeopleService peopleService) {
+    public AuthenticationService(OAuthHandler oauthHandler, HttpClient client, PeopleService peopleService) {
         super(oauthHandler, client);
         this.peopleService = peopleService;
     }
 
-    @Override
-    public UserInfo authenticate() throws FlickrServiceException {
+    public UserInfos authenticate() throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.test.login", true);
         LoginResponse response = doGet(args, LoginResponse.class);
         BaseUser identifier = response.getIdentifier();

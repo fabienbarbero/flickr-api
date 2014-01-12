@@ -33,12 +33,12 @@ public class PaginatedContactsResponse extends ServerResponse {
 
     private PaginatedContacts contacts;
 
-    public PaginatedContacts getContacts() {
-        return contacts;
-    }
-
     @Override
     protected void readObject(JSONObject json) throws JSONException {
         contacts = new PaginatedContacts(json.getJSONObject("contacts"));
+    }
+
+    public Paginated<Contact> getContacts() {
+        return contacts;
     }
 }

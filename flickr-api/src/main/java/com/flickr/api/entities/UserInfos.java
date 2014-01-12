@@ -32,7 +32,7 @@ import com.flickr.api.utils.URLUtils;
  *
  * @author Fabien Barbero
  */
-public class UserInfo implements BaseUser, Serializable {
+public class UserInfos implements BaseUser, Serializable {
 
     private static final long serialVersionUID = -5126309551528400272L;
     private String id;
@@ -45,7 +45,7 @@ public class UserInfo implements BaseUser, Serializable {
     private UserPhotosInfo photosInfo;
     private URL avatar;
 
-    UserInfo(JSONObject json) throws JSONException {
+    UserInfos(JSONObject json) throws JSONException {
         id = json.getString("nsid");
         isPro = json.getInt("ispro");
         description = JSONUtils.getContent(json, "description");
@@ -54,12 +54,7 @@ public class UserInfo implements BaseUser, Serializable {
         photosUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "photosurl"));
         profileUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "profileurl"));
         photosInfo = new UserPhotosInfo(json.getJSONObject("photos"));
-
-        if (json.has("iconfarm") && json.has("iconserver")) {
-            avatar = URLUtils.fromString("http://farm" + json.getString("iconfarm") + ".staticflickr.com/" + json.getString("iconserver") + "/buddyicons/" + id + ".jpg");
-        } else {
-            avatar = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
-        }
+        avatar = JSONUtils.getUserAvatar(json, id);
     }
 
     @Override

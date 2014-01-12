@@ -1,16 +1,16 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
+ * Copyright (C) 2014 Fabien Barbero
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
+ * in the Software without restriction, including without limitation the rights 
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -19,19 +19,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.auth;
+package com.flickr.api.entities;
 
-import com.flickr.api.FlickrServiceException;
-import com.flickr.api.entities.UserInfo;
+import com.flickr.api.ServerResponse;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
- * http://www.flickr.com/services/api/auth.howto.desktop.html
  *
  * @author Fabien Barbero
  */
-public interface AuthenticationService {
+public class LicensesResponse extends ServerResponse {
 
-    UserInfo authenticate()
-            throws FlickrServiceException;
+    private List<License> licenses;
 
+    public List<License> getLicenses() {
+        return licenses;
+    }
+
+    @Override
+    protected void readObject(JSONObject json) throws JSONException {
+        JSONArray array = json.getJSONObject("licenses").getJSONArray("license");
+
+        licenses = new ArrayList<License>();
+        for (int i = 0; i < array.length(); i++) {
+            licenses.add(new License(array.getJSONObject(i)));
+        }
+    }
 }

@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.favorites;
+package com.flickr.api.services;
 
 import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrService;
@@ -35,13 +35,12 @@ import org.apache.http.client.HttpClient;
  *
  * @author fabien
  */
-public class FavoritesServiceImpl extends FlickrService implements FavoritesService {
+public class FavoritesService extends FlickrService {
     
-    public FavoritesServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+    public FavoritesService(OAuthHandler oauthHandler, HttpClient client) {
         super(oauthHandler, client);
     }
 
-    @Override
     public Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.favorites.getList", true);
         args.put("per_page", perPage);
@@ -51,7 +50,6 @@ public class FavoritesServiceImpl extends FlickrService implements FavoritesServ
         return doGet(args, PaginatedPhotosResponse.class).getPhotos();
     }
 
-    @Override
     public Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.favorites.getPublicList", false);
         args.put("per_page", perPage);

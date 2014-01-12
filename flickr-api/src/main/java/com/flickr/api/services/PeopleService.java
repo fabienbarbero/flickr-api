@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.people;
+package com.flickr.api.services;
 
 import com.flickr.api.FlickrService;
 import com.flickr.api.CommandArguments;
@@ -31,7 +31,7 @@ import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PaginatedPhotosResponse;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.User;
-import com.flickr.api.entities.UserInfo;
+import com.flickr.api.entities.UserInfos;
 import com.flickr.api.entities.UserInfoResponse;
 import com.flickr.api.entities.UserResponse;
 import org.apache.http.client.HttpClient;
@@ -40,13 +40,12 @@ import org.apache.http.client.HttpClient;
  *
  * @author Fabien Barbero
  */
-public class PeopleServiceImpl extends FlickrService implements PeopleService {
+public class PeopleService extends FlickrService {
 
-    public PeopleServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+    public PeopleService(OAuthHandler oauthHandler, HttpClient client) {
         super(oauthHandler, client);
     }
 
-    @Override
     public User findByEmail(String email) throws FlickrServiceException {
         try {
             CommandArguments args = new CommandArguments("flickr.people.findByEmail", false);
@@ -61,7 +60,6 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
         }
     }
 
-    @Override
     public User findByUserName(String userName) throws FlickrServiceException {
         try {
             CommandArguments args = new CommandArguments("flickr.people.findByUsername", false);
@@ -76,14 +74,12 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
         }
     }
 
-    @Override
-    public UserInfo getUserInfo(BaseUser user) throws FlickrServiceException {
+    public UserInfos getUserInfo(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getInfo", false);
         args.put("user_id", user.getId());
         return doGet(args, UserInfoResponse.class).getUserInfo();
     }
 
-    @Override
     public Paginated<Photo> getUserPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotos", false);
         args.put("user_id", user.getId());
@@ -92,7 +88,6 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
         return doGet(args, PaginatedPhotosResponse.class).getPhotos();
     }
 
-    @Override
     public Paginated<Photo> getUserPublicPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPublicPhotos", false);
         args.put("user_id", user.getId());
@@ -101,7 +96,6 @@ public class PeopleServiceImpl extends FlickrService implements PeopleService {
         return doGet(args, PaginatedPhotosResponse.class).getPhotos();
     }
 
-    @Override
     public Paginated<Photo> getUserPhotosOf(BaseUser user, BaseUser owner, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotosOf", false);
         args.put("user_id", user.getId());

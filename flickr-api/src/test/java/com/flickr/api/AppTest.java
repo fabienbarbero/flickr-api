@@ -1,14 +1,19 @@
 package com.flickr.api;
 
 import com.flickr.api.entities.Contact;
+import com.flickr.api.entities.ExifInfos;
+import com.flickr.api.entities.License;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoPermissions;
 import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoSize;
+import com.flickr.api.entities.PhotoStats;
 import com.flickr.api.entities.Photoset;
+import com.flickr.api.entities.PhotosetInfos;
+import com.flickr.api.entities.TotalViews;
 import com.flickr.api.entities.User;
-import com.flickr.api.entities.UserInfo;
+import com.flickr.api.entities.UserInfos;
 import java.io.File;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -39,7 +44,7 @@ public class AppTest {
             }
 
             // Auth
-            UserInfo caller = flickr.authenticate();
+            UserInfos caller = flickr.authenticate();
             assertNotNull(caller);
             assertNotNull(caller.getPhotosInfo().getFirstDate());
             assertTrue(caller.getPhotosInfo().getCount() > 0);
@@ -63,7 +68,7 @@ public class AppTest {
             assertNotNull(contact.getAvatar());
 
             // People
-            UserInfo userInfo = flickr.getPeopleService().getUserInfo(caller);
+            UserInfos userInfo = flickr.getPeopleService().getUserInfo(caller);
             assertNotNull(userInfo);
             assertNotNull(userInfo.getAvatar());
             assertNotNull(userInfo.getId());
@@ -94,6 +99,15 @@ public class AppTest {
             assertNotNull(set.getUpdateDate());
             assertTrue(set.getPhotosCount() > 0);
             assertTrue(set.getCountViews() > 0);
+            
+            PhotosetInfos photosetInfos = flickr.getPhotosetsService().getInfos(set);
+            assertNotNull(photosetInfos);
+            assertNotNull(photosetInfos.getCreateDate());
+            assertNotNull(photosetInfos.getDescription());
+            assertNotNull(photosetInfos.getId());
+            assertNotNull(photosetInfos.getUpdateDate());
+            
+            flickr.getPhotosetsService().getComments(set);
 
             photos = flickr.getPhotosetsService().getPhotos(set, 10, 1);
             assertFalse(photos.isEmpty());
@@ -132,6 +146,27 @@ public class AppTest {
 
             List<PhotoSize> sizes = flickr.getPhotosService().getSizes(photo);
             assertFalse(sizes.isEmpty());
+            
+            List<License> licenses = flickr.getPhotosService().getLicenses();
+            assertFalse(licenses.isEmpty());
+            
+            ExifInfos exifInfos = flickr.getPhotosService().getExif(photo);
+            assertNotNull(exifInfos);
+            assertNotNull(exifInfos.getCamera());
+            assertFalse(exifInfos.getEntries().isEmpty());
+            
+            flickr.getPhotosService().getComments(photo);
+            
+            // Stats
+            TotalViews views = flickr.getStatsService().getTotalViews(null);
+            assertNotNull(views);
+            assertTrue(views.getPhotosViews() > 0);
+            assertTrue(views.getPhotosetsViews() > 0);
+            
+            Paginated<PhotoStats> photoStats = flickr.getStatsService().getPopularPhotos(null, 10, 1);
+            assertFalse(photoStats.isEmpty());
+            assertNotNull(photoStats.get(0).getPhoto());
+            assertNotNull(photoStats.get(0).getStats());
 
         } catch (Exception ex) {
             ex.printStackTrace();

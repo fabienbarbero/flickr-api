@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.contacts;
+package com.flickr.api.services;
 
 import com.flickr.api.entities.Contact;
 import com.flickr.api.CommandArguments;
@@ -35,13 +35,12 @@ import org.apache.http.client.HttpClient;
  *
  * @author Fabien Barbero
  */
-public class ContactsServiceImpl extends FlickrService implements ContactsService {
+public final class ContactsService extends FlickrService {
 
-    public ContactsServiceImpl(OAuthHandler oauthHandler, HttpClient client) {
+    public ContactsService(OAuthHandler oauthHandler, HttpClient client) {
         super(oauthHandler, client);
     }
 
-    @Override
     public Paginated<Contact> getContacts(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getList", true);
         args.put("per_page", perPage);
@@ -49,7 +48,6 @@ public class ContactsServiceImpl extends FlickrService implements ContactsServic
         return doGet(args, PaginatedContactsResponse.class).getContacts();
     }
 
-    @Override
     public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getPublicList", false);
         args.put("per_page", perPage);

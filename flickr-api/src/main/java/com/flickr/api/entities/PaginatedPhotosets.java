@@ -10,7 +10,7 @@ import org.json.JSONObject;
 class PaginatedPhotosets extends Paginated<Photoset>
 {
 
-    private List<Photoset> photosets;
+    private final List<Photoset> photosets;
     
     PaginatedPhotosets(JSONObject json) throws JSONException {
         super(json);
