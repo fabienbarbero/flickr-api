@@ -31,7 +31,7 @@ public class AppTest {
 //            System.setProperty("flickr.api.debug", "true");
 
             Flickr flickr = new Flickr(
-                    "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4",
+                    "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "write",
                     new File(System.getProperty("user.home"), ".flickr-api/flickr.conf"));
 
             if (!flickr.isLogged()) {
@@ -99,14 +99,14 @@ public class AppTest {
             assertNotNull(set.getUpdateDate());
             assertTrue(set.getPhotosCount() > 0);
             assertTrue(set.getCountViews() > 0);
-            
+
             PhotosetInfos photosetInfos = flickr.getPhotosetsService().getInfos(set);
             assertNotNull(photosetInfos);
             assertNotNull(photosetInfos.getCreateDate());
             assertNotNull(photosetInfos.getDescription());
             assertNotNull(photosetInfos.getId());
             assertNotNull(photosetInfos.getUpdateDate());
-            
+
             flickr.getPhotosetsService().getComments(set);
 
             photos = flickr.getPhotosetsService().getPhotos(set, 10, 1);
@@ -146,23 +146,23 @@ public class AppTest {
 
             List<PhotoSize> sizes = flickr.getPhotosService().getSizes(photo);
             assertFalse(sizes.isEmpty());
-            
+
             List<License> licenses = flickr.getPhotosService().getLicenses();
             assertFalse(licenses.isEmpty());
-            
+
             ExifInfos exifInfos = flickr.getPhotosService().getExif(photo);
             assertNotNull(exifInfos);
             assertNotNull(exifInfos.getCamera());
             assertFalse(exifInfos.getEntries().isEmpty());
-            
+
             flickr.getPhotosService().getComments(photo);
-            
+
             // Stats
             TotalViews views = flickr.getStatsService().getTotalViews(null);
             assertNotNull(views);
             assertTrue(views.getPhotosViews() > 0);
             assertTrue(views.getPhotosetsViews() > 0);
-            
+
             Paginated<PhotoStats> photoStats = flickr.getStatsService().getPopularPhotos(null, 10, 1);
             assertFalse(photoStats.isEmpty());
             assertNotNull(photoStats.get(0).getPhoto());

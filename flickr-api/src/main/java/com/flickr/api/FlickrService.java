@@ -56,9 +56,7 @@ public abstract class FlickrService {
     private <T extends ServerResponse> T doRequest(CommandArguments args, Class<T> clazz, HttpUriRequest request) throws FlickrServiceException {
         InputStream is = null;
         try {
-            if (args.isSign()) {
-                oauth.getConsumer().sign(request);
-            }
+            oauth.getConsumer().sign(request);
             HttpResponse response = client.execute(request);
 
             is = response.getEntity().getContent();

@@ -47,13 +47,13 @@ public class OAuthHandler {
     private OAuthToken accessToken;
     private String token;
 
-    OAuthHandler(FlickrProperties props, String apiKey, String apiSecret) {
+    OAuthHandler(FlickrProperties props, String apiKey, String apiSecret, String perms) {
         this.props = props;
         consumer = new CommonsHttpOAuthConsumer(apiKey, apiSecret);
         provider = new CommonsHttpOAuthProvider(
                 "http://www.flickr.com/services/oauth/request_token",
                 "http://www.flickr.com/services/oauth/access_token",
-                "http://www.flickr.com/services/oauth/authorize");
+                "http://www.flickr.com/services/oauth/authorize?perms=" + perms);
         provider.setOAuth10a(true);
 
         load();

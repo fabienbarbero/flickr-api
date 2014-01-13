@@ -26,8 +26,10 @@ import com.flickr.api.FlickrService;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.Paginated;
+import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoStats;
 import com.flickr.api.entities.PhotoStatsResponse;
+import com.flickr.api.entities.Stats;
 import com.flickr.api.entities.TotalViews;
 import com.flickr.api.entities.TotalViewsResponse;
 import java.text.DateFormat;
@@ -48,7 +50,7 @@ public class StatsService extends FlickrService {
     }
 
     public Paginated<PhotoStats> getPopularPhotos(Date startDate, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos", false);
+        CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos", true);
         args.put("per_page", perPage);
         args.put("page", page);
         if(startDate != null) {
@@ -58,11 +60,11 @@ public class StatsService extends FlickrService {
     }
     
     public TotalViews getTotalViews(Date startDate) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.stats.getTotalViews", false);
+        CommandArguments args = new CommandArguments("flickr.stats.getTotalViews", true);
         if(startDate != null) {
             args.put("date", DATE_FORMAT.format(startDate));
         }
         return doGet(args, TotalViewsResponse.class).getViews();
     }
-
+    
 }

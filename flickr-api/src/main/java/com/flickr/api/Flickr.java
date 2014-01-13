@@ -75,12 +75,13 @@ public final class Flickr {
      * @param apiKey The flickr API key
      * @param apiSecret The flickr API secret
      * @param configurationFile The configuration file used to store the OAuth
+     * @param permission The permission to use (read, write or delete)
      * data. At the beginning, this file
      * <b>must</b> not exists.
      */
-    public Flickr(String apiKey, String apiSecret, File configurationFile) {
+    public Flickr(String apiKey, String apiSecret, String permission, File configurationFile) {
         props = new FlickrProperties(configurationFile);
-        oauthHandler = new OAuthHandler(props, apiKey, apiSecret);
+        oauthHandler = new OAuthHandler(props, apiKey, apiSecret, permission);
 
         // HttpClient configuration
         HttpParams params = new BasicHttpParams();
@@ -112,6 +113,7 @@ public final class Flickr {
      * @param callbackUrl The callback URL where the user will be redirected
      * when he will grant the access of the application (see {@link Flickr#verifyToken(java.lang.String)
      * }).
+     *
      * @return The authorization URL to open in the browser
      * @throws OAuthException Error getting the URL
      */
