@@ -22,6 +22,7 @@
 package com.flickr.api.entities;
 
 import com.flickr.api.utils.JSONUtils;
+import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +30,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class ExifEntry {
+public class ExifEntry implements Serializable {
 
     public static final String TAG_MAKE = "Make";
     public static final String TAG_MODEL = "Model";

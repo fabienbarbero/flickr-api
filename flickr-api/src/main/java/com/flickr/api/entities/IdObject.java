@@ -21,11 +21,13 @@
  */
 package com.flickr.api.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Fabien Barbero
  */
-public interface IdObject {
+public interface IdObject extends Serializable {
     
     /**
      * Get the identifier.

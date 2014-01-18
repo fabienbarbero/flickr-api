@@ -21,6 +21,7 @@
  */
 package com.flickr.api.entities;
 
+import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +29,8 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class TotalViews {
+public class TotalViews implements Serializable {
+
     private final int total;
     private final int photos;
     private final int photosets;

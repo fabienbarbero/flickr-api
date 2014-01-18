@@ -22,6 +22,7 @@
 package com.flickr.api.entities;
 
 import com.flickr.api.utils.JSONUtils;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoInfos {
+public class PhotoInfos implements Serializable {
 
     private final Owner owner;
     private final String title;
@@ -64,7 +65,11 @@ public class PhotoInfos {
         publicEditability = new PhotoEditability(json.getJSONObject("publiceditability"));
         isFavorite = json.getInt("isfavorite") == 1;
         license = json.getString("license");
-        location = new PhotoLocation(json.getJSONObject("location"));
+        if (json.has("location")) {
+            location = new PhotoLocation(json.getJSONObject("location"));
+        } else {
+            location = null;
+        }
         views = json.getInt("views");
 
         tags = new ArrayList<PhotoTag>();

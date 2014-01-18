@@ -32,9 +32,9 @@ import com.flickr.api.utils.JSONUtils;
  */
 public class Person implements BaseUser {
 
-    private String id;
-    private String username;
-    private Date favedate;
+    private final String id;
+    private final String username;
+    private final Date favedate;
 
     Person(JSONObject json) throws JSONException {
         id = json.getString("nsid");

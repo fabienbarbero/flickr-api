@@ -26,35 +26,37 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.flickr.api.utils.JSONUtils;
-import com.flickr.api.utils.URLUtils;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class UserInfos implements BaseUser, Serializable {
+public class UserInfos implements BaseUser {
 
     private static final long serialVersionUID = -5126309551528400272L;
-    private String id;
-    private int isPro;
-    private String description;
-    private String userName;
+    //
+    private final String id;
+    private final int isPro;
+    private final String description;
+    private final String userName;
     private String realName;
-    private URL photosUrl;
-    private URL profileUrl;
-    private UserPhotosInfo photosInfo;
-    private URL avatar;
+    private final URL photosUrl;
+    private final URL profileUrl;
+    private final UserPhotosInfo photosInfo;
+    private final Avatar avatar;
 
     UserInfos(JSONObject json) throws JSONException {
         id = json.getString("nsid");
         isPro = json.getInt("ispro");
         description = JSONUtils.getContent(json, "description");
         userName = JSONUtils.getContent(json, "username");
-        realName = JSONUtils.getContent(json, "realname");
+        if (json.has("realname")) {
+            realName = JSONUtils.getContent(json, "realname");
+        }
         photosUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "photosurl"));
         profileUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "profileurl"));
         photosInfo = new UserPhotosInfo(json.getJSONObject("photos"));
-        avatar = JSONUtils.getUserAvatar(json, id);
+        avatar = new Avatar(json, id);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class UserInfos implements BaseUser, Serializable {
         return id;
     }
 
-    public URL getAvatar() {
+    public Avatar getAvatar() {
         return avatar;
     }
 

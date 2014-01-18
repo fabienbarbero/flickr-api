@@ -21,7 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +28,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Photo implements IdObject, Serializable {
+public class Photo implements IdObject {
 
     private static final long serialVersionUID = 5438438431425L;
     //

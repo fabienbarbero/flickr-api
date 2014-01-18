@@ -34,9 +34,9 @@ import com.flickr.api.utils.JSONUtils;
 public class UserPhotosInfo implements Serializable {
 
     private static final long serialVersionUID = 5602104420678151276L;
-    private Date firstDate;
-    private Date firstDateTaken;
-    private int count;
+    private final Date firstDate;
+    private final Date firstDateTaken;
+    private final int count;
 
     UserPhotosInfo(JSONObject json) throws JSONException {
         firstDate = JSONUtils.dateFromString(JSONUtils.getContent(json, "firstdate"));

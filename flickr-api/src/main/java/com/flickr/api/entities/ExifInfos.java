@@ -21,6 +21,7 @@
  */
 package com.flickr.api.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
  *
  * @author fabien
  */
-public class ExifInfos {
+public class ExifInfos implements Serializable {
 
     private final String camera;
     private final List<ExifEntry> entries = new ArrayList<ExifEntry>();

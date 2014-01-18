@@ -29,12 +29,12 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class User implements BaseUser, Serializable {
+public class User implements BaseUser {
 
     private static final long serialVersionUID = -1178719861430017441L;
     
-    private String id;
-    private String username;
+    private final String id;
+    private final String username;
 
     User(JSONObject json) throws JSONException {
         id = json.getString("nsid");
@@ -66,6 +66,13 @@ public class User implements BaseUser, Serializable {
             return id.equals(user.id);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
     }
     
 }

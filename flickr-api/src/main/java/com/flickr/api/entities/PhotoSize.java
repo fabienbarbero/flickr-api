@@ -26,17 +26,18 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.flickr.api.utils.JSONUtils;
+import java.io.Serializable;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class PhotoSize {
+public class PhotoSize implements Serializable {
 
-    private String label;
-    private int width;
-    private int height;
-    private URL source;
+    private final String label;
+    private final int width;
+    private final int height;
+    private final URL source;
 
     PhotoSize(JSONObject json) throws JSONException {
         label = json.getString("label");

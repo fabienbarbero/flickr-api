@@ -21,8 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.utils.URLUtils;
-import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +36,7 @@ public class Contact implements BaseUser {
     private final int friend;
     private final int family;
     private final int ignored;
-    private final URL avatar;
+    private final Avatar avatar;
 
     Contact(JSONObject json) throws JSONException {
         id = json.getString("nsid");
@@ -47,19 +45,14 @@ public class Contact implements BaseUser {
         friend = json.getInt("friend");
         family = json.getInt("family");
         ignored = json.getInt("ignored");
-        
-        if (json.has("iconfarm") && json.has("iconserver")) {
-            avatar = URLUtils.fromString("http://farm" + json.getString("iconfarm") + ".staticflickr.com/" + json.getString("iconserver") + "/buddyicons/" + id + ".jpg");
-        } else {
-            avatar = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
-        }
+        avatar = new Avatar(json, id);
     }
 
     /**
      * Get the contact avatar
      * @return The avatar
      */
-    public URL getAvatar() {
+    public Avatar getAvatar() {
         return avatar;
     }
 

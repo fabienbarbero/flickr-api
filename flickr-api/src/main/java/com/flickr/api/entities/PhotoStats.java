@@ -21,6 +21,7 @@
  */
 package com.flickr.api.entities;
 
+import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +29,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoStats {
+public class PhotoStats implements Serializable {
 
     private final Stats stats;
     private final Photo photo;

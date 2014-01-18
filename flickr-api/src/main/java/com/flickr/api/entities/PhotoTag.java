@@ -30,11 +30,11 @@ import org.json.JSONObject;
  */
 public class PhotoTag implements IdObject {
 
-    private String id;
-    private String author;
-    private String raw;
+    private final String id;
+    private final String author;
+    private final String raw;
     // FIXME
-    private String tag;
+    private final String tag;
 
     PhotoTag(JSONObject json) throws JSONException {
         id = json.getString("id");

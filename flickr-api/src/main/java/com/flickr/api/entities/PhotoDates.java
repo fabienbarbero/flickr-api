@@ -25,17 +25,18 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.flickr.api.utils.JSONUtils;
+import java.io.Serializable;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class PhotoDates {
+public class PhotoDates implements Serializable {
 
-    private Date posted;
-    private Date taken;
-    private int takengranularity;
-    private Date lastupdate;
+    private final Date posted;
+    private final Date taken;
+    private final int takengranularity;
+    private final Date lastupdate;
 
     PhotoDates(JSONObject json) throws JSONException {
         posted = JSONUtils.dateFromString(json.getString("posted"));

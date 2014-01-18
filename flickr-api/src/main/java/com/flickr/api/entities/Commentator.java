@@ -21,8 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.utils.JSONUtils;
-import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,16 +33,16 @@ public class Commentator implements BaseUser {
     private final String id;
     private final String name;
     private final String realName;
-    private final URL avatar;
+    private final Avatar avatar;
 
     Commentator(JSONObject json) throws JSONException {
         id = json.getString("author");
         name = json.getString("authorname");
         realName = json.getString("realname");
-        avatar = JSONUtils.getUserAvatar(json, id);
+        avatar = new Avatar(json, id);
     }
 
-    public URL getAvatar() {
+    public Avatar getAvatar() {
         return avatar;
     }
 

@@ -21,6 +21,7 @@
  */
 package com.flickr.api.entities;
 
+import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,11 +29,11 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoVisibility {
+public class PhotoVisibility implements Serializable {
 
-    private int isPublic;
-    private int isFriend;
-    private int isFamily;
+    private final int isPublic;
+    private final int isFriend;
+    private final int isFamily;
 
     PhotoVisibility(JSONObject json) throws JSONException {
         isPublic = json.getInt("ispublic");

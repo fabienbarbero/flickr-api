@@ -22,6 +22,7 @@
 package com.flickr.api.entities;
 
 import com.flickr.api.utils.JSONUtils;
+import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,24 +30,34 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoLocation {
+public class PhotoLocation implements Serializable {
 
-    private final String locality;
-    private final String county;
-    private final String region;
-    private final String country;
+    private String locality;
+    private String county;
+    private String neighbourhood;
+    private String region;
+    private String country;
     private final double latitude;
     private final double longitude;
     private final int accuracy;
     private final int context;
-    private final String neighbourhood;
 
     PhotoLocation(JSONObject json) throws JSONException {
-        locality = JSONUtils.getContent(json, "locality");
-        county = JSONUtils.getContent(json, "county");
-        region = JSONUtils.getContent(json, "region");
-        country = JSONUtils.getContent(json, "country");
-        neighbourhood = JSONUtils.getContent(json, "neighbourhood");
+        if (json.has("locality")) {
+            locality = JSONUtils.getContent(json, "locality");
+        }
+        if (json.has("county")) {
+            county = JSONUtils.getContent(json, "county");
+        }
+        if (json.has("region")) {
+            region = JSONUtils.getContent(json, "region");
+        }
+        if (json.has("country")) {
+            country = JSONUtils.getContent(json, "country");
+        }
+        if (json.has("neighbourhood")) {
+            neighbourhood = JSONUtils.getContent(json, "neighbourhood");
+        }
         latitude = json.getDouble("latitude");
         longitude = json.getDouble("longitude");
         accuracy = json.getInt("accuracy");

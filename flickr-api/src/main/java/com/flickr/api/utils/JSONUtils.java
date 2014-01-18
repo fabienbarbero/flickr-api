@@ -18,14 +18,6 @@ public class JSONUtils {
     private static final String DATE_TIME_REGEX = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$";
     private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static URL getUserAvatar(JSONObject json, String userId) throws JSONException {
-        if (json.has("iconfarm") && json.has("iconserver")) {
-            return URLUtils.fromString("http://farm" + json.getString("iconfarm") + ".staticflickr.com/" + json.getString("iconserver") + "/buddyicons/" + userId + ".jpg");
-        } else {
-            return URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
-        }
-    }
-
     /**
      * Get a URL object from a String.
      *
