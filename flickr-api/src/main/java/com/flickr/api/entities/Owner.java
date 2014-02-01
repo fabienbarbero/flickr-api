@@ -30,12 +30,12 @@ import org.json.JSONObject;
  */
 public class Owner implements BaseUser {
 
-    private String id;
-    private String username;
-    private String realname;
-    private String location;
-    private String iconserver;
-    private String iconfarm;
+    private final String id;
+    private final String username;
+    private final String realname;
+    private final String location;
+    private final String iconserver;
+    private final String iconfarm;
 
     Owner(JSONObject json) throws JSONException {
         id = json.getString("nsid");
@@ -50,10 +50,12 @@ public class Owner implements BaseUser {
         return location;
     }
 
+    @Override
     public String getRealName() {
         return realname;
     }
 
+    @Override
     public String getUserName() {
         return username;
     }

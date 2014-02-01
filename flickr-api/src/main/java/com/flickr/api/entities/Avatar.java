@@ -32,7 +32,7 @@ import org.json.JSONObject;
  */
 public class Avatar implements Serializable {
 
-    private static final URL DEFAULT_AVATAR = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
+    public static final URL DEFAULT_AVATAR = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
 
     /**
      * Small square (48x48)

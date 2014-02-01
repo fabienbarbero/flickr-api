@@ -45,8 +45,8 @@ public class LoginResponse extends ServerResponse
     
     private static class LoginUser implements BaseUser {
 
-        private String username;
-        private String id;
+        private final String username;
+        private final String id;
         
         public LoginUser(JSONObject json) throws JSONException {
             id = json.getString("id");

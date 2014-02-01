@@ -37,14 +37,16 @@ public class Contact implements BaseUser {
     private final int family;
     private final int ignored;
     private final Avatar avatar;
+    private final String realname;
 
     Contact(JSONObject json) throws JSONException {
         id = json.getString("nsid");
         username = json.getString("username");
+        realname = json.optString("realname", null);
         location = json.optString("location", null);
-        friend = json.getInt("friend");
-        family = json.getInt("family");
-        ignored = json.getInt("ignored");
+        friend = json.optInt("friend", 0);
+        family = json.optInt("family", 0);
+        ignored = json.optInt("ignored", 0);
         avatar = new Avatar(json, id);
     }
 
@@ -85,7 +87,7 @@ public class Contact implements BaseUser {
 
     @Override
     public String getRealName() {
-        return username;
+        return realname;
     }
 
     @Override

@@ -21,7 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 

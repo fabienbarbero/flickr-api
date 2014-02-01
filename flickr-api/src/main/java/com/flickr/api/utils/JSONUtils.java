@@ -39,6 +39,9 @@ public class JSONUtils {
      * @return The date.
      */
     public static Date dateFromString(String s) {
+        if(s == null) {
+            return null;
+        }
         try {
             if (s.matches(DATE_REGEX)) {
                 return DATE_FORMAT.parse(s);
@@ -69,7 +72,11 @@ public class JSONUtils {
      * @throws JSONException Parsing error.
      */
     public static String getContent(JSONObject json, String key) throws JSONException {
-        return json.getJSONObject(key).getString("_content");
+        String value = json.getJSONObject(key).getString("_content");
+        if("null".equals(value)) {
+            return null;
+        }
+        return value;
     }
 
     public static int getIntegerContent(JSONObject json, String key) throws JSONException {

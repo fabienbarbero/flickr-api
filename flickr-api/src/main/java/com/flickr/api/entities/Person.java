@@ -51,10 +51,12 @@ public class Person implements BaseUser {
         return favedate;
     }
 
+    @Override
     public String getRealName() {
         return username;
     }
 
+    @Override
     public String getUserName() {
         return username;
     }

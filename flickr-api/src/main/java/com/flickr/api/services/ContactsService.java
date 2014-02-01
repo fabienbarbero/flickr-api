@@ -52,6 +52,7 @@ public final class ContactsService extends FlickrService {
         CommandArguments args = new CommandArguments("flickr.contacts.getPublicList", false);
         args.put("per_page", perPage);
         args.put("page", page);
+        args.put("user_id", user.getId());
         return doGet(args, PaginatedContactsResponse.class).getContacts();
     }
 }
