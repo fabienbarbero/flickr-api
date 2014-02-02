@@ -38,6 +38,11 @@ public class ExifInfosResponse extends ServerResponse {
         infos = new ExifInfos(json.getJSONObject("photo"));
     }
 
+    /**
+     * Get the exif infos
+     *
+     * @return The infos
+     */
     public ExifInfos getExifInfos() {
         return infos;
     }

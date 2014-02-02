@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Represents a user contact
  *
  * @author Fabien Barbero
  */
@@ -52,6 +53,7 @@ public class Contact implements BaseUser {
 
     /**
      * Get the contact avatar
+     *
      * @return The avatar
      */
     public Avatar getAvatar() {
@@ -97,12 +99,13 @@ public class Contact implements BaseUser {
 
     /**
      * Get the location of the contact
+     *
      * @return The location or null
      */
     public String getLocation() {
         return location;
     }
-    
+
     @Override
     public String getId() {
         return id;

@@ -39,10 +39,20 @@ public class PhotoStats implements Serializable {
         photo = new Photo(json);
     }
 
+    /**
+     * Get the statistics
+     *
+     * @return The statistics
+     */
     public Stats getStats() {
         return stats;
     }
 
+    /**
+     * Get the photo
+     *
+     * @return The photo
+     */
     public Photo getPhoto() {
         return photo;
     }

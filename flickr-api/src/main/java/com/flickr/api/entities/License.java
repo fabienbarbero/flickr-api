@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
 public class License implements IdObject {
 
@@ -40,10 +40,20 @@ public class License implements IdObject {
         url = json.getString("url");
     }
 
+    /**
+     * Get the license URL
+     *
+     * @return The URL
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Get the license name
+     *
+     * @return The license name
+     */
     public String getName() {
         return name;
     }

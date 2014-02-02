@@ -21,7 +21,9 @@
  */
 package com.flickr.api.entities;
 
+import com.flickr.api.ServerResponse;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,23 +33,40 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-class PaginatedPhotoStats extends Paginated<PhotoStats> {
+public abstract class PaginatedResponse<T> extends ServerResponse {
 
-    private final ArrayList<PhotoStats> stats;
-
-    public PaginatedPhotoStats(JSONObject json) throws JSONException {
-        super(json);
-
-        JSONArray array = json.getJSONArray("photo");
-        stats = new ArrayList<PhotoStats>();
-        for (int i = 0; i < array.length(); i++) {
-            stats.add(new PhotoStats(array.getJSONObject(i)));
-        }
-    }
+    private Paginated<T> value;
 
     @Override
-    public List<PhotoStats> asList() {
-        return stats;
+    protected final void readObject(JSONObject json) throws JSONException {
+        List<T> values = new ArrayList<T>();
+
+        JSONObject parent = find(json, JSONObject.class);
+        JSONArray array = find(parent, JSONArray.class);
+        if (array != null) {
+            for (int i = 0; i < array.length(); i++) {
+                values.add(unmarshall(array.getJSONObject(i)));
+            }
+        }
+
+        value = new Paginated<T>(parent, values);
+    }
+
+    private <T> T find(JSONObject json, Class<T> clazz) throws JSONException {
+        Iterator<String> it = json.keys();
+        while (it.hasNext()) {
+            Object obj = json.get(it.next());
+            if (clazz.isInstance(obj)) {
+                return (T) obj;
+            }
+        }
+        return null;
+    }
+
+    protected abstract T unmarshall(JSONObject json) throws JSONException;
+
+    public final Paginated<T> getPaginated() {
+        return value;
     }
 
 }

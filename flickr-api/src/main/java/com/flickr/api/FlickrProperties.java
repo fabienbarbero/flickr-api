@@ -32,9 +32,9 @@ import java.util.Properties;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
-public class FlickrProperties {
+class FlickrProperties {
 
     private final Properties props;
     private final File file;

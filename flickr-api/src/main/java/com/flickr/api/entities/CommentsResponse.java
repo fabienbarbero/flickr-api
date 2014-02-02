@@ -21,35 +21,18 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.ServerResponse;
-import java.util.ArrayList;
-import java.util.List;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
-public class CommentsResponse extends ServerResponse {
-
-    private List<Comment> comments;
+public class CommentsResponse extends ListResponse<Comment> {
 
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        comments = new ArrayList<Comment>();
-
-        JSONObject commentsObj = json.getJSONObject("comments");
-        if (commentsObj.has("comment")) {
-            JSONArray array = commentsObj.getJSONArray("comment");
-            for (int i = 0; i < array.length(); i++) {
-                comments.add(new Comment(array.getJSONObject(i)));
-            }
-        }
+    protected Comment unmarshall(JSONObject json) throws JSONException {
+        return new Comment(json);
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
 }

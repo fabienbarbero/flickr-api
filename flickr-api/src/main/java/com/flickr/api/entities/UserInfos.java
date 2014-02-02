@@ -21,7 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import java.io.Serializable;
 import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +38,7 @@ public class UserInfos implements BaseUser {
     private final int isPro;
     private final String description;
     private final String userName;
+    private String location;
     private String realName;
     private final URL photosUrl;
     private final URL profileUrl;
@@ -53,6 +53,9 @@ public class UserInfos implements BaseUser {
         if (json.has("realname")) {
             realName = JSONUtils.getContent(json, "realname");
         }
+        if (json.has("location")) {
+            location = JSONUtils.getContent(json, "location");
+        }
         photosUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "photosurl"));
         profileUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "profileurl"));
         photosInfo = new UserPhotosInfo(json.getJSONObject("photos"));
@@ -64,8 +67,22 @@ public class UserInfos implements BaseUser {
         return id;
     }
 
+    /**
+     * Get the user avatar
+     *
+     * @return The avatar
+     */
     public Avatar getAvatar() {
         return avatar;
+    }
+
+    /**
+     * Get the user location
+     *
+     * @return The location or null
+     */
+    public String getLocation() {
+        return location;
     }
 
     /**

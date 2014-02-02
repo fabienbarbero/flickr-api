@@ -21,9 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,27 +28,11 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PaginatedPhotos extends Paginated<Photo> {
-    
-    private List<Photo> photos;
-    
-    public PaginatedPhotos(JSONObject json) throws JSONException {
-        super(json);
-        
-        JSONArray array = json.getJSONArray("photo");
-        photos = new ArrayList<Photo>();
-        for(int i=0; i<array.length(); i++) {
-            photos.add(new Photo(array.getJSONObject(i)));
-        }
-    }
-    
-    /**
-     * Get the photos.
-     * @return The photos.
-     */
-    @Override
-    public List<Photo> asList() {
-        return photos;
-    }
+public class PhotosResponse extends PaginatedResponse<Photo> {
 
+    @Override
+    protected Photo unmarshall(JSONObject json) throws JSONException {
+        return new Photo(json);
+    }
+    
 }

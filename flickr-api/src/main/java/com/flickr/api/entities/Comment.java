@@ -44,14 +44,29 @@ public class Comment implements IdObject {
         value = json.getString("_content");
     }
 
+    /**
+     * Get the user who set the comment
+     *
+     * @return The commentator
+     */
     public Commentator getCommentator() {
         return commentator;
     }
 
+    /**
+     * Get the comment creation date
+     *
+     * @return The creation date
+     */
     public Date getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Get the comment text
+     *
+     * @return The text
+     */
     public String getValue() {
         return value;
     }

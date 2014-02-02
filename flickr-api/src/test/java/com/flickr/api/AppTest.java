@@ -2,6 +2,8 @@ package com.flickr.api;
 
 import com.flickr.api.entities.Contact;
 import com.flickr.api.entities.ExifInfos;
+import com.flickr.api.entities.Group;
+import com.flickr.api.entities.GroupInfos;
 import com.flickr.api.entities.License;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
@@ -15,6 +17,9 @@ import com.flickr.api.entities.TotalViews;
 import com.flickr.api.entities.User;
 import com.flickr.api.entities.UserInfos;
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.junit.Test;
@@ -90,7 +95,7 @@ public class AppTest {
             // Photoset
             Paginated<Photoset> sets = flickr.getPhotosetsService().getPhotosets(caller, 10, 0);
             assertFalse(sets.isEmpty());
-            Photoset set = sets.get(0);
+            Photoset set = sets.get(1);
             assertNotNull(set.getId());
             assertNotNull(set.getDescription());
             assertNotNull(set.getTitle());
@@ -134,7 +139,7 @@ public class AppTest {
             assertNotNull(photoInfos.getVisibility());
             assertTrue(photoInfos.getViews() > 0);
 
-            PhotoPermissions access = flickr.getPhotosService().getPermission(photo);
+            PhotoPermissions access = flickr.getPhotosService().getPermissions(photo);
             assertNotNull(access);
 
             photos = flickr.getPhotosService().getRecent(10, 1);
@@ -168,9 +173,39 @@ public class AppTest {
             assertNotNull(photoStats.get(0).getPhoto());
             assertNotNull(photoStats.get(0).getStats());
 
+            // Groups
+            Paginated<Group> groups = flickr.getGroupsService().getGroups(500, 1);
+            assertFalse(groups.isEmpty());
+            Group group = groups.get(0);
+            assertNotNull(group.getName());
+            assertTrue(group.getPhotos() > 0);
+//            assertTrue(isAccessible(group.getCover()));
+
+            GroupInfos groupInfos = flickr.getGroupsService().getGroupInfos(group);
+            assertNotNull(groupInfos);
+            assertNotNull(groupInfos.getDescription());
+            assertNotNull(groupInfos.getName());
+            assertNotNull(groupInfos.getRules());
+            assertTrue(groupInfos.getMembers() > 0);
+            
+            photos = flickr.getGroupsService().getGroupPhotos(group, 50, 1);
+            assertFalse(photos.isEmpty());
+
         } catch (Exception ex) {
             ex.printStackTrace();
             fail(ex.getMessage());
+        }
+    }
+
+    private boolean isAccessible(URL url) throws IOException {
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+            conn.connect();
+            return conn.getResponseCode() == 200;
+
+        } finally {
+            conn.disconnect();
         }
     }
 }

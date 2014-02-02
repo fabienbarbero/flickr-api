@@ -28,6 +28,7 @@ import com.flickr.api.utils.JSONUtils;
 import java.io.Serializable;
 
 /**
+ * Represents the dates of the photo
  *
  * @author Fabien Barbero
  */
@@ -54,10 +55,20 @@ public class PhotoDates implements Serializable {
         return lastupdate;
     }
 
+    /**
+     * Get the date when the photo has been posted
+     *
+     * @return The post date
+     */
     public Date getPostedDate() {
         return posted;
     }
 
+    /**
+     * Get the date when the photo has been taken
+     *
+     * @return The taken date
+     */
     public Date getTakenDate() {
         return taken;
     }

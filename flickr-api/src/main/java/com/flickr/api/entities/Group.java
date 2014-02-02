@@ -1,16 +1,16 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
+ * Copyright (C) 2014 Fabien Barbero
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
+ * in the Software without restriction, including without limitation the rights 
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,36 +21,57 @@
  */
 package com.flickr.api.entities;
 
+import com.flickr.api.utils.URLUtils;
+import java.net.URL;
+import java.text.MessageFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Represents a tag on a photo
  *
  * @author Fabien Barbero
  */
-public class PhotoTag implements IdObject {
+public class Group implements IdObject {
 
     private final String id;
-    private final String author;
-    private final String raw;
-    // FIXME
-    private final String tag;
+    private final String name;
+    private final int photos;
+    private final URL cover;
 
-    PhotoTag(JSONObject json) throws JSONException {
-        id = json.getString("id");
-        author = json.getString("author");
-        raw = json.getString("raw");
-        tag = json.getString("_content");
+    Group(JSONObject json) throws JSONException {
+        id = json.getString("nsid");
+        name = json.getString("name");
+        photos = json.getInt("photos");
+
+        cover = URLUtils.fromString(MessageFormat.format("http://farm{0}.staticflickr.com/{1}/coverphoto/{2}_s.jpg",
+                json.getString("iconfarm"), json.getString("iconserver"), id));
     }
 
     /**
-     * Get the author (user) identifier
+     * Get the group primary image
      *
-     * @return The author
+     * @return The group image
      */
-    public String getAuthorId() {
-        return author;
+    public URL getCover() {
+        return cover;
+    }
+
+    /**
+     * Get the photos count in the group
+     *
+     * @return The photos count
+     */
+    public int getPhotos() {
+        return photos;
+    }
+
+    /**
+     * Get the group name
+     *
+     * @return the group name
+     */
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -58,26 +79,4 @@ public class PhotoTag implements IdObject {
         return id;
     }
 
-    /**
-     * Get the "raw" value of the tag
-     *
-     * @return The raw value
-     */
-    public String getRaw() {
-        return raw;
-    }
-
-    /**
-     * Get the readable value of the tag
-     *
-     * @return The tag value
-     */
-    public String getTag() {
-        return tag;
-    }
-
-    @Override
-    public String toString() {
-        return raw;
-    }
 }

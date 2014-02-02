@@ -25,6 +25,7 @@ import com.flickr.api.services.AuthenticationService;
 import com.flickr.api.services.ContactsService;
 import com.flickr.api.entities.UserInfos;
 import com.flickr.api.services.FavoritesService;
+import com.flickr.api.services.GroupsService;
 import com.flickr.api.services.PeopleService;
 import com.flickr.api.services.PhotosService;
 import com.flickr.api.services.PhotosetsService;
@@ -67,6 +68,7 @@ public final class Flickr {
     private final AuthenticationService authenticationService;
     private final FavoritesService favoritesService;
     private final StatsService statsService;
+    private final GroupsService groupsService;
     private final DefaultHttpClient client;
 
     /**
@@ -75,8 +77,7 @@ public final class Flickr {
      * @param apiKey The flickr API key
      * @param apiSecret The flickr API secret
      * @param configurationFile The configuration file used to store the OAuth
-     * @param permission The permission to use (read, write or delete)
-     * data. At the beginning, this file
+     * @param permission The permission to use (read, write or delete) data. At the beginning, this file
      * <b>must</b> not exists.
      */
     public Flickr(String apiKey, String apiSecret, String permission, File configurationFile) {
@@ -96,6 +97,7 @@ public final class Flickr {
         favoritesService = new FavoritesService(oauthHandler, client);
         authenticationService = new AuthenticationService(oauthHandler, client, peoplesService);
         statsService = new StatsService(oauthHandler, client);
+        groupsService = new GroupsService(oauthHandler, client);
     }
 
     /**
@@ -110,8 +112,8 @@ public final class Flickr {
     /**
      * Get the authorization URL used to allow the access to the application
      *
-     * @param callbackUrl The callback URL where the user will be redirected
-     * when he will grant the access of the application (see {@link Flickr#verifyToken(java.lang.String)
+     * @param callbackUrl The callback URL where the user will be redirected when he will grant the access of the
+     * application (see {@link Flickr#verifyToken(java.lang.String)
      * }).
      *
      * @return The authorization URL to open in the browser
@@ -204,6 +206,15 @@ public final class Flickr {
      */
     public StatsService getStatsService() {
         return statsService;
+    }
+
+    /**
+     * Get the groups service
+     *
+     * @return The service
+     */
+    public GroupsService getGroupsService() {
+        return groupsService;
     }
 
     /**

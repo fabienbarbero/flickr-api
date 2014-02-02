@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Contains the location informations of a photo
  *
  * @author Fabien Barbero
  */
@@ -64,26 +65,56 @@ public class PhotoLocation implements Serializable {
         context = json.getInt("context");
     }
 
+    /**
+     * Get the country where the photo has been taken
+     *
+     * @return The country
+     */
     public String getCountry() {
         return country;
     }
 
+    /**
+     * Get the county where the photo has been taken
+     *
+     * @return The county
+     */
     public String getCounty() {
         return county;
     }
 
+    /**
+     * Get the city where the photo has been taken
+     *
+     * @return The city
+     */
     public String getLocality() {
         return locality;
     }
 
+    /**
+     * Get the region where the photo has been taken
+     *
+     * @return The region
+     */
     public String getRegion() {
         return region;
     }
 
+    /**
+     * Get GPS latitude
+     *
+     * @return The latitude
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Get the GPS longitude
+     *
+     * @return The longitude
+     */
     public double getLongitude() {
         return longitude;
     }

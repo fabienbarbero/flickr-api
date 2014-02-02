@@ -26,10 +26,8 @@ import com.flickr.api.FlickrService;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoStats;
 import com.flickr.api.entities.PhotoStatsResponse;
-import com.flickr.api.entities.Stats;
 import com.flickr.api.entities.TotalViews;
 import com.flickr.api.entities.TotalViewsResponse;
 import java.text.DateFormat;
@@ -42,29 +40,45 @@ import org.apache.http.client.HttpClient;
  * @author Fabien Barbero
  */
 public class StatsService extends FlickrService {
-    
+
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public StatsService(OAuthHandler oauthHandler, HttpClient client) {
         super(oauthHandler, client);
     }
 
-    public Paginated<PhotoStats> getPopularPhotos(Date startDate, int perPage, int page) throws FlickrServiceException {
+    /**
+     * List the photos with the most views, comments or favorites
+     *
+     * @param date Stats will be returned for this date
+     * @param perPage Number of referrers to return per page. The maximum allowed value is 100.
+     * @param page The page of results to return
+     * @return The stats
+     * @throws FlickrServiceException Error getting the stats
+     */
+    public Paginated<PhotoStats> getPopularPhotos(Date date, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos", true);
         args.put("per_page", perPage);
         args.put("page", page);
-        if(startDate != null) {
-            args.put("date", DATE_FORMAT.format(startDate));
+        if (date != null) {
+            args.put("date", DATE_FORMAT.format(date));
         }
-        return doGet(args, PhotoStatsResponse.class).getPhotoStats();
+        return doGet(args, PhotoStatsResponse.class).getPaginated();
     }
-    
-    public TotalViews getTotalViews(Date startDate) throws FlickrServiceException {
+
+    /**
+     * Get the overall view counts for an account
+     *
+     * @param date Stats will be returned for this date
+     * @return The views
+     * @throws FlickrServiceException
+     */
+    public TotalViews getTotalViews(Date date) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.stats.getTotalViews", true);
-        if(startDate != null) {
-            args.put("date", DATE_FORMAT.format(startDate));
+        if (date != null) {
+            args.put("date", DATE_FORMAT.format(date));
         }
         return doGet(args, TotalViewsResponse.class).getViews();
     }
-    
+
 }

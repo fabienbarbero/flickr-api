@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Represents the informations of a photoset
  *
  * @author Fabien Barbero
  */
@@ -52,30 +53,65 @@ public class PhotosetInfos implements IdObject {
         owner = json.getString("owner");
     }
 
+    /**
+     * Get the last update date of the set
+     *
+     * @return The last update
+     */
     public Date getUpdateDate() {
         return updateDate;
     }
 
+    /**
+     * Get the views count of the ser
+     *
+     * @return The views count
+     */
     public int getViewsCount() {
         return viewsCount;
     }
 
+    /**
+     * Indicates if comments can be added to the set
+     *
+     * @return true if comments can be added, false otherwise
+     */
     public boolean canComment() {
         return canComment;
     }
 
+    /**
+     * Get the owner (user) identifier
+     *
+     * @return The owner
+     */
     public String getOwnerId() {
         return owner;
     }
 
+    /**
+     * Get the set description
+     *
+     * @return The description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Get the set creation date
+     *
+     * @return The creation date
+     */
     public Date getCreateDate() {
         return createDate;
     }
 
+    /**
+     * Get the comments count
+     *
+     * @return The comments count
+     */
     public int getCommentsCount() {
         return commentsCount;
     }

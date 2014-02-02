@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Represents an exif entry for a photo
  *
  * @author Fabien Barbero
  */
@@ -133,18 +134,38 @@ public class ExifEntry implements Serializable {
         }
     }
 
+    /**
+     * Get the "human readable" value of the entry
+     *
+     * @return The value or null
+     */
     public String getClean() {
         return clean;
     }
 
+    /**
+     * Get the exif label
+     *
+     * @return the label
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * Get the "raw" value of the entry
+     *
+     * @return The raw value
+     */
     public String getRaw() {
         return raw;
     }
 
+    /**
+     * Get the exif tag (see the contants TAG_*)
+     *
+     * @return The tag
+     */
     public String getTag() {
         return tag;
     }
@@ -156,5 +177,5 @@ public class ExifEntry implements Serializable {
         }
         return raw;
     }
-    
+
 }

@@ -27,11 +27,12 @@ import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.PaginatedContactsResponse;
+import com.flickr.api.entities.ContactsResponse;
 import com.flickr.api.FlickrService;
 import org.apache.http.client.HttpClient;
 
 /**
+ * Service used to get the contacts informations.
  *
  * @author Fabien Barbero
  */
@@ -41,18 +42,35 @@ public final class ContactsService extends FlickrService {
         super(oauthHandler, client);
     }
 
+    /**
+     * Get a list of contacts for the calling user
+     *
+     * @param perPage Number of photos to return per page. The maximum allowed value is 1000
+     * @param page The page of results to return
+     * @return The contacts
+     * @throws FlickrServiceException Error getting the contacts
+     */
     public Paginated<Contact> getContacts(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getList", true);
         args.put("per_page", perPage);
         args.put("page", page);
-        return doGet(args, PaginatedContactsResponse.class).getContacts();
+        return doGet(args, ContactsResponse.class).getPaginated();
     }
 
+    /**
+     * Get the contact list for a user
+     *
+     * @param user The user to fetch the contact list for
+     * @param perPage Number of photos to return per page. The maximum allowed value is 1000
+     * @param page The page of results to return
+     * @return The contacts
+     * @throws FlickrServiceException Error getting the contacts
+     */
     public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getPublicList", false);
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("user_id", user.getId());
-        return doGet(args, PaginatedContactsResponse.class).getContacts();
+        return doGet(args, ContactsResponse.class).getPaginated();
     }
 }

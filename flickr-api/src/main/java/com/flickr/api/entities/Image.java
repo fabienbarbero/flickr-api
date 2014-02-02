@@ -27,8 +27,6 @@ import java.text.MessageFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.flickr.api.utils.URLUtils;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * This class represents an URL of an image as described in the Flickr API. see
@@ -74,9 +72,13 @@ public class Image implements Serializable {
      */
     public static final String ORIGINAL = "0";
     private final String prefix;
-    
+
+    Image(String prefix) {
+        this.prefix = prefix;
+    }
+
     Image(String farm, String server, String primary, String secret) {
-        prefix = MessageFormat.format("http://farm{0}.static.flickr.com/{1}/{2}_{3}_", farm, server, primary, secret);
+        prefix = MessageFormat.format("http://farm{0}.staticflickr.com/{1}/{2}_{3}_", farm, server, primary, secret);
     }
 
     Image(JSONObject json) throws JSONException {
@@ -92,7 +94,7 @@ public class Image implements Serializable {
                 id,
                 json.getString("secret"));
     }
-    
+
     /**
      * Get the image URL with the given size
      *
@@ -103,7 +105,4 @@ public class Image implements Serializable {
         return URLUtils.fromString(prefix + size + ".jpg");
     }
 
-    public InputStream openStream(String size) throws IOException {
-        return getURL(size).openStream();
-    }
 }

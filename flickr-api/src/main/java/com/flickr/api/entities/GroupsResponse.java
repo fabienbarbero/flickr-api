@@ -1,16 +1,16 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
+ * Copyright (C) 2014 Fabien Barbero
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
+ * in the Software without restriction, including without limitation the rights 
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.ServerResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,16 +28,11 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PaginatedContactsResponse extends ServerResponse {
-
-    private PaginatedContacts contacts;
+public class GroupsResponse extends PaginatedResponse<Group> {
 
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        contacts = new PaginatedContacts(json.getJSONObject("contacts"));
+    protected Group unmarshall(JSONObject json) throws JSONException {
+        return new Group(json);
     }
 
-    public Paginated<Contact> getContacts() {
-        return contacts;
-    }
 }

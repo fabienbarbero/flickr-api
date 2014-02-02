@@ -23,11 +23,11 @@ import com.flickr.api.utils.JSONUtils;
 import java.util.Date;
 
 /**
- * 
+ *
  * @author Fabien Barbero
  */
-public class Photoset implements IdObject
-{
+public class Photoset implements IdObject {
+
     private static final long serialVersionUID = 545748673399L;
 
     private final String id;
@@ -43,8 +43,7 @@ public class Photoset implements IdObject
     private final Date updateDate;
 
     Photoset(JSONObject json)
-        throws JSONException
-    {
+            throws JSONException {
         id = json.getString("id");
         photos = json.getInt("photos");
         owner = json.optString("owner");
@@ -59,80 +58,93 @@ public class Photoset implements IdObject
     }
 
     @Override
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
+    /**
+     * Indicates if comments can be added to the set
+     *
+     * @return true if comments can be added, false otherwise
+     */
     public boolean canComment() {
         return canComment;
     }
 
+    /**
+     * Get the comments count
+     *
+     * @return The comments count
+     */
     public int getCommentCount() {
         return commentCount;
     }
 
+    /**
+     * Get the set creation date
+     *
+     * @return The creation date
+     */
     public Date getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Get the last set update date
+     *
+     * @return The last update date
+     */
     public Date getUpdateDate() {
         return updateDate;
     }
-    
+
     /**
      * Get the number of photos in the set.
-     * 
+     *
      * @return The number of photos.
      */
-    public int getPhotosCount()
-    {
+    public int getPhotosCount() {
         return photos;
     }
 
     /**
      * Get the title of the set.
-     * 
+     *
      * @return The title.
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
     /**
      * Get the description of the set.
-     * 
+     *
      * @return The description.
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
     /**
      * Get the number of views of the set.
-     * 
+     *
      * @return The number of views.
      */
-    public int getCountViews()
-    {
+    public int getCountViews() {
         return countViews;
     }
 
     /**
      * Get the primary photo.
-     * 
+     *
      * @return The primary photo.
      */
-    public Image getPrimaryPhoto()
-    {
+    public Image getPrimaryPhoto() {
         return primaryPhoto;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return title;
     }
 }

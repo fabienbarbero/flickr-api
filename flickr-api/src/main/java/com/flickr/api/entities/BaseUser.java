@@ -21,12 +21,25 @@
  */
 package com.flickr.api.entities;
 
+/**
+ * Represents a user. It can be a contact, someone on a photo, the calling user ...
+ *
+ * @author Fabien Barbero
+ */
+public interface BaseUser extends IdObject {
 
-public interface BaseUser extends IdObject
-{
-    
+    /**
+     * Get the real name of the user
+     *
+     * @return The real name
+     */
     String getRealName();
-    
+
+    /**
+     * Get the user name
+     *
+     * @return The user name
+     */
     String getUserName();
 
 }

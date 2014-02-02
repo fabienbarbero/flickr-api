@@ -62,6 +62,11 @@ public class UserPhotosInfo implements Serializable {
         return firstDate;
     }
 
+    /**
+     * Get the date when the user has taken his first photo
+     *
+     * @return The first taken date
+     */
     public Date getFirstDateTaken() {
         return firstDateTaken;
     }

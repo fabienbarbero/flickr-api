@@ -28,11 +28,12 @@ import java.io.Serializable;
  * @author Fabien Barbero
  */
 public interface IdObject extends Serializable {
-    
+
     /**
      * Get the identifier.
+     *
      * @return The identifier.
      */
     String getId();
-    
+
 }

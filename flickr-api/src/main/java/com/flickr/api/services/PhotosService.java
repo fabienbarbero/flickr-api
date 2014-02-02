@@ -34,7 +34,7 @@ import com.flickr.api.entities.ExifInfosResponse;
 import com.flickr.api.entities.License;
 import com.flickr.api.entities.LicensesResponse;
 import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.PaginatedPhotosResponse;
+import com.flickr.api.entities.PhotosResponse;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoPermissions;
 import com.flickr.api.entities.PhotoInfos;
@@ -44,36 +44,70 @@ import com.flickr.api.entities.PhotoSizesResponse;
 import org.apache.http.client.HttpClient;
 
 /**
+ * Service used to access the photos.
  *
  * @author Fabien Barbero
  */
 public class PhotosService extends FlickrService {
 
-
     public PhotosService(OAuthHandler oauthHandler, HttpClient client) {
         super(oauthHandler, client);
     }
 
+    /**
+     * Fetch a list of recent photos from the calling users' contacts.
+     *
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getContactsPhotos() throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos", true);
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
+    /**
+     * Fetch a list of recent photos from the calling users' contacts.
+     *
+     * @param count Number of photos to return
+     * @param justFriends To only show photos from friends and family (excluding regular contacts).
+     * @param singlePhoto Only fetch one photo (the latest) per contact, instead of all photos in chronological order.
+     * @param includeSelf To include photos from the user specified by user_id.
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getContactsPhotos(int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos", true);
         args.put("count", count);
         args.put("just_friends", justFriends);
         args.put("single_photo", singlePhoto);
         args.put("include_self", includeSelf);
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
+    /**
+     * Fetch a list of recent public photos from a users' contacts.
+     *
+     * @param user The user to fetch photos for
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getContactsPublicPhotos(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos", false);
         args.put("user_id", user.getId());
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
+    /**
+     * Fetch a list of recent public photos from a users' contacts.
+     *
+     * @param user The user to fetch photos for
+     * @param count Number of photos to return
+     * @param justFriends To only show photos from friends and family (excluding regular contacts).
+     * @param singlePhoto Only fetch one photo (the latest) per contact, instead of all photos in chronological order.
+     * @param includeSelf To include photos from the user specified by user_id.
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getContactsPublicPhotos(BaseUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos", false);
         args.put("user_id", user.getId());
@@ -81,61 +115,121 @@ public class PhotosService extends FlickrService {
         args.put("just_friends", justFriends);
         args.put("single_photo", singlePhoto);
         args.put("include_self", includeSelf);
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
+    /**
+     * Get information about a photo. The calling user must have permission to view the photo.
+     *
+     * @param photo The photo
+     * @return The photo informations
+     * @throws FlickrServiceException Error getting the informations
+     */
     public PhotoInfos getInfos(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getInfo", false);
         args.put("photo_id", photo.getId());
         return doGet(args, PhotoInfosResponse.class).getInfos();
     }
 
-    public PhotoPermissions getPermission(Photo photo) throws FlickrServiceException {
+    /**
+     * Get permissions for a photo.
+     *
+     * @param photo The photo
+     * @return The photo permissions
+     * @throws FlickrServiceException Error getting the permissions
+     */
+    public PhotoPermissions getPermissions(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getPerms", true);
         args.put("photo_id", photo.getId());
         return doGet(args, PhotoPermissions.class);
     }
 
+    /**
+     * Returns a list of the latest public photos uploaded to flickr.
+     *
+     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The recent photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getRecent(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getRecent", false);
         args.put("per_page", perPage);
         args.put("page", page);
-        Paginated<Photo> photos = doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        Paginated<Photo> photos = doGet(args, PhotosResponse.class).getPaginated();
         return photos;
     }
 
+    /**
+     * Returns the available sizes for a photo. The calling user must have permission to view the photo.
+     *
+     * @param photo The photo
+     * @return The photo sizes
+     * @throws FlickrServiceException Error getting the sizes
+     */
     public List<PhotoSize> getSizes(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getSizes", false);
         args.put("photo_id", photo.getId());
-        List<PhotoSize> sizes = doGet(args, PhotoSizesResponse.class).getSizes();
+        List<PhotoSize> sizes = doGet(args, PhotoSizesResponse.class).getList();
         return sizes;
     }
-    
+
+    /**
+     * Return a list of your photos that have been recently created or which have been recently modified. Recently
+     * modified may mean that the photo's metadata (title, description, tags) may have been changed or a comment has
+     * been added (or just modified somehow :-)
+     *
+     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getRecentlyUpdated(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.recentlyUpdated", true);
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("extras", "date_upload");
         args.put("min_date", "10000");
-        Paginated<Photo> photos = doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        Paginated<Photo> photos = doGet(args, PhotosResponse.class).getPaginated();
         return photos;
     }
-    
+
+    /**
+     * Retrieves a list of EXIF/TIFF/GPS tags for a given photo. The calling user must have permission to view the
+     * photo.
+     *
+     * @param photo The photo
+     * @return The exif informations
+     * @throws FlickrServiceException Error getting the exif informations
+     */
     public ExifInfos getExif(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getExif", false);
         args.put("photo_id", photo.getId());
         return doGet(args, ExifInfosResponse.class).getExifInfos();
     }
-    
+
+    /**
+     * Fetches a list of available photo licenses for Flickr.
+     *
+     * @return The licenses
+     * @throws FlickrServiceException Error getting the licenses
+     */
     public List<License> getLicenses() throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.licenses.getInfo", false);
-        return doGet(args, LicensesResponse.class).getLicenses();
+        return doGet(args, LicensesResponse.class).getList();
     }
-    
+
+    /**
+     * Returns the comments for a photo
+     *
+     * @param photo The photo
+     * @return The comments
+     * @throws FlickrServiceException Error getting the comments
+     */
     public List<Comment> getComments(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.comments.getList", false);
         args.put("photo_id", photo.getId());
-        return doGet(args, CommentsResponse.class).getComments();
+        return doGet(args, CommentsResponse.class).getList();
     }
 
 }

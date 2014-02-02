@@ -30,14 +30,15 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public abstract class Paginated<T> implements Iterable<T> {
+public final class Paginated<T> implements Iterable<T> {
 
     private final int page;
     private final int pages;
     private final int perpage;
     private final int total;
+    private final List<T> content;
 
-    protected Paginated(JSONObject json) throws JSONException {
+    protected Paginated(JSONObject json, List<T> content) throws JSONException {
         page = json.getInt("page");
         pages = json.getInt("pages");
         if (json.has("per_page")) {
@@ -46,6 +47,7 @@ public abstract class Paginated<T> implements Iterable<T> {
             perpage = json.getInt("perpage");
         }
         total = json.getInt("total");
+        this.content = content;
     }
 
     /**
@@ -84,6 +86,11 @@ public abstract class Paginated<T> implements Iterable<T> {
         return total;
     }
 
+    /**
+     * Indicates if the list is empty
+     *
+     * @return true if the list is empty, false otherwise
+     */
     public boolean isEmpty() {
         return total == 0;
     }
@@ -93,14 +100,22 @@ public abstract class Paginated<T> implements Iterable<T> {
      *
      * @return The values.
      */
-    public abstract List<T> asList();
+    public List<T> asList() {
+        return content;
+    }
 
     @Override
     public Iterator<T> iterator() {
-        return asList().iterator();
+        return content.iterator();
     }
 
+    /**
+     * Get a value at a given index
+     *
+     * @param index The index
+     * @return The value
+     */
     public T get(int index) {
-        return asList().get(index);
+        return content.get(index);
     }
 }

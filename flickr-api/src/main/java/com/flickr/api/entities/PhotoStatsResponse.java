@@ -21,7 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.ServerResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,17 +28,11 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoStatsResponse extends ServerResponse {
-
-    private Paginated<PhotoStats> stats;
-
-    public Paginated<PhotoStats> getPhotoStats() {
-        return stats;
-    }
+public class PhotoStatsResponse extends PaginatedResponse<PhotoStats> {
 
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        stats = new PaginatedPhotoStats(json.getJSONObject("photos"));
+    protected PhotoStats unmarshall(JSONObject json) throws JSONException {
+        return new PhotoStats(json);
     }
 
 }

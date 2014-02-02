@@ -21,10 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.ServerResponse;
-import java.util.ArrayList;
-import java.util.List;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,22 +28,11 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PersonsResponse extends ServerResponse {
-    
-//    @XmlElementWrapper(name="photo")
-    private List<Person> persons;
-
-    public List<Person> getPersons() {
-        return persons;
-    }
+public class PersonsResponse extends ListResponse<Person> {
 
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        persons = new ArrayList<Person>();
-        JSONArray array = json.getJSONArray("person");
-        for(int i=0; i<array.length(); i++) {
-            persons.add(new Person(array.getJSONObject(i)));
-        }
+    protected Person unmarshall(JSONObject json) throws JSONException {
+        return new Person(json);
     }
     
 }

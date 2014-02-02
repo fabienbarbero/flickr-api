@@ -43,18 +43,38 @@ public class PhotoUsage implements Serializable {
         canShare = json.getInt("canshare");
     }
 
+    /**
+     * Indicates if the photo can be added to a blog
+     *
+     * @return true if the photo can be added to a blog, false otherwise
+     */
     public boolean canBlog() {
         return canBlog == 1;
     }
 
+    /**
+     * Indicates if the photo can be downloaded
+     *
+     * @return true if the photo can be downloaded, false otherwise
+     */
     public boolean canDownload() {
         return canDownload == 1;
     }
 
+    /**
+     * Indicates if the photo can be printed
+     *
+     * @return true if the photo can be printed, false otherwise
+     */
     public boolean canPrint() {
         return canPrint == 1;
     }
 
+    /**
+     * Indicates if the photo can be shared
+     *
+     * @return true if the photo can be shared, false otherwise
+     */
     public boolean canShare() {
         return canShare == 1;
     }

@@ -59,14 +59,29 @@ public class TotalViews implements Serializable {
         return photoStream;
     }
 
+    /**
+     * Get the photos views count
+     *
+     * @return The count
+     */
     public int getPhotosViews() {
         return photos;
     }
 
+    /**
+     * Get the photoset views count
+     *
+     * @return The count
+     */
     public int getPhotosetsViews() {
         return photosets;
     }
 
+    /**
+     * Get the total views count
+     *
+     * @return The count
+     */
     public int getTotalViews() {
         return total;
     }

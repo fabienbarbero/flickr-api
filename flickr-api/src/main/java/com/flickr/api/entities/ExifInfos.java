@@ -29,8 +29,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- *
- * @author fabien
+ * Represents the exif informations of a photo
+ * 
+ * @author Fabien Barbero
  */
 public class ExifInfos implements Serializable {
 
@@ -46,14 +47,30 @@ public class ExifInfos implements Serializable {
         }
     }
 
+    /**
+     * Get the camera name
+     *
+     * @return The camera name
+     */
     public String getCamera() {
         return camera;
     }
 
+    /**
+     * Get the exif entries
+     *
+     * @return The entries
+     */
     public List<ExifEntry> getEntries() {
         return entries;
     }
 
+    /**
+     * Get a exif entry
+     *
+     * @param tag The exif tag (see ExifEntry.TAG_*)
+     * @return The entry or null if not present
+     */
     public ExifEntry getEntry(String tag) {
         for (ExifEntry entry : entries) {
             if (entry.getTag().equals(tag)) {

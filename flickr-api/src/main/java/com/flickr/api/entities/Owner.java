@@ -34,18 +34,30 @@ public class Owner implements BaseUser {
     private final String username;
     private final String realname;
     private final String location;
-    private final String iconserver;
-    private final String iconfarm;
+    private final Avatar avatar;
 
     Owner(JSONObject json) throws JSONException {
         id = json.getString("nsid");
         username = json.getString("username");
         realname = json.getString("realname");
         location = json.getString("location");
-        iconserver = json.getString("iconserver");
-        iconfarm = json.getString("iconfarm");
+        avatar = new Avatar(json, id);
     }
 
+    /**
+     * Get the user avatar
+     *
+     * @return The avatar
+     */
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * Get the user location
+     *
+     * @return The location
+     */
     public String getLocation() {
         return location;
     }

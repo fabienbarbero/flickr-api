@@ -28,7 +28,6 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.LoginResponse;
 import com.flickr.api.entities.UserInfos;
 import com.flickr.api.FlickrService;
-import com.flickr.api.services.PeopleService;
 import org.apache.http.client.HttpClient;
 
 /**

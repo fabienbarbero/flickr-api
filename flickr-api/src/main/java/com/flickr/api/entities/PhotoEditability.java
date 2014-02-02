@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
 public class PhotoEditability implements Serializable {
 
@@ -39,10 +39,18 @@ public class PhotoEditability implements Serializable {
         canComment = json.getInt("cancomment") == 1;
     }
 
+    /**
+     * Indicates if a meta-data can be added to the photo
+     * @return true if meta-data can be added, false otherwise
+     */
     public boolean canAddMedata() {
         return canAddMedata;
     }
 
+    /**
+     * Indicates if comments can be added to the photo
+     * @return true if comments can be added, false otherwise
+     */
     public boolean canComment() {
         return canComment;
     }

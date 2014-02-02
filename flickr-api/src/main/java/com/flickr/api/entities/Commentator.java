@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Represents a user who write a comment.
  *
  * @author Fabien Barbero
  */
@@ -42,6 +43,11 @@ public class Commentator implements BaseUser {
         avatar = new Avatar(json, id);
     }
 
+    /**
+     * Get the commentator avatar
+     *
+     * @return The avatar
+     */
     public Avatar getAvatar() {
         return avatar;
     }

@@ -26,32 +26,38 @@ package com.flickr.api;
  * @author Fabien Barbero
  */
 public class FlickrServiceException extends Exception {
+
     private static final long serialVersionUID = 1L;
-    
+
     private final FlickrErrorCode errorCode;
-    
+
     public FlickrServiceException(String s, Throwable t, FlickrErrorCode errorCode) {
         super(s, t);
         this.errorCode = errorCode;
     }
-    
+
     public FlickrServiceException(String s, Throwable t) {
         super(s, t);
         errorCode = null;
     }
-    
+
     public FlickrServiceException(String s, FlickrErrorCode errorCode) {
         super(s);
         this.errorCode = errorCode;
     }
-    
+
     public FlickrServiceException(String s) {
         super(s);
         errorCode = null;
     }
 
+    /**
+     * Get the error code
+     *
+     * @return The error code or null
+     */
     public final FlickrErrorCode getErrorCode() {
         return errorCode;
     }
-    
+
 }

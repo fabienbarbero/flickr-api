@@ -21,7 +21,7 @@
  */
 package com.flickr.api.entities;
 
-import java.io.Serializable;
+import com.flickr.api.utils.JSONUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,43 +29,68 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Stats implements Serializable {
+public class GroupInfos implements IdObject {
 
-    private final int views;
-    private final int comments;
-    private final int favorites;
+    private final String name;
+    private final String description;
+    private final String rules;
+    private final int members;
+    private final String blast;
+    private final String id;
 
-    Stats(JSONObject json) throws JSONException {
-        views = json.getInt("views");
-        comments = json.getInt("comments");
-        favorites = json.getInt("favorites");
+    GroupInfos(JSONObject json) throws JSONException {
+        id = json.getString("id");
+        name = JSONUtils.getContent(json, "name");
+        description = JSONUtils.getContent(json, "description");
+        rules = JSONUtils.getContent(json, "rules");
+        members = JSONUtils.getIntegerContent(json, "members");
+        blast = JSONUtils.getContent(json, "blast");
+        // FIXME: add throttle
     }
 
     /**
-     * Get the total views count by other users
+     * Get the group rules
      *
-     * @return the views count
+     * @return The rules
      */
-    public int getViewsCount() {
-        return views;
+    public String getRules() {
+        return rules;
     }
 
     /**
-     * Get the photo count added as favorites by other users
+     * Get the name of the group
      *
-     * @return The favorites count
+     * @return The name
      */
-    public int getFavoritesCount() {
-        return favorites;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Get the comments count added by other users
+     * Get the members count
      *
-     * @return The comments count
+     * @return The members count
      */
-    public int getCommentsCount() {
-        return comments;
+    public int getMembers() {
+        return members;
+    }
+
+    /**
+     * Get the group description
+     *
+     * @return The description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    public String getBlast() {
+        return blast;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
 }

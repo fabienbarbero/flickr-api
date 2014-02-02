@@ -28,7 +28,7 @@ import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.PaginatedPhotosResponse;
+import com.flickr.api.entities.PhotosResponse;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.User;
 import com.flickr.api.entities.UserInfos;
@@ -46,6 +46,13 @@ public class PeopleService extends FlickrService {
         super(oauthHandler, client);
     }
 
+    /**
+     * Find a user by its email address
+     *
+     * @param email The email address of the user to find (may be primary or secondary).
+     * @return The user found or null
+     * @throws FlickrServiceException Eror finding the user
+     */
     public User findByEmail(String email) throws FlickrServiceException {
         try {
             CommandArguments args = new CommandArguments("flickr.people.findByEmail", false);
@@ -60,6 +67,13 @@ public class PeopleService extends FlickrService {
         }
     }
 
+    /**
+     * Find a user by its username
+     *
+     * @param userName The username to search
+     * @return The user found, or null
+     * @throws FlickrServiceException Error getting the user
+     */
     public User findByUserName(String userName) throws FlickrServiceException {
         try {
             CommandArguments args = new CommandArguments("flickr.people.findByUsername", false);
@@ -74,35 +88,70 @@ public class PeopleService extends FlickrService {
         }
     }
 
+    /**
+     * Get the user informations
+     *
+     * @param user The user
+     * @return The user informations
+     * @throws FlickrServiceException Error getting the informations
+     */
     public UserInfos getUserInfo(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getInfo", false);
         args.put("user_id", user.getId());
         return doGet(args, UserInfoResponse.class).getUserInfo();
     }
 
+    /**
+     * Return photos from the given user's photostream. Only photos visible to the calling user will be returned.
+     *
+     * @param user The user
+     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getUserPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotos", false);
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
         args.put("page", page);
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
+    /**
+     * Get a list of public photos for the given user.
+     *
+     * @param user The user
+     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getUserPublicPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPublicPhotos", false);
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
         args.put("page", page);
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
+    /**
+     * Returns a list of photos containing a particular Flickr member.
+     *
+     * @param user The user you want to find photos of
+     * @param owner A Flickr member. This will restrict the list of photos to those taken by that member.
+     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
+     */
     public Paginated<Photo> getUserPhotosOf(BaseUser user, BaseUser owner, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotosOf", false);
         args.put("user_id", user.getId());
         args.put("owner_id", owner.getId());
         args.put("per_page", perPage);
         args.put("page", page);
-        return doGet(args, PaginatedPhotosResponse.class).getPhotos();
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
 }

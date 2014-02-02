@@ -23,23 +23,16 @@ package com.flickr.api.entities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.flickr.api.ServerResponse;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class PhotosetsResponse extends ServerResponse {
-    
-    private Paginated<Photoset> photoset;
-
-    public Paginated<Photoset> getPhotosets() {
-        return photoset;
-    }
+public class PhotosetsResponse extends PaginatedResponse<Photoset> {
 
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        photoset = new PaginatedPhotosets(json.getJSONObject("photosets"));
+    protected Photoset unmarshall(JSONObject json) throws JSONException {
+        return new Photoset(json);
     }
-    
+
 }

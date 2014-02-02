@@ -115,34 +115,74 @@ public class PhotoInfos implements Serializable {
         return owner;
     }
 
+    /**
+     * Get the photo tags
+     *
+     * @return The tags
+     */
     public List<PhotoTag> getTags() {
         return tags;
     }
 
+    /**
+     * Get the editability informations of the photo
+     *
+     * @return The informations
+     */
     public PhotoEditability getEditability() {
         return editability;
     }
 
+    /**
+     * Get the license identifier
+     *
+     * @return The license
+     */
     public String getLicense() {
         return license;
     }
 
+    /**
+     * Get the photo location
+     *
+     * @return The location or null if not present
+     */
     public PhotoLocation getLocation() {
         return location;
     }
 
+    /**
+     * Get the editability informations of the photo
+     *
+     * @return The informations
+     */
     public PhotoEditability getPublicEditability() {
         return publicEditability;
     }
 
+    /**
+     * Get the date when the photo has been uploaded
+     *
+     * @return The upload date
+     */
     public Date getUploadedDate() {
         return uploadedDate;
     }
 
+    /**
+     * Get the views count
+     *
+     * @return The views count
+     */
     public int getViews() {
         return views;
     }
 
+    /**
+     * Indicates if the photo is a favorite
+     *
+     * @return true if the photo is a favorite, false otherwise
+     */
     public boolean isFavorite() {
         return isFavorite;
     }
@@ -156,10 +196,20 @@ public class PhotoInfos implements Serializable {
         return title;
     }
 
+    /**
+     * Get the photo usages
+     *
+     * @return the usages
+     */
     public PhotoUsage getUsage() {
         return usage;
     }
 
+    /**
+     * Get the photo visibility
+     *
+     * @return The visibility
+     */
     public PhotoVisibility getVisibility() {
         return visibility;
     }

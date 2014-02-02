@@ -32,6 +32,9 @@ import org.json.JSONObject;
  */
 public class Avatar implements Serializable {
 
+    /**
+     * The default avatar URL (must be used if a user did not set any avatar).
+     */
     public static final URL DEFAULT_AVATAR = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
 
     /**
@@ -57,9 +60,15 @@ public class Avatar implements Serializable {
         this.userId = userId;
     }
 
+    /**
+     * Get a download URL for an avatar size
+     *
+     * @param size The size to choose
+     * @return The URL
+     */
     public URL getUrl(String size) {
         if (iconServer > 0 && iconFarm != null) {
-            if(size.equals(SMALL_SQUARE)) {
+            if (size.equals(SMALL_SQUARE)) {
                 return URLUtils.fromString("http://farm" + iconFarm + ".staticflickr.com/" + iconServer + "/buddyicons/" + userId + ".jpg");
             } else {
                 return URLUtils.fromString("http://farm" + iconFarm + ".staticflickr.com/" + iconServer + "/buddyicons/" + userId + "_" + size + ".jpg");
