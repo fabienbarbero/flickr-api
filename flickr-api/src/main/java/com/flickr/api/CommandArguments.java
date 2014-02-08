@@ -35,19 +35,17 @@ import org.apache.http.entity.mime.content.StringBody;
  *
  * @author Fabien Barbero
  */
-public final class CommandArguments {
+public class CommandArguments {
 
     private final Map<String, String> args;
-    private final boolean sign;
 
     /**
      * Create a new command
      *
      * @param method The method name
      */
-    public CommandArguments(String method, boolean sign) {
+    public CommandArguments(String method) {
 
-        this.sign = sign;
         args = new TreeMap<String, String>();
         if (method != null) {
             put("method", method);
@@ -56,11 +54,6 @@ public final class CommandArguments {
         put("nojsoncallback", "1");
     }
 
-
-    public boolean isSign() {
-        return sign;
-    }
-    
     public String getMethod() {
         return args.get("method");
     }
@@ -99,17 +92,5 @@ public final class CommandArguments {
         return baseURI + "?" + builder.toString();
     }
 
-    public MultipartEntity getPostEntity(String apiKey) {
-        put("api_key", apiKey);
-
-        MultipartEntity entity = new MultipartEntity();
-        for (Map.Entry<String, String> entry : args.entrySet()) {
-            try {
-                entity.addPart(entry.getKey(), new StringBody(entry.getValue()));
-            } catch (UnsupportedEncodingException ex) {
-                throw new UnsupportedOperationException(ex.getMessage(), ex);
-            }
-        }
-        return entity;
-    }
+    
 }

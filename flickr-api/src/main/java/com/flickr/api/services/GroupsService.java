@@ -30,6 +30,8 @@ import com.flickr.api.entities.GroupInfos;
 import com.flickr.api.entities.GroupInfosResponse;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.GroupsResponse;
+import com.flickr.api.entities.Member;
+import com.flickr.api.entities.MembersResponse;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotosResponse;
 import java.util.Locale;
@@ -54,7 +56,7 @@ public class GroupsService extends FlickrService {
      * @throws FlickrServiceException Error getting the groups
      */
     public Paginated<Group> getGroups(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.groups.pools.getGroups", true);
+        CommandArguments args = new CommandArguments("flickr.groups.pools.getGroups");
         args.put("page", page);
         args.put("per_page", perPage);
         return doGet(args, GroupsResponse.class).getPaginated();
@@ -69,7 +71,7 @@ public class GroupsService extends FlickrService {
      */
     public GroupInfos getGroupInfos(Group group) throws FlickrServiceException {
         Locale locale = Locale.getDefault();
-        CommandArguments args = new CommandArguments("flickr.groups.getInfo", true);
+        CommandArguments args = new CommandArguments("flickr.groups.getInfo");
         args.put("group_id", group.getId());
         args.put("lang", locale.getCountry().toLowerCase() + "-" + locale.getLanguage());
         return doGet(args, GroupInfosResponse.class).getInfos();
@@ -86,11 +88,47 @@ public class GroupsService extends FlickrService {
      * @throws FlickrServiceException Error getting the photos
      */
     public Paginated<Photo> getGroupPhotos(Group group, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.groups.pools.getPhotos", true);
+        CommandArguments args = new CommandArguments("flickr.groups.pools.getPhotos");
         args.put("group_id", group.getId());
         args.put("page", page);
         args.put("per_page", perPage);
         return doGet(args, PhotosResponse.class).getPaginated();
+    }
+
+    /**
+     * Get a list of the members of a group. The call must be signed on behalf of a Flickr member, and the ability to
+     * see the group membership will be determined by the Flickr member's group privileges.
+     *
+     * @param group The group
+     * @param perPage Number of members to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The members
+     * @throws FlickrServiceException Error getting the members
+     */
+    public Paginated<Member> getGroupMembers(Group group, int perPage, int page) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.groups.members.getList");
+        args.put("group_id", group.getId());
+        args.put("page", page);
+        args.put("per_page", perPage);
+        return doGet(args, MembersResponse.class).getPaginated();
+    }
+
+    /**
+     * Search for groups. 18+ groups will only be returned for authenticated calls where the authenticated user is over
+     * 18.
+     *
+     * @param search The text to search for
+     * @param perPage Number of members to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The groups found
+     * @throws FlickrServiceException Error searching the groups
+     */
+    public Paginated<Group> searchGroup(String search, int perPage, int page) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.groups.search");
+        args.put("text", search);
+        args.put("page", page);
+        args.put("per_page", perPage);
+        return doGet(args, GroupsResponse.class).getPaginated();
     }
 
 }

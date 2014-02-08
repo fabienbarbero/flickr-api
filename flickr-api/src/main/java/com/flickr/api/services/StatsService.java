@@ -57,7 +57,7 @@ public class StatsService extends FlickrService {
      * @throws FlickrServiceException Error getting the stats
      */
     public Paginated<PhotoStats> getPopularPhotos(Date date, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos", true);
+        CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos");
         args.put("per_page", perPage);
         args.put("page", page);
         if (date != null) {
@@ -74,7 +74,7 @@ public class StatsService extends FlickrService {
      * @throws FlickrServiceException
      */
     public TotalViews getTotalViews(Date date) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.stats.getTotalViews", true);
+        CommandArguments args = new CommandArguments("flickr.stats.getTotalViews");
         if (date != null) {
             args.put("date", DATE_FORMAT.format(date));
         }

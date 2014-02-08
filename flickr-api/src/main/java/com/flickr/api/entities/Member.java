@@ -21,9 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.utils.URLUtils;
-import java.net.URL;
-import java.text.MessageFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,52 +28,75 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Group implements IdObject {
+public class Member implements BaseUser {
 
     private final String id;
-    private final String name;
-    private final int photos;
-    private final URL cover;
+    private final String username;
+    private final String realname;
+    private final Avatar avatar;
+    private final Type type;
 
-    Group(JSONObject json) throws JSONException {
+    Member(JSONObject json) throws JSONException {
         id = json.getString("nsid");
-        name = json.getString("name");
-        photos = json.optInt("photos", -1);
-
-        cover = URLUtils.fromString(MessageFormat.format("http://farm{0}.staticflickr.com/{1}/coverphoto/{2}_s.jpg",
-                json.getString("iconfarm"), json.getString("iconserver"), id));
+        username = json.getString("username");
+        realname = json.getString("realname");
+        avatar = new Avatar(json, id);
+        type = Type.fromValue(json.getInt("membertype"));
     }
 
     /**
-     * Get the group primary image
+     * Get the member avatar
      *
-     * @return The group image
+     * @return The avatar
      */
-    public URL getCover() {
-        return cover;
+    public Avatar getAvatar() {
+        return avatar;
     }
 
     /**
-     * Get the photos count in the group
+     * Get the member type
      *
-     * @return The photos count
+     * @return The type
      */
-    public int getPhotos() {
-        return photos;
+    public Type getType() {
+        return type;
     }
 
-    /**
-     * Get the group name
-     *
-     * @return the group name
-     */
-    public String getName() {
-        return name;
+    @Override
+    public String getRealName() {
+        return realname;
+    }
+
+    @Override
+    public String getUserName() {
+        return username;
     }
 
     @Override
     public String getId() {
         return id;
+    }
+
+    public enum Type {
+
+        MEMBER(2),
+        MODERATOR(3),
+        ADMIN(4);
+        //
+        private final int value;
+
+        private Type(int value) {
+            this.value = value;
+        }
+
+        private static Type fromValue(int value) {
+            for (Type type : values()) {
+                if (type.value == value) {
+                    return type;
+                }
+            }
+            return null;
+        }
     }
 
 }

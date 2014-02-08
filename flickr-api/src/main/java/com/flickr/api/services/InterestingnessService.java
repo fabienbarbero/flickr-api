@@ -19,64 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.entities;
+package com.flickr.api.services;
 
-import com.flickr.api.utils.URLUtils;
-import java.net.URL;
-import java.text.MessageFormat;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.flickr.api.CommandArguments;
+import com.flickr.api.FlickrService;
+import com.flickr.api.FlickrServiceException;
+import com.flickr.api.OAuthHandler;
+import com.flickr.api.entities.Paginated;
+import com.flickr.api.entities.Photo;
+import com.flickr.api.entities.PhotosResponse;
+import org.apache.http.client.HttpClient;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class Group implements IdObject {
+public class InterestingnessService extends FlickrService {
 
-    private final String id;
-    private final String name;
-    private final int photos;
-    private final URL cover;
-
-    Group(JSONObject json) throws JSONException {
-        id = json.getString("nsid");
-        name = json.getString("name");
-        photos = json.optInt("photos", -1);
-
-        cover = URLUtils.fromString(MessageFormat.format("http://farm{0}.staticflickr.com/{1}/coverphoto/{2}_s.jpg",
-                json.getString("iconfarm"), json.getString("iconserver"), id));
+    public InterestingnessService(OAuthHandler oauthHandler, HttpClient client) {
+        super(oauthHandler, client);
     }
 
     /**
-     * Get the group primary image
+     * Returns the list of interesting photos for the most recent day or a user-specified date.
      *
-     * @return The group image
+     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param page The page of results to return
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
      */
-    public URL getCover() {
-        return cover;
-    }
-
-    /**
-     * Get the photos count in the group
-     *
-     * @return The photos count
-     */
-    public int getPhotos() {
-        return photos;
-    }
-
-    /**
-     * Get the group name
-     *
-     * @return the group name
-     */
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getId() {
-        return id;
+    public Paginated<Photo> getInterestingPhotos(int perPage, int page) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.interestingness.getList");
+        args.put("page", page);
+        args.put("per_page", perPage);
+        return doGet(args, PhotosResponse.class).getPaginated();
     }
 
 }

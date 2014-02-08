@@ -1,10 +1,13 @@
 package com.flickr.api;
 
+import com.flickr.api.entities.CameraBrand;
+import com.flickr.api.entities.CameraBrandModel;
 import com.flickr.api.entities.Contact;
 import com.flickr.api.entities.ExifInfos;
 import com.flickr.api.entities.Group;
 import com.flickr.api.entities.GroupInfos;
 import com.flickr.api.entities.License;
+import com.flickr.api.entities.Member;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotoPermissions;
@@ -33,7 +36,7 @@ public class AppTest {
     @Test
     public void testApi() {
         try {
-//            System.setProperty("flickr.api.debug", "true");
+            System.setProperty("flickr.api.debug", "true");
 
             Flickr flickr = new Flickr(
                     "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "write",
@@ -189,6 +192,20 @@ public class AppTest {
             assertTrue(groupInfos.getMembers() > 0);
             
             photos = flickr.getGroupsService().getGroupPhotos(group, 50, 1);
+            assertFalse(photos.isEmpty());
+            
+            Paginated<Member> members = flickr.getGroupsService().getGroupMembers(group, 1000, 1);
+            assertFalse(members.isEmpty());
+            
+            // Cameras
+            List<CameraBrand> brands = flickr.getCameraService().getBrands();
+            assertFalse(brands.isEmpty());
+            
+            List<CameraBrandModel> models = flickr.getCameraService().getBrandModels(brands.get(0));
+            assertFalse(models.isEmpty());
+            
+            // Interestingness
+            photos = flickr.getInterestingnessService().getInterestingPhotos(1000, 1);
             assertFalse(photos.isEmpty());
 
         } catch (Exception ex) {

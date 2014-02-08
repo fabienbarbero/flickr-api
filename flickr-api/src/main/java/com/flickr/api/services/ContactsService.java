@@ -51,7 +51,7 @@ public final class ContactsService extends FlickrService {
      * @throws FlickrServiceException Error getting the contacts
      */
     public Paginated<Contact> getContacts(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.contacts.getList", true);
+        CommandArguments args = new CommandArguments("flickr.contacts.getList");
         args.put("per_page", perPage);
         args.put("page", page);
         return doGet(args, ContactsResponse.class).getPaginated();
@@ -67,7 +67,7 @@ public final class ContactsService extends FlickrService {
      * @throws FlickrServiceException Error getting the contacts
      */
     public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.contacts.getPublicList", false);
+        CommandArguments args = new CommandArguments("flickr.contacts.getPublicList");
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("user_id", user.getId());

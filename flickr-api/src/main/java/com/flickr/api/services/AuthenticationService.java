@@ -46,7 +46,7 @@ public final class AuthenticationService extends FlickrService {
     }
 
     public UserInfos authenticate() throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.test.login", true);
+        CommandArguments args = new CommandArguments("flickr.test.login");
         LoginResponse response = doGet(args, LoginResponse.class);
         BaseUser identifier = response.getIdentifier();
 

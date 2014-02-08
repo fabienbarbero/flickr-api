@@ -21,9 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.utils.URLUtils;
-import java.net.URL;
-import java.text.MessageFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,44 +28,20 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Group implements IdObject {
+public class CameraBrand implements IdObject {
 
-    private final String id;
     private final String name;
-    private final int photos;
-    private final URL cover;
+    private final String id;
 
-    Group(JSONObject json) throws JSONException {
-        id = json.getString("nsid");
+    CameraBrand(JSONObject json) throws JSONException {
+        id = json.getString("id");
         name = json.getString("name");
-        photos = json.optInt("photos", -1);
-
-        cover = URLUtils.fromString(MessageFormat.format("http://farm{0}.staticflickr.com/{1}/coverphoto/{2}_s.jpg",
-                json.getString("iconfarm"), json.getString("iconserver"), id));
     }
 
     /**
-     * Get the group primary image
+     * Get the brand name
      *
-     * @return The group image
-     */
-    public URL getCover() {
-        return cover;
-    }
-
-    /**
-     * Get the photos count in the group
-     *
-     * @return The photos count
-     */
-    public int getPhotos() {
-        return photos;
-    }
-
-    /**
-     * Get the group name
-     *
-     * @return the group name
+     * @return The name
      */
     public String getName() {
         return name;

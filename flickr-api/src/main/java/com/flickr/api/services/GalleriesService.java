@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Fabien Barbero
+ * Copyright (C) 2014 Fabien Barbero
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,54 +26,55 @@ import com.flickr.api.FlickrService;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.BaseUser;
+import com.flickr.api.entities.GalleriesResponse;
+import com.flickr.api.entities.Gallery;
 import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.PhotosResponse;
 import com.flickr.api.entities.Photo;
+import com.flickr.api.entities.PhotosResponse;
 import org.apache.http.client.HttpClient;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
-public class FavoritesService extends FlickrService {
+public class GalleriesService extends FlickrService {
 
-    public FavoritesService(OAuthHandler oauthHandler, HttpClient client) {
+    public GalleriesService(OAuthHandler oauthHandler, HttpClient client) {
         super(oauthHandler, client);
     }
 
     /**
-     * Returns a list of the user's favorite photos. Only photos which the calling user has permission to see are
-     * returned.
+     * Return the list of galleries created by a user. Sorted from newest to oldest.
      *
-     * @param user The user to fetch the favorites list for
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param user The user to get a galleries list for
+     * @param perPage Number of galleries to return per page. The maximum allowed value is 500.
      * @param page The page of results to return
-     * @return The favorites photos
-     * @throws FlickrServiceException Error getting the favorites
+     * @return The galleries
+     * @throws FlickrServiceException Error getting the galleries
      */
-    public Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.favorites.getList");
+    public Paginated<Gallery> getGalleries(BaseUser user, int perPage, int page) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.galleries.getList");
         args.put("per_page", perPage);
         args.put("page", page);
         args.put("user_id", user.getId());
 
-        return doGet(args, PhotosResponse.class).getPaginated();
+        return doGet(args, GalleriesResponse.class).getPaginated();
     }
 
     /**
-     * Returns a list of favorite public photos for the given user.
+     * Return the list of photos for a gallery
      *
-     * @param user The user to fetch the favorites list for
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
+     * @param gallery The gallery of photos to return
+     * @param perPage Number of galleries to return per page. The maximum allowed value is 500.
      * @param page The page of results to return
-     * @return The favorites photos
-     * @throws FlickrServiceException Error getting the favorites
+     * @return The photos
+     * @throws FlickrServiceException Error getting the photos
      */
-    public Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.favorites.getPublicList");
+    public Paginated<Photo> getGalleryPhotos(Gallery gallery, int perPage, int page) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.galleries.getPhotos");
         args.put("per_page", perPage);
         args.put("page", page);
-        args.put("user_id", user.getId());
+        args.put("gallery_id", gallery.getId());
 
         return doGet(args, PhotosResponse.class).getPaginated();
     }

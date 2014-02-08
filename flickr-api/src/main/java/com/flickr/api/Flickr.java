@@ -24,8 +24,11 @@ package com.flickr.api;
 import com.flickr.api.services.AuthenticationService;
 import com.flickr.api.services.ContactsService;
 import com.flickr.api.entities.UserInfos;
+import com.flickr.api.services.CameraService;
 import com.flickr.api.services.FavoritesService;
+import com.flickr.api.services.GalleriesService;
 import com.flickr.api.services.GroupsService;
+import com.flickr.api.services.InterestingnessService;
 import com.flickr.api.services.PeopleService;
 import com.flickr.api.services.PhotosService;
 import com.flickr.api.services.PhotosetsService;
@@ -69,7 +72,10 @@ public final class Flickr {
     private final FavoritesService favoritesService;
     private final StatsService statsService;
     private final GroupsService groupsService;
+    private final CameraService cameraService;
     private final DefaultHttpClient client;
+    private final InterestingnessService interestingnessService;
+    private final GalleriesService galleriesService;
 
     /**
      * Create a new Flickr instance
@@ -98,6 +104,9 @@ public final class Flickr {
         authenticationService = new AuthenticationService(oauthHandler, client, peoplesService);
         statsService = new StatsService(oauthHandler, client);
         groupsService = new GroupsService(oauthHandler, client);
+        cameraService = new CameraService(oauthHandler, client);
+        interestingnessService = new InterestingnessService(oauthHandler, client);
+        galleriesService = new GalleriesService(oauthHandler, client);
     }
 
     /**
@@ -224,6 +233,33 @@ public final class Flickr {
      */
     public FavoritesService getFavoritesService() {
         return favoritesService;
+    }
+
+    /**
+     * Get the cameras service
+     *
+     * @return The camera service
+     */
+    public CameraService getCameraService() {
+        return cameraService;
+    }
+
+    /**
+     * Get the interestingness service
+     *
+     * @return The interestingness service
+     */
+    public InterestingnessService getInterestingnessService() {
+        return interestingnessService;
+    }
+
+    /**
+     * Get the galleries service
+     *
+     * @return The galleries service
+     */
+    public GalleriesService getGalleriesService() {
+        return galleriesService;
     }
 
     public InputStream openStream(URL url) throws IOException {

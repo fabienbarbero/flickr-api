@@ -70,7 +70,7 @@ public class PhotosetsService extends FlickrService {
      * @throws FlickrServiceException Error getting the sets
      */
     public Paginated<Photoset> getPhotosets(BaseUser user, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getList", false);
+        CommandArguments args = new CommandArguments("flickr.photosets.getList");
         args.put("user_id", user.getId());
         args.put("per_page", perPage);
         args.put("page", page);
@@ -87,7 +87,7 @@ public class PhotosetsService extends FlickrService {
      * @throws FlickrServiceException Error getting the photos
      */
     public Paginated<Photo> getPhotos(Photoset photoset, int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getPhotos", false);
+        CommandArguments args = new CommandArguments("flickr.photosets.getPhotos");
         args.put("photoset_id", photoset.getId());
         args.put("per_page", perPage);
         args.put("page", page);
@@ -102,7 +102,7 @@ public class PhotosetsService extends FlickrService {
      * @throws FlickrServiceException Error getting the set
      */
     public PhotosetInfos getInfos(Photoset photoset) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getInfo", false);
+        CommandArguments args = new CommandArguments("flickr.photosets.getInfo");
         args.put("photoset_id", photoset.getId());
         return doGet(args, PhotosetInfosResponse.class).getInfos();
     }
@@ -115,7 +115,7 @@ public class PhotosetsService extends FlickrService {
      * @throws FlickrServiceException Error getting the comments
      */
     public List<Comment> getComments(Photoset photoset) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.photosets.comments.getList", false);
+        CommandArguments args = new CommandArguments("flickr.photosets.comments.getList");
         args.put("photoset_id", photoset.getId());
         return doGet(args, CommentsResponse.class).getList();
     }

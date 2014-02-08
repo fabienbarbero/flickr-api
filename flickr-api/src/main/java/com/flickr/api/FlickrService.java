@@ -47,11 +47,11 @@ public abstract class FlickrService {
         return doRequest(args, clazz, request);
     }
 
-    protected final <T extends ServerResponse> T doPost(CommandArguments args, Class<T> clazz) throws FlickrServiceException {
-        HttpPost request = new HttpPost(URL_PREFIX);
-        request.setEntity(args.getPostEntity(oauth.getConsumer().getConsumerKey()));
-        return doRequest(args, clazz, request);
-    }
+//    protected final <T extends ServerResponse> T doPost(CommandArguments args, Class<T> clazz) throws FlickrServiceException {
+//        HttpPost request = new HttpPost(URL_PREFIX);
+//        request.setEntity(args.getPostEntity(oauth.getConsumer().getConsumerKey()));
+//        return doRequest(args, clazz, request);
+//    }
 
     private <T extends ServerResponse> T doRequest(CommandArguments args, Class<T> clazz, HttpUriRequest request) throws FlickrServiceException {
         InputStream is = null;
