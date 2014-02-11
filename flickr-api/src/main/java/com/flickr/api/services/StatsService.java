@@ -33,7 +33,6 @@ import com.flickr.api.entities.TotalViewsResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -43,8 +42,8 @@ public class StatsService extends FlickrService {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    public StatsService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public StatsService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -58,10 +57,10 @@ public class StatsService extends FlickrService {
      */
     public Paginated<PhotoStats> getPopularPhotos(Date date, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos");
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         if (date != null) {
-            args.put("date", DATE_FORMAT.format(date));
+            args.addParam("date", DATE_FORMAT.format(date));
         }
         return doGet(args, PhotoStatsResponse.class).getPaginated();
     }
@@ -76,7 +75,7 @@ public class StatsService extends FlickrService {
     public TotalViews getTotalViews(Date date) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.stats.getTotalViews");
         if (date != null) {
-            args.put("date", DATE_FORMAT.format(date));
+            args.addParam("date", DATE_FORMAT.format(date));
         }
         return doGet(args, TotalViewsResponse.class).getViews();
     }

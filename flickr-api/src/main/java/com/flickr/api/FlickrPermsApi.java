@@ -19,39 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.services;
+package com.flickr.api;
 
-import com.flickr.api.CommandArguments;
-import com.flickr.api.FlickrService;
-import com.flickr.api.FlickrServiceException;
-import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotosResponse;
+import org.scribe.builder.api.FlickrApi;
+import org.scribe.model.Token;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class InterestingnessService extends FlickrService {
+class FlickrPermsApi extends FlickrApi {
 
-    public InterestingnessService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    private final String perms;
+
+    FlickrPermsApi(String perms) {
+        this.perms = perms;
     }
 
-    /**
-     * Returns the list of interesting photos for the most recent day or a user-specified date.
-     *
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
-     * @param page The page of results to return
-     * @return The photos
-     * @throws FlickrServiceException Error getting the photos
-     */
-    public Paginated<Photo> getInterestingPhotos(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.interestingness.getList");
-        args.addParam("page", page);
-        args.addParam("per_page", perPage);
-        return doGet(args, PhotosResponse.class).getPaginated();
+    @Override
+    public String getAuthorizationUrl(Token requestToken) {
+        return "http://www.flickr.com/services/oauth/authorize?perms=" + perms + "&oauth_token=" + requestToken.getToken();
     }
 
 }

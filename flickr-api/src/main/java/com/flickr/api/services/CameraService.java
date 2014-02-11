@@ -30,7 +30,6 @@ import com.flickr.api.entities.CameraBrandModel;
 import com.flickr.api.entities.CameraBrandModelsResponse;
 import com.flickr.api.entities.CameraBrandsResponse;
 import java.util.List;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -38,8 +37,8 @@ import org.apache.http.client.HttpClient;
  */
 public class CameraService extends FlickrService {
 
-    public CameraService(OAuthHandler oauth, HttpClient client) {
-        super(oauth, client);
+    public CameraService(OAuthHandler oauth) {
+        super(oauth);
     }
 
     /**
@@ -62,7 +61,7 @@ public class CameraService extends FlickrService {
      */
     public List<CameraBrandModel> getBrandModels(CameraBrand brand) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.cameras.getBrandModels");
-        args.put("brand", brand.getId());
+        args.addParam("brand", brand.getId());
         return doGet(args, CameraBrandModelsResponse.class).getList();
     }
 

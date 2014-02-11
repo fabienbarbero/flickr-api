@@ -29,7 +29,6 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.ContactsResponse;
 import com.flickr.api.FlickrService;
-import org.apache.http.client.HttpClient;
 
 /**
  * Service used to get the contacts informations.
@@ -38,8 +37,8 @@ import org.apache.http.client.HttpClient;
  */
 public final class ContactsService extends FlickrService {
 
-    public ContactsService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public ContactsService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -52,8 +51,8 @@ public final class ContactsService extends FlickrService {
      */
     public Paginated<Contact> getContacts(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getList");
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         return doGet(args, ContactsResponse.class).getPaginated();
     }
 
@@ -68,9 +67,9 @@ public final class ContactsService extends FlickrService {
      */
     public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.contacts.getPublicList");
-        args.put("per_page", perPage);
-        args.put("page", page);
-        args.put("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("user_id", user.getId());
         return doGet(args, ContactsResponse.class).getPaginated();
     }
 }

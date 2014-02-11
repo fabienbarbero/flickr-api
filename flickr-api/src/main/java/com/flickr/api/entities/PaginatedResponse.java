@@ -21,7 +21,7 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.ServerResponse;
+import com.flickr.api.JSONResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +33,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public abstract class PaginatedResponse<T> extends ServerResponse {
+public abstract class PaginatedResponse<T> extends JSONResponse {
 
     private Paginated<T> value;
 

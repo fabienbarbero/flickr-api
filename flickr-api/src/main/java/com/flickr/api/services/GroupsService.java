@@ -35,7 +35,6 @@ import com.flickr.api.entities.MembersResponse;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotosResponse;
 import java.util.Locale;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -43,8 +42,8 @@ import org.apache.http.client.HttpClient;
  */
 public class GroupsService extends FlickrService {
 
-    public GroupsService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public GroupsService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -57,8 +56,8 @@ public class GroupsService extends FlickrService {
      */
     public Paginated<Group> getGroups(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.groups.pools.getGroups");
-        args.put("page", page);
-        args.put("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("per_page", perPage);
         return doGet(args, GroupsResponse.class).getPaginated();
     }
 
@@ -72,8 +71,8 @@ public class GroupsService extends FlickrService {
     public GroupInfos getGroupInfos(Group group) throws FlickrServiceException {
         Locale locale = Locale.getDefault();
         CommandArguments args = new CommandArguments("flickr.groups.getInfo");
-        args.put("group_id", group.getId());
-        args.put("lang", locale.getCountry().toLowerCase() + "-" + locale.getLanguage());
+        args.addParam("group_id", group.getId());
+        args.addParam("lang", locale.getCountry().toLowerCase() + "-" + locale.getLanguage());
         return doGet(args, GroupInfosResponse.class).getInfos();
     }
 
@@ -89,9 +88,9 @@ public class GroupsService extends FlickrService {
      */
     public Paginated<Photo> getGroupPhotos(Group group, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.groups.pools.getPhotos");
-        args.put("group_id", group.getId());
-        args.put("page", page);
-        args.put("per_page", perPage);
+        args.addParam("group_id", group.getId());
+        args.addParam("page", page);
+        args.addParam("per_page", perPage);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -107,9 +106,9 @@ public class GroupsService extends FlickrService {
      */
     public Paginated<Member> getGroupMembers(Group group, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.groups.members.getList");
-        args.put("group_id", group.getId());
-        args.put("page", page);
-        args.put("per_page", perPage);
+        args.addParam("group_id", group.getId());
+        args.addParam("page", page);
+        args.addParam("per_page", perPage);
         return doGet(args, MembersResponse.class).getPaginated();
     }
 
@@ -125,9 +124,9 @@ public class GroupsService extends FlickrService {
      */
     public Paginated<Group> searchGroup(String search, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.groups.search");
-        args.put("text", search);
-        args.put("page", page);
-        args.put("per_page", perPage);
+        args.addParam("text", search);
+        args.addParam("page", page);
+        args.addParam("per_page", perPage);
         return doGet(args, GroupsResponse.class).getPaginated();
     }
 

@@ -25,33 +25,31 @@ import com.flickr.api.CommandArguments;
 import com.flickr.api.FlickrService;
 import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotosResponse;
+import com.flickr.api.entities.UploadedPhotoResponse;
+import java.io.File;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class InterestingnessService extends FlickrService {
+public class UploadService extends FlickrService {
 
-    public InterestingnessService(OAuthHandler oauthHandler) {
+    public UploadService(OAuthHandler oauthHandler) {
         super(oauthHandler);
     }
 
-    /**
-     * Returns the list of interesting photos for the most recent day or a user-specified date.
-     *
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
-     * @param page The page of results to return
-     * @return The photos
-     * @throws FlickrServiceException Error getting the photos
-     */
-    public Paginated<Photo> getInterestingPhotos(int perPage, int page) throws FlickrServiceException {
-        CommandArguments args = new CommandArguments("flickr.interestingness.getList");
-        args.addParam("page", page);
-        args.addParam("per_page", perPage);
-        return doGet(args, PhotosResponse.class).getPaginated();
+    public String uploadPhoto(File file, String title, String description) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments();
+        args.addParam("photo", file);
+        args.addParam("content_type", 1);
+        if (title != null) {
+            args.addParam("title", title);
+        }
+        if (description != null) {
+            args.addParam("description", description);
+        }
+
+        return doPost(args, UploadedPhotoResponse.class, "http://up.flickr.com/services/upload").getPhotoId();
     }
 
 }

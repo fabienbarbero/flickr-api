@@ -36,7 +36,6 @@ import com.flickr.api.entities.PhotosetInfos;
 import com.flickr.api.entities.PhotosetInfosResponse;
 import com.flickr.api.entities.PhotosetsResponse;
 import java.util.List;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -44,8 +43,8 @@ import org.apache.http.client.HttpClient;
  */
 public class PhotosetsService extends FlickrService {
 
-    public PhotosetsService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public PhotosetsService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
 //    /**
@@ -71,9 +70,9 @@ public class PhotosetsService extends FlickrService {
      */
     public Paginated<Photoset> getPhotosets(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photosets.getList");
-        args.put("user_id", user.getId());
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         return doGet(args, PhotosetsResponse.class).getPaginated();
     }
 
@@ -88,9 +87,9 @@ public class PhotosetsService extends FlickrService {
      */
     public Paginated<Photo> getPhotos(Photoset photoset, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photosets.getPhotos");
-        args.put("photoset_id", photoset.getId());
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("photoset_id", photoset.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -103,7 +102,7 @@ public class PhotosetsService extends FlickrService {
      */
     public PhotosetInfos getInfos(Photoset photoset) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photosets.getInfo");
-        args.put("photoset_id", photoset.getId());
+        args.addParam("photoset_id", photoset.getId());
         return doGet(args, PhotosetInfosResponse.class).getInfos();
     }
 
@@ -116,7 +115,7 @@ public class PhotosetsService extends FlickrService {
      */
     public List<Comment> getComments(Photoset photoset) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photosets.comments.getList");
-        args.put("photoset_id", photoset.getId());
+        args.addParam("photoset_id", photoset.getId());
         return doGet(args, CommentsResponse.class).getList();
     }
 }

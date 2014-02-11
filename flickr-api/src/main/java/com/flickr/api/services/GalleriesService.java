@@ -31,7 +31,6 @@ import com.flickr.api.entities.Gallery;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotosResponse;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -39,8 +38,8 @@ import org.apache.http.client.HttpClient;
  */
 public class GalleriesService extends FlickrService {
 
-    public GalleriesService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public GalleriesService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -54,9 +53,9 @@ public class GalleriesService extends FlickrService {
      */
     public Paginated<Gallery> getGalleries(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.galleries.getList");
-        args.put("per_page", perPage);
-        args.put("page", page);
-        args.put("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("user_id", user.getId());
 
         return doGet(args, GalleriesResponse.class).getPaginated();
     }
@@ -72,9 +71,9 @@ public class GalleriesService extends FlickrService {
      */
     public Paginated<Photo> getGalleryPhotos(Gallery gallery, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.galleries.getPhotos");
-        args.put("per_page", perPage);
-        args.put("page", page);
-        args.put("gallery_id", gallery.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("gallery_id", gallery.getId());
 
         return doGet(args, PhotosResponse.class).getPaginated();
     }

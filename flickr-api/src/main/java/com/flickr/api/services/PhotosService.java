@@ -41,7 +41,6 @@ import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoInfosResponse;
 import com.flickr.api.entities.PhotoSize;
 import com.flickr.api.entities.PhotoSizesResponse;
-import org.apache.http.client.HttpClient;
 
 /**
  * Service used to access the photos.
@@ -50,8 +49,8 @@ import org.apache.http.client.HttpClient;
  */
 public class PhotosService extends FlickrService {
 
-    public PhotosService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public PhotosService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -77,10 +76,10 @@ public class PhotosService extends FlickrService {
      */
     public Paginated<Photo> getContactsPhotos(int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPhotos");
-        args.put("count", count);
-        args.put("just_friends", justFriends);
-        args.put("single_photo", singlePhoto);
-        args.put("include_self", includeSelf);
+        args.addParam("count", count);
+        args.addParam("just_friends", justFriends);
+        args.addParam("single_photo", singlePhoto);
+        args.addParam("include_self", includeSelf);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -93,7 +92,7 @@ public class PhotosService extends FlickrService {
      */
     public Paginated<Photo> getContactsPublicPhotos(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos");
-        args.put("user_id", user.getId());
+        args.addParam("user_id", user.getId());
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -110,11 +109,11 @@ public class PhotosService extends FlickrService {
      */
     public Paginated<Photo> getContactsPublicPhotos(BaseUser user, int count, boolean justFriends, boolean singlePhoto, boolean includeSelf) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getContactsPublicPhotos");
-        args.put("user_id", user.getId());
-        args.put("count", count);
-        args.put("just_friends", justFriends);
-        args.put("single_photo", singlePhoto);
-        args.put("include_self", includeSelf);
+        args.addParam("user_id", user.getId());
+        args.addParam("count", count);
+        args.addParam("just_friends", justFriends);
+        args.addParam("single_photo", singlePhoto);
+        args.addParam("include_self", includeSelf);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -127,7 +126,7 @@ public class PhotosService extends FlickrService {
      */
     public PhotoInfos getInfos(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getInfo");
-        args.put("photo_id", photo.getId());
+        args.addParam("photo_id", photo.getId());
         return doGet(args, PhotoInfosResponse.class).getInfos();
     }
 
@@ -140,7 +139,7 @@ public class PhotosService extends FlickrService {
      */
     public PhotoPermissions getPermissions(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getPerms");
-        args.put("photo_id", photo.getId());
+        args.addParam("photo_id", photo.getId());
         return doGet(args, PhotoPermissions.class);
     }
 
@@ -154,8 +153,8 @@ public class PhotosService extends FlickrService {
      */
     public Paginated<Photo> getRecent(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getRecent");
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         Paginated<Photo> photos = doGet(args, PhotosResponse.class).getPaginated();
         return photos;
     }
@@ -169,7 +168,7 @@ public class PhotosService extends FlickrService {
      */
     public List<PhotoSize> getSizes(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getSizes");
-        args.put("photo_id", photo.getId());
+        args.addParam("photo_id", photo.getId());
         List<PhotoSize> sizes = doGet(args, PhotoSizesResponse.class).getList();
         return sizes;
     }
@@ -186,10 +185,10 @@ public class PhotosService extends FlickrService {
      */
     public Paginated<Photo> getRecentlyUpdated(int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.recentlyUpdated");
-        args.put("per_page", perPage);
-        args.put("page", page);
-        args.put("extras", "date_upload");
-        args.put("min_date", "10000");
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("extras", "date_upload");
+        args.addParam("min_date", "10000");
         Paginated<Photo> photos = doGet(args, PhotosResponse.class).getPaginated();
         return photos;
     }
@@ -204,7 +203,7 @@ public class PhotosService extends FlickrService {
      */
     public ExifInfos getExif(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.getExif");
-        args.put("photo_id", photo.getId());
+        args.addParam("photo_id", photo.getId());
         return doGet(args, ExifInfosResponse.class).getExifInfos();
     }
 
@@ -228,7 +227,7 @@ public class PhotosService extends FlickrService {
      */
     public List<Comment> getComments(Photo photo) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.photos.comments.getList");
-        args.put("photo_id", photo.getId());
+        args.addParam("photo_id", photo.getId());
         return doGet(args, CommentsResponse.class).getList();
     }
 

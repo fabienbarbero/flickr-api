@@ -1,16 +1,16 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
+ * Copyright (C) 2014 Fabien Barbero
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
+ * in the Software without restriction, including without limitation the rights 
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -19,23 +19,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api;
+package com.flickr.api.utils;
 
-public class OAuthToken {
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-    private String key;
-    private String secret;
+/**
+ *
+ * @author Fabien Barbero
+ */
+public class XMLUtils {
 
-    OAuthToken(String key, String secret) {
-        this.key = key;
-        this.secret = secret;
+    private XMLUtils() {
     }
 
-    public String getKey() {
-        return key;
-    }
+    public static Element getChildElement(Element parent, String childName) {
+        NodeList list = parent.getElementsByTagName(childName);
 
-    public String getSecret() {
-        return secret;
+        Node node;
+        for (int i = 0; i < list.getLength(); i++) {
+            node = list.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                return (Element) node;
+            }
+        }
+        return null;
     }
 }

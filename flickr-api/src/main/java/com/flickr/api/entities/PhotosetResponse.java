@@ -21,7 +21,7 @@
  */
 package com.flickr.api.entities;
 
-import com.flickr.api.ServerResponse;
+import com.flickr.api.JSONResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +29,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotosetResponse extends ServerResponse {
+public class PhotosetResponse extends JSONResponse {
     
     private Photoset photoset;
 

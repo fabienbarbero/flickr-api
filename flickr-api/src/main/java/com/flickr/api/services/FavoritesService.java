@@ -29,7 +29,6 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PhotosResponse;
 import com.flickr.api.entities.Photo;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -37,8 +36,8 @@ import org.apache.http.client.HttpClient;
  */
 public class FavoritesService extends FlickrService {
 
-    public FavoritesService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public FavoritesService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -53,9 +52,9 @@ public class FavoritesService extends FlickrService {
      */
     public Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.favorites.getList");
-        args.put("per_page", perPage);
-        args.put("page", page);
-        args.put("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("user_id", user.getId());
 
         return doGet(args, PhotosResponse.class).getPaginated();
     }
@@ -71,9 +70,9 @@ public class FavoritesService extends FlickrService {
      */
     public Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.favorites.getPublicList");
-        args.put("per_page", perPage);
-        args.put("page", page);
-        args.put("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
+        args.addParam("user_id", user.getId());
 
         return doGet(args, PhotosResponse.class).getPaginated();
     }

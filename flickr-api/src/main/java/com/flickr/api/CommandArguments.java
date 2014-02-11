@@ -21,12 +21,14 @@
  */
 package com.flickr.api;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
+import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
 /**
@@ -35,9 +37,11 @@ import org.apache.http.entity.mime.content.StringBody;
  *
  * @author Fabien Barbero
  */
-public class CommandArguments {
+public final class CommandArguments {
 
-    private final Map<String, String> args;
+    private static final Charset UTF8 = Charset.forName("UTF-8");
+    private final Map<String, Object> params = new TreeMap<String, Object>();
+    private final String method;
 
     /**
      * Create a new command
@@ -45,52 +49,57 @@ public class CommandArguments {
      * @param method The method name
      */
     public CommandArguments(String method) {
-
-        args = new TreeMap<String, String>();
+        this.method = method;
         if (method != null) {
-            put("method", method);
+            addParam("method", method);
         }
-        put("format", "json");
-        put("nojsoncallback", "1");
+        addParam("format", "json");
+        addParam("nojsoncallback", "1");
+    }
+
+    public CommandArguments() {
+        this(null);
     }
 
     public String getMethod() {
-        return args.get("method");
+        return method;
     }
 
-    public void put(String key, String value) {
-        args.put(key, value);
+    public void addParam(String key, Object value) {
+        params.put(key, value);
     }
 
-    public void put(String key, int value) {
-        args.put(key, String.valueOf(value));
-    }
-
-    public void put(String key, long value) {
-        args.put(key, String.valueOf(value));
-    }
-
-    public void put(String key, boolean value) {
+    public void addParam(String key, boolean value) {
         if (value) {
-            args.put(key, "1");
+            params.put(key, "1");
         } else {
-            args.put(key, "0");
+            params.put(key, "0");
         }
     }
 
-    public String toURI(String baseURI, String apiKey) {
-        put("api_key", apiKey);
+    Map<String, Object> getParameters() {
+        return params;
+    }
 
-        StringBuilder builder = new StringBuilder();
-        List<Map.Entry<String, String>> entries = new ArrayList<Map.Entry<String, String>>(args.entrySet());
-        for (int i = 0; i < entries.size(); i++) {
-            builder.append(entries.get(i).getKey()).append("=").append(entries.get(i).getValue());
-            if (i < entries.size() - 1) {
-                builder.append("&");
+    public MultipartEntity getBody(Map<String,String> additionalParameters) {
+        try {
+            MultipartEntity entity = new MultipartEntity(HttpMultipartMode.STRICT);
+
+            Object value;
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                value = entry.getValue();
+                if (value instanceof File) {
+                    entity.addPart(entry.getKey(), new FileBody((File) value));
+                }
             }
-        }
-        return baseURI + "?" + builder.toString();
-    }
+            for(Map.Entry<String, String> entry : additionalParameters.entrySet()) {
+                entity.addPart(entry.getKey(), new StringBody(entry.getValue(), UTF8));
+            }
+            
+            return entity;
 
-    
+        } catch (UnsupportedEncodingException ex) {
+            throw new UnsupportedOperationException(ex.getMessage(), ex);
+        }
+    }
 }

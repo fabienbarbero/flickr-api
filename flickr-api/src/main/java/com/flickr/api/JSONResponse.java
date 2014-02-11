@@ -19,9 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.entities;
+package com.flickr.api;
 
-import com.flickr.api.JSONResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,17 +28,28 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class UserResponse extends JSONResponse {
-    
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
+public abstract class JSONResponse implements ServerResponse {
 
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        user = new User(json.getJSONObject("user"));
+    public final void read(String data, String method) throws FlickrServiceException {
+        try {
+            JSONObject json = new JSONObject(data);
+            
+            ResponseStatus status = ResponseStatus.valueOf(json.getString("stat"));
+            
+            if(status == ResponseStatus.fail) {
+                FlickrErrorCode code = FlickrErrorCode.fromCode(json.optInt("code"));
+                String message = json.optString("message");
+                throw new FlickrServiceException("Error calling method '" + method + "' (" + message + ")", code);
+            }
+            
+            readObject(json);
+            
+        } catch (JSONException ex) {
+            throw new FlickrServiceException("Error parsing JSON response", ex);
+        }
     }
-    
+
+    protected abstract void readObject(JSONObject json) throws JSONException;
+
 }

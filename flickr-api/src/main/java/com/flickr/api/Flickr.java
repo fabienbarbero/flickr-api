@@ -33,24 +33,12 @@ import com.flickr.api.services.PeopleService;
 import com.flickr.api.services.PhotosService;
 import com.flickr.api.services.PhotosetsService;
 import com.flickr.api.services.StatsService;
+import com.flickr.api.services.UploadService;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import oauth.signpost.OAuth;
-import oauth.signpost.exception.OAuthException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
+import org.scribe.model.OAuthConstants;
 
 /**
  * This class is the entry point of the API.
@@ -73,40 +61,37 @@ public final class Flickr {
     private final StatsService statsService;
     private final GroupsService groupsService;
     private final CameraService cameraService;
-    private final DefaultHttpClient client;
     private final InterestingnessService interestingnessService;
     private final GalleriesService galleriesService;
+    private final UploadService uploadService;
 
     /**
      * Create a new Flickr instance
      *
      * @param apiKey The flickr API key
      * @param apiSecret The flickr API secret
+     * @param callbackUrl The callback URL where the user will be redirected when he will grant the access of the
+     * application (see {@link Flickr#verifyToken(java.lang.String)}).
      * @param configurationFile The configuration file used to store the OAuth
      * @param permission The permission to use (read, write or delete) data. At the beginning, this file
      * <b>must</b> not exists.
      */
-    public Flickr(String apiKey, String apiSecret, String permission, File configurationFile) {
+    public Flickr(String apiKey, String apiSecret, String callbackUrl, String permission, File configurationFile) {
         props = new FlickrProperties(configurationFile);
-        oauthHandler = new OAuthHandler(props, apiKey, apiSecret, permission);
+        oauthHandler = new OAuthHandler(props, apiKey, apiSecret, callbackUrl, permission);
 
-        // HttpClient configuration
-        HttpParams params = new BasicHttpParams();
-        SchemeRegistry registry = new SchemeRegistry();
-        registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-        client = new DefaultHttpClient(new ThreadSafeClientConnManager(params, registry), params);
-
-        contactsService = new ContactsService(oauthHandler, client);
-        peoplesService = new PeopleService(oauthHandler, client);
-        photosService = new PhotosService(oauthHandler, client);
-        photosetsService = new PhotosetsService(oauthHandler, client);
-        favoritesService = new FavoritesService(oauthHandler, client);
-        authenticationService = new AuthenticationService(oauthHandler, client, peoplesService);
-        statsService = new StatsService(oauthHandler, client);
-        groupsService = new GroupsService(oauthHandler, client);
-        cameraService = new CameraService(oauthHandler, client);
-        interestingnessService = new InterestingnessService(oauthHandler, client);
-        galleriesService = new GalleriesService(oauthHandler, client);
+        contactsService = new ContactsService(oauthHandler);
+        peoplesService = new PeopleService(oauthHandler);
+        photosService = new PhotosService(oauthHandler);
+        photosetsService = new PhotosetsService(oauthHandler);
+        favoritesService = new FavoritesService(oauthHandler);
+        authenticationService = new AuthenticationService(oauthHandler, peoplesService);
+        statsService = new StatsService(oauthHandler);
+        groupsService = new GroupsService(oauthHandler);
+        cameraService = new CameraService(oauthHandler);
+        interestingnessService = new InterestingnessService(oauthHandler);
+        galleriesService = new GalleriesService(oauthHandler);
+        uploadService = new UploadService(oauthHandler);
     }
 
     /**
@@ -121,15 +106,10 @@ public final class Flickr {
     /**
      * Get the authorization URL used to allow the access to the application
      *
-     * @param callbackUrl The callback URL where the user will be redirected when he will grant the access of the
-     * application (see {@link Flickr#verifyToken(java.lang.String)
-     * }).
-     *
      * @return The authorization URL to open in the browser
-     * @throws OAuthException Error getting the URL
      */
-    public String getAuthorizationUrl(String callbackUrl) throws OAuthException {
-        return oauthHandler.retrieveAuthorizationUrl(callbackUrl);
+    public String getAuthorizationUrl() {
+        return oauthHandler.retrieveAuthorizationUrl();
     }
 
     /**
@@ -137,9 +117,8 @@ public final class Flickr {
      * '[callbackUrl]?oauth_verifier=...&oauth_token=...'.
      *
      * @param url The callback URL with the authorization parameters to verify
-     * @throws OAuthException Verification error
      */
-    public void verifyToken(String url) throws OAuthException {
+    public void verifyToken(String url) {
         URI uri = URI.create(url);
 
         Map<String, String> queryParams = new HashMap<String, String>();
@@ -148,7 +127,7 @@ public final class Flickr {
             split = param.split("=");
             queryParams.put(split[0], split[1]);
         }
-        verifyToken(queryParams.get(OAuth.OAUTH_VERIFIER), queryParams.get(OAuth.OAUTH_TOKEN));
+        verifyToken(queryParams.get(OAuthConstants.VERIFIER), queryParams.get(OAuthConstants.TOKEN));
     }
 
     /**
@@ -156,9 +135,8 @@ public final class Flickr {
      *
      * @param verifier The verifier value to verify
      * @param token The token value to verify
-     * @throws OAuthException Verification error
      */
-    public void verifyToken(String verifier, String token) throws OAuthException {
+    public void verifyToken(String verifier, String token) {
         oauthHandler.retrieveAccessToken(verifier, token);
     }
 
@@ -262,13 +240,8 @@ public final class Flickr {
         return galleriesService;
     }
 
-    public InputStream openStream(URL url) throws IOException {
-        try {
-            HttpGet request = new HttpGet(url.toURI());
-            return client.execute(request).getEntity().getContent();
-
-        } catch (URISyntaxException ex) {
-            throw new IOException(ex.getMessage(), ex);
-        }
+    public UploadService getUploadService() {
+        return uploadService;
     }
+
 }

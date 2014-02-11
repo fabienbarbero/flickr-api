@@ -23,11 +23,11 @@ package com.flickr.api.entities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.flickr.api.ServerResponse;
+import com.flickr.api.JSONResponse;
 import com.flickr.api.utils.JSONUtils;
 
 
-public class LoginResponse extends ServerResponse
+public class LoginResponse extends JSONResponse
 {
     
     private BaseUser identifier;

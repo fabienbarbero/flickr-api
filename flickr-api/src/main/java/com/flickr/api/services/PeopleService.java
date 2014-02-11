@@ -37,7 +37,6 @@ import com.flickr.api.entities.UserInfos;
 import com.flickr.api.entities.UserInfoResponse;
 import com.flickr.api.entities.UserResponse;
 import java.util.List;
-import org.apache.http.client.HttpClient;
 
 /**
  *
@@ -45,8 +44,8 @@ import org.apache.http.client.HttpClient;
  */
 public class PeopleService extends FlickrService {
 
-    public PeopleService(OAuthHandler oauthHandler, HttpClient client) {
-        super(oauthHandler, client);
+    public PeopleService(OAuthHandler oauthHandler) {
+        super(oauthHandler);
     }
 
     /**
@@ -59,7 +58,7 @@ public class PeopleService extends FlickrService {
     public User findByEmail(String email) throws FlickrServiceException {
         try {
             CommandArguments args = new CommandArguments("flickr.people.findByEmail");
-            args.put("find_email", email);
+            args.addParam("find_email", email);
             return doGet(args, UserResponse.class).getUser();
         } catch (FlickrServiceException ex) {
             if (ex.getErrorCode() == FlickrErrorCode.not_found) {
@@ -80,7 +79,7 @@ public class PeopleService extends FlickrService {
     public User findByUserName(String userName) throws FlickrServiceException {
         try {
             CommandArguments args = new CommandArguments("flickr.people.findByUsername");
-            args.put("username", userName);
+            args.addParam("username", userName);
             return doGet(args, UserResponse.class).getUser();
         } catch (FlickrServiceException ex) {
             if (ex.getErrorCode() == FlickrErrorCode.not_found) {
@@ -100,7 +99,7 @@ public class PeopleService extends FlickrService {
      */
     public UserInfos getUserInfo(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getInfo");
-        args.put("user_id", user.getId());
+        args.addParam("user_id", user.getId());
         return doGet(args, UserInfoResponse.class).getUserInfo();
     }
 
@@ -115,9 +114,9 @@ public class PeopleService extends FlickrService {
      */
     public Paginated<Photo> getUserPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotos");
-        args.put("user_id", user.getId());
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -132,9 +131,9 @@ public class PeopleService extends FlickrService {
      */
     public Paginated<Photo> getUserPublicPhotos(BaseUser user, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPublicPhotos");
-        args.put("user_id", user.getId());
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("user_id", user.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -150,10 +149,10 @@ public class PeopleService extends FlickrService {
      */
     public Paginated<Photo> getUserPhotosOf(BaseUser user, BaseUser owner, int perPage, int page) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotosOf");
-        args.put("user_id", user.getId());
-        args.put("owner_id", owner.getId());
-        args.put("per_page", perPage);
-        args.put("page", page);
+        args.addParam("user_id", user.getId());
+        args.addParam("owner_id", owner.getId());
+        args.addParam("per_page", perPage);
+        args.addParam("page", page);
         return doGet(args, PhotosResponse.class).getPaginated();
     }
 
@@ -166,7 +165,7 @@ public class PeopleService extends FlickrService {
      */
     public List<Group> getUserGroups(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPhotosOf");
-        args.put("user_id", user.getId());
+        args.addParam("user_id", user.getId());
         return doGet(args, GroupsResponse.class).getPaginated().asList();
     }
 
@@ -179,8 +178,8 @@ public class PeopleService extends FlickrService {
      */
     public List<Group> getUserPublicGroups(BaseUser user) throws FlickrServiceException {
         CommandArguments args = new CommandArguments("flickr.people.getPublicGroups");
-        args.put("user_id", user.getId());
+        args.addParam("user_id", user.getId());
         return doGet(args, GroupsResponse.class).getPaginated().asList();
     }
-
+    
 }

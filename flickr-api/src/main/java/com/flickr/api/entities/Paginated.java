@@ -55,7 +55,7 @@ public final class Paginated<T> implements Iterable<T> {
      *
      * @return The index of the page.
      */
-    public final int getPageIndex() {
+    public int getPageIndex() {
         return page;
     }
 
@@ -64,7 +64,7 @@ public final class Paginated<T> implements Iterable<T> {
      *
      * @return The number of pages.
      */
-    public final int getPagesCount() {
+    public int getPagesCount() {
         return pages;
     }
 
@@ -73,7 +73,7 @@ public final class Paginated<T> implements Iterable<T> {
      *
      * @return The number of objects per page.
      */
-    public final int getPerPage() {
+    public int getPerPage() {
         return perpage;
     }
 
@@ -82,7 +82,7 @@ public final class Paginated<T> implements Iterable<T> {
      *
      * @return The number of objects.
      */
-    public final int getTotalCount() {
+    public int getTotalCount() {
         return total;
     }
 

@@ -21,11 +21,13 @@
  */
 package com.flickr.api;
 
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
-import oauth.signpost.exception.OAuthException;
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.builder.api.FlickrApi;
+import org.scribe.exceptions.OAuthException;
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
+import org.scribe.oauth.OAuthService;
 
 /**
  *
@@ -40,33 +42,28 @@ public class OAuthHandler {
     private static final String PROPERTY_TOKEN = "oauth.token";
     //
     private final FlickrProperties props;
-    private final OAuthConsumer consumer;
-    private final OAuthProvider provider;
+    private final OAuthService service;
     //
-    private OAuthToken requestToken;
-    private OAuthToken accessToken;
+    private Token requestToken;
+    private Token accessToken;
     private String token;
 
-    OAuthHandler(FlickrProperties props, String apiKey, String apiSecret, String perms) {
+    OAuthHandler(FlickrProperties props, String apiKey, String apiSecret, String callbackUrl, String perms) {
         this.props = props;
-        consumer = new CommonsHttpOAuthConsumer(apiKey, apiSecret);
-        provider = new CommonsHttpOAuthProvider(
-                "http://www.flickr.com/services/oauth/request_token",
-                "http://www.flickr.com/services/oauth/access_token",
-                "http://www.flickr.com/services/oauth/authorize?perms=" + perms);
-        provider.setOAuth10a(true);
-
+        service = new ServiceBuilder()
+                .provider(new FlickrPermsApi(perms))
+                .apiKey(apiKey).apiSecret(apiSecret)
+                .callback(callbackUrl)
+                .build();
         load();
     }
 
     private void load() {
         if (props.contains(PROPERTY_REQUEST_TOKEN) && props.contains(PROPERTY_REQUEST_SECRET)) {
-            requestToken = new OAuthToken(props.getString(PROPERTY_REQUEST_TOKEN, null), props.getString(PROPERTY_REQUEST_SECRET, null));
-            setToken(requestToken);
+            requestToken = new Token(props.getString(PROPERTY_REQUEST_TOKEN, null), props.getString(PROPERTY_REQUEST_SECRET, null));
 
         } else if (props.contains(PROPERTY_ACCESS_TOKEN) && props.contains(PROPERTY_ACCESS_SECRET)) {
-            accessToken = new OAuthToken(props.getString(PROPERTY_ACCESS_TOKEN, null), props.getString(PROPERTY_ACCESS_SECRET, null));
-            setToken(accessToken);
+            accessToken = new Token(props.getString(PROPERTY_ACCESS_TOKEN, null), props.getString(PROPERTY_ACCESS_SECRET, null));
         }
 
         token = props.getString(PROPERTY_TOKEN, null);
@@ -76,13 +73,9 @@ public class OAuthHandler {
         return token;
     }
 
-    private void setToken(OAuthToken token) {
-        consumer.setTokenWithSecret(token.getKey(), token.getSecret());
-    }
-
     private void save() {
         if (requestToken != null) {
-            props.putString(PROPERTY_REQUEST_TOKEN, requestToken.getKey());
+            props.putString(PROPERTY_REQUEST_TOKEN, requestToken.getToken());
             props.putString(PROPERTY_REQUEST_SECRET, requestToken.getSecret());
         } else {
             props.remove(PROPERTY_REQUEST_TOKEN);
@@ -90,7 +83,7 @@ public class OAuthHandler {
         }
 
         if (accessToken != null) {
-            props.putString(PROPERTY_ACCESS_TOKEN, accessToken.getKey());
+            props.putString(PROPERTY_ACCESS_TOKEN, accessToken.getToken());
             props.putString(PROPERTY_ACCESS_SECRET, accessToken.getSecret());
         } else {
             props.remove(PROPERTY_ACCESS_TOKEN);
@@ -106,28 +99,29 @@ public class OAuthHandler {
         props.commit();
     }
 
-    public OAuthToken getAccessToken() {
+    public Token getAccessToken() {
         return accessToken;
     }
 
-    public OAuthToken getRequestToken() {
+    public Token getRequestToken() {
         return requestToken;
     }
 
-    OAuthConsumer getConsumer() {
-        return consumer;
+    void signRequest(OAuthRequest request) {
+        service.signRequest(accessToken, request);
     }
 
-    String retrieveAuthorizationUrl(String callbackUrl) throws OAuthException {
-        String authorizationUrl = provider.retrieveRequestToken(consumer, callbackUrl);
-        requestToken = new OAuthToken(consumer.getToken(), consumer.getTokenSecret());
+    String retrieveAuthorizationUrl() throws OAuthException {
+        requestToken = service.getRequestToken();
+        String authorizationUrl = service.getAuthorizationUrl(requestToken);
+
         save();
         return authorizationUrl;
     }
 
     void retrieveAccessToken(String verifier, String token) throws OAuthException {
-        provider.retrieveAccessToken(consumer, verifier);
-        accessToken = new OAuthToken(consumer.getToken(), consumer.getTokenSecret());
+        accessToken = service.getAccessToken(requestToken, new Verifier(verifier));
+
         this.token = token;
         requestToken = null; // Invalidate
         save();

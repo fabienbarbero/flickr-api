@@ -21,7 +21,6 @@
  */
 package com.flickr.api.entities;
 
-import java.io.IOException;
 import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,7 +76,6 @@ public class PhotoSize implements Serializable {
      * Get the image with the correct size.
      *
      * @return The image URL
-     * @throws IOException
      */
     public URL getSource() {
         return source;

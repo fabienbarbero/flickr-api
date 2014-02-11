@@ -28,7 +28,6 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.LoginResponse;
 import com.flickr.api.entities.UserInfos;
 import com.flickr.api.FlickrService;
-import org.apache.http.client.HttpClient;
 
 /**
  * http://www.flickr.com/services/api/auth.spec.html
@@ -40,8 +39,8 @@ public final class AuthenticationService extends FlickrService {
 
     private final PeopleService peopleService;
 
-    public AuthenticationService(OAuthHandler oauthHandler, HttpClient client, PeopleService peopleService) {
-        super(oauthHandler, client);
+    public AuthenticationService(OAuthHandler oauthHandler, PeopleService peopleService) {
+        super(oauthHandler);
         this.peopleService = peopleService;
     }
 

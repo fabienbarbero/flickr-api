@@ -36,14 +36,14 @@ public class AppTest {
     @Test
     public void testApi() {
         try {
-            System.setProperty("flickr.api.debug", "true");
+//            System.setProperty("flickr.api.debug", "true");
 
             Flickr flickr = new Flickr(
-                    "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "write",
+                    "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "http://localhost", "write",
                     new File(System.getProperty("user.home"), ".flickr-api/flickr.conf"));
 
             if (!flickr.isLogged()) {
-                String url = flickr.getAuthorizationUrl("http://localhost");
+                String url = flickr.getAuthorizationUrl();
                 System.out.println(url);
 
                 String verifier = JOptionPane.showInputDialog("Verifier");
@@ -56,6 +56,10 @@ public class AppTest {
             assertNotNull(caller);
             assertNotNull(caller.getPhotosInfo().getFirstDate());
             assertTrue(caller.getPhotosInfo().getCount() > 0);
+            
+//            String photoId = flickr.getUploadService().uploadPhoto(new File("/home/fabien/Images/6387435413_26acd0a519_o.jpg"), "test", null);
+//            assertNotNull(photoId);
+            if(true) return;
 
             // Favorites
             Paginated<Photo> photos = flickr.getFavoritesService().getFavorites(caller, 10, 1);

@@ -23,13 +23,13 @@ package com.flickr.api.entities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.flickr.api.ServerResponse;
+import com.flickr.api.JSONResponse;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class VoidResponse extends ServerResponse {
+public class VoidResponse extends JSONResponse {
 
     @Override
     protected void readObject(JSONObject json) throws JSONException {
