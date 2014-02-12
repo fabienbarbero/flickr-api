@@ -29,6 +29,7 @@ import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.PhotosResponse;
 import com.flickr.api.entities.Photo;
+import com.flickr.api.entities.VoidResponse;
 
 /**
  *
@@ -75,6 +76,32 @@ public class FavoritesService extends FlickrService {
         args.addParam("user_id", user.getId());
 
         return doGet(args, PhotosResponse.class).getPaginated();
+    }
+
+    /**
+     * Add a photo as favorite
+     *
+     * @param photo The photo to set favorite
+     * @throws FlickrServiceException Error setting the photo as favorite
+     */
+    public void addFavorite(Photo photo) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.favorites.add");
+        args.addParam("photo_id", photo.getId());
+
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Remove a photo from favorite
+     *
+     * @param photo The photo to remove from favorites
+     * @throws FlickrServiceException Error removing the photo from favorite
+     */
+    public void removeFavorite(Photo photo) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.favorites.remove");
+        args.addParam("photo_id", photo.getId());
+
+        doPost(args, VoidResponse.class);
     }
 
 }

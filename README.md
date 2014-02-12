@@ -10,17 +10,17 @@ The API use the following dependencies:
  - [httpclient](http://hc.apache.org/downloads.cgi) to use the web services (not needed for android)
  - [httpmime](http://hc.apache.org/downloads.cgi) to use large data in httpclient
  - [json](http://mvnrepository.com/artifact/org.json/json/20090211) to read the web services responses (not needed for android)
- - [signpost](https://code.google.com/p/oauth-signpost/) to use the OAuth authentication
+ - [scribe](https://github.com/fernandezpablo85/scribe-java) to use the OAuth authentication
  
 The calls to Flickr are quiet easy:
 
 ```java
-Flickr flickr = new Flickr("my.api.key", "my.api.secret", new File("flickr.conf"));
+Flickr flickr = new Flickr("my.api.key", "my.api.secret", "http://localhost/callback", new File("flickr.conf"));
 
 // Check if a user is already logged
 if(!flickr.isLogged()) {
     // Get the authorization URL to allow the application to use the Flickr services
-    String url = flickr.getAuthorizationUrl("http://localhost");
+    String url = flickr.getAuthorizationUrl();
     // Show the previous URL in a browser
 
     ...
@@ -38,3 +38,19 @@ UserInfo user = flickr.authenticate();
 Paginated<Photo> photos = flickr.getPhotosService().getRecentlyUpdated(50, 0);
 ...
 ```
+
+Features
+========
+
+The library do not supports all Flickr features. Here are the supported :
+
+ - get the users contacts
+ - get the cameras brand list
+ - get the favorites photos of users
+ - get the users galleries
+ - get the groups and their photos
+ - get the people (search user, get users informations ...)
+ - get the photos and the sets
+ - get the statistics on photos, set ...
+ - upload new photos
+

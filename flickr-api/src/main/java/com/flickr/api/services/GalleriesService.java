@@ -28,9 +28,11 @@ import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.GalleriesResponse;
 import com.flickr.api.entities.Gallery;
+import com.flickr.api.entities.GalleryResponse;
 import com.flickr.api.entities.Paginated;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotosResponse;
+import com.flickr.api.entities.VoidResponse;
 
 /**
  *
@@ -76,6 +78,45 @@ public class GalleriesService extends FlickrService {
         args.addParam("gallery_id", gallery.getId());
 
         return doGet(args, PhotosResponse.class).getPaginated();
+    }
+
+    /**
+     * Create a new gallery
+     *
+     * @param title The gallery title
+     * @param description The gallery description
+     * @param primaryPhoto The primary photo (optional)
+     * @return The created gallery
+     * @throws FlickrServiceException Error creating the gallery
+     */
+    public Gallery createGallery(String title, String description, Photo primaryPhoto) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.galleries.create");
+        args.addParam("title", title);
+        args.addParam("description", description);
+        if (primaryPhoto != null) {
+            args.addParam("primary_photo_id", primaryPhoto.getId());
+        }
+
+        return doPost(args, GalleryResponse.class).getGallery();
+    }
+
+    /**
+     * Add a photo to a gallery
+     *
+     * @param gallery The gallery
+     * @param photo The photo to add
+     * @param comment A comment (optional)
+     * @throws FlickrServiceException Error adding the photo
+     */
+    public void addPhotoToGallery(Gallery gallery, Photo photo, String comment) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.galleries.addPhoto");
+        args.addParam("gallery_id", gallery.getId());
+        args.addParam("photo_id", photo.getId());
+        if (comment != null) {
+            args.addParam("comment", comment);
+        }
+
+        doPost(args, VoidResponse.class);
     }
 
 }

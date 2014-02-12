@@ -38,6 +38,15 @@ public class UploadService extends FlickrService {
         super(oauthHandler);
     }
 
+    /**
+     * Upload a new photo on Flickr
+     *
+     * @param file The photo file
+     * @param title The photo title (optional)
+     * @param description The photo description (optional)
+     * @return The new photo identifier
+     * @throws FlickrServiceException Upload error
+     */
     public String uploadPhoto(File file, String title, String description) throws FlickrServiceException {
         CommandArguments args = new CommandArguments();
         args.addParam("photo", file);

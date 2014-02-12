@@ -22,7 +22,6 @@
 package com.flickr.api;
 
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.FlickrApi;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Token;

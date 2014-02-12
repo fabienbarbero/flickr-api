@@ -28,6 +28,7 @@ import com.flickr.api.FlickrServiceException;
 import com.flickr.api.OAuthHandler;
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.Comment;
+import com.flickr.api.entities.CommentResponse;
 import com.flickr.api.entities.CommentsResponse;
 import com.flickr.api.entities.ExifInfos;
 import com.flickr.api.entities.ExifInfosResponse;
@@ -41,6 +42,8 @@ import com.flickr.api.entities.PhotoInfos;
 import com.flickr.api.entities.PhotoInfosResponse;
 import com.flickr.api.entities.PhotoSize;
 import com.flickr.api.entities.PhotoSizesResponse;
+import com.flickr.api.entities.PhotoTag;
+import com.flickr.api.entities.VoidResponse;
 
 /**
  * Service used to access the photos.
@@ -229,6 +232,147 @@ public class PhotosService extends FlickrService {
         CommandArguments args = new CommandArguments("flickr.photos.comments.getList");
         args.addParam("photo_id", photo.getId());
         return doGet(args, CommentsResponse.class).getList();
+    }
+
+    /**
+     * Delete a photo from flickr
+     *
+     * @param photo The photo to delete
+     * @throws FlickrServiceException Error deleting the photo
+     */
+    public void deletePhoto(Photo photo) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.delete");
+        args.addParam("photo_id", photo.getId());
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Set the tags for a photo.
+     *
+     * @param photo The photo to set the tags
+     * @param tags The tags list
+     * @throws FlickrServiceException Error setting the tags
+     */
+    public void setTags(Photo photo, String... tags) throws FlickrServiceException {
+        StringBuilder tagsBuilder = new StringBuilder();
+        for (String tag : tags) {
+            if (tag.contains(" ")) {
+                tagsBuilder.append("\"").append(tag).append("\"");
+            } else {
+                tagsBuilder.append(tag);
+            }
+            tagsBuilder.append(" ");
+        }
+
+        CommandArguments args = new CommandArguments("flickr.photos.setTag");
+        args.addParam("photo_id", photo.getId());
+        args.addParam("tags", tagsBuilder);
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Remove a tag on a photo
+     *
+     * @param tag The tag to remove
+     * @throws FlickrServiceException Error removing tag
+     */
+    public void removeTag(PhotoTag tag) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.removeTag");
+        args.addParam("tag_id", tag.getId());
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Set the meta information for a photo.
+     *
+     * @param photo The photo to modify
+     * @param title The new photo title
+     * @param description The new photo description
+     * @throws FlickrServiceException Error updating the photo meta
+     */
+    public void setPhotoMeta(Photo photo, String title, String description) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.setMeta");
+        args.addParam("photo_id", photo.getId());
+        args.addParam("title", title);
+        args.addParam("description", description);
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Set permissions for a photo.
+     *
+     * @param photo The photo to modify the permissions
+     * @param isPublic true to set the photo public, false otherwise
+     * @param isFriend true to set the photo accessible for friends, false otherwise
+     * @param isFamily true to set the photo accessible for family, false otherwise
+     * @param commentsPerms Comments permissions
+     * @param addMetaPerms Meta add permissions
+     * @throws FlickrServiceException Error setting the permissions
+     */
+    public void setPhotoPermissions(Photo photo, boolean isPublic, boolean isFriend, boolean isFamily, Permission commentsPerms, Permission addMetaPerms) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.setPerms");
+        args.addParam("photo_id", photo.getId());
+        args.addParam("is_public", isPublic);
+        args.addParam("is_friend", isFriend);
+        args.addParam("is_family", isFamily);
+        args.addParam("perm_comment", commentsPerms.value);
+        args.addParam("perm_addmeta", addMetaPerms.value);
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Add a comment to a photo
+     *
+     * @param photo The photo
+     * @param text The comment to add
+     * @return The comment
+     * @throws FlickrServiceException Error adding the comment
+     */
+    public Comment addPhotoComment(Photo photo, String text) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.comments.addComment");
+        args.addParam("photo_id", photo.getId());
+        args.addParam("comment_text", text);
+        return doPost(args, CommentResponse.class).getComment();
+    }
+
+    /**
+     * Delete a comment
+     *
+     * @param comment The comment to delete
+     * @throws FlickrServiceException Error deleting the comment
+     */
+    public void deleteComment(Comment comment) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.comments.deleteComment");
+        args.addParam("comment_id", comment.getId());
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Edit the text of a comment as the currently authenticated user.
+     *
+     * @param comment The comment to update
+     * @param text The new comment text
+     * @throws FlickrServiceException Error editing the comment
+     */
+    public void editComment(Comment comment, String text) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.photos.comments.editComment");
+        args.addParam("comment_id", comment.getId());
+        args.addParam("comment_text", text);
+        doPost(args, VoidResponse.class);
+    }
+
+    public enum Permission {
+
+        JUST_OWNER(0),
+        FRIENDS_FAMILY(1),
+        CONTACTS(2),
+        EVERYBODY(3);
+
+        private final int value;
+
+        private Permission(int value) {
+            this.value = value;
+        }
     }
 
 }

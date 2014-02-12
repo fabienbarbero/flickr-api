@@ -76,7 +76,6 @@ public abstract class FlickrService {
 
             Response response = request.send();
             String body = response.getBody();
-            System.out.println(body);
 
             return parseBody(args, clazz, body);
 

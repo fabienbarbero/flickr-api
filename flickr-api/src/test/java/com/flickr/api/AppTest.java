@@ -59,7 +59,7 @@ public class AppTest {
             
 //            String photoId = flickr.getUploadService().uploadPhoto(new File("/home/fabien/Images/6387435413_26acd0a519_o.jpg"), "test", null);
 //            assertNotNull(photoId);
-            if(true) return;
+//            if(true) return;
 
             // Favorites
             Paginated<Photo> photos = flickr.getFavoritesService().getFavorites(caller, 10, 1);

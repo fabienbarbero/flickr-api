@@ -34,6 +34,7 @@ import com.flickr.api.entities.Member;
 import com.flickr.api.entities.MembersResponse;
 import com.flickr.api.entities.Photo;
 import com.flickr.api.entities.PhotosResponse;
+import com.flickr.api.entities.VoidResponse;
 import java.util.Locale;
 
 /**
@@ -128,6 +129,37 @@ public class GroupsService extends FlickrService {
         args.addParam("page", page);
         args.addParam("per_page", perPage);
         return doGet(args, GroupsResponse.class).getPaginated();
+    }
+
+    /**
+     * Join a group
+     *
+     * @param group The group to join
+     * @param acceptRules If the group has rules, they must be displayed to the user prior to joining. Passing a true
+     * value for this argument specifies that the application has displayed the group rules to the user, and that the
+     * user has agreed to them.
+     * @throws FlickrServiceException Error joining the group
+     */
+    public void joinGroup(Group group, boolean acceptRules) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.groups.join");
+        args.addParam("group_id", group.getId());
+        args.addParam("accept_rules", acceptRules);
+        doPost(args, VoidResponse.class);
+    }
+
+    /**
+     * Leave a group. If the user is the only administrator left, and there are other members, the oldest member will be
+     * promoted to administrator. If the user is the last person in the group, the group will be deleted.
+     *
+     * @param group The group to leave
+     * @param deleteUserPhotos true to delete the user photos, false otherwise
+     * @throws FlickrServiceException Error leaving the group
+     */
+    public void leaveGroup(Group group, boolean deleteUserPhotos) throws FlickrServiceException {
+        CommandArguments args = new CommandArguments("flickr.groups.leave");
+        args.addParam("group_id", group.getId());
+        args.addParam("delete_photos", deleteUserPhotos);
+        doPost(args, VoidResponse.class);
     }
 
 }
