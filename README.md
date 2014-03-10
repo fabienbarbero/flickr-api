@@ -7,7 +7,6 @@ Getting started
 ===============
 The API use the following dependencies:
 
- - [httpclient](http://hc.apache.org/downloads.cgi) to use the web services (not needed for android)
  - [httpmime](http://hc.apache.org/downloads.cgi) to use large data in httpclient
  - [json](http://mvnrepository.com/artifact/org.json/json/20090211) to read the web services responses (not needed for android)
  - [scribe](https://github.com/fernandezpablo85/scribe-java) to use the OAuth authentication
