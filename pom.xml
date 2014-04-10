@@ -6,6 +6,7 @@
     <artifactId>flickr-api</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Flickr API</name>
+    <url>https://github.com/fabienbarbero/flickr-api</url>
     
     <build>
         <plugins>
@@ -20,6 +21,12 @@
             </plugin>
         </plugins>
     </build>
+    
+    <scm>
+        <connection>scm:git:git@github.com:fabienbarbero/flickr-api.git</connection>
+        <developerConnection>scm:git:git@github.com:fabienbarbero/flickr-api.git</developerConnection>
+        <url>https://github.com/fabienbarbero/flickr-api</url>
+    </scm>
 
     <dependencies>
         <dependency>

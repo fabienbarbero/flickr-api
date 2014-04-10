@@ -23,7 +23,6 @@ package com.flickr.api;
 
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.LoginResponse;
-import com.flickr.api.entities.UserInfos;
 
 /**
  * http://www.flickr.com/services/api/auth.spec.html
@@ -31,20 +30,17 @@ import com.flickr.api.entities.UserInfos;
  *
  * @author Fabien Barbero
  */
-public final class AuthenticationService extends FlickrService {
+final class AuthenticationService extends FlickrService {
 
-    private final PeopleService peopleService;
 
-    AuthenticationService(OAuthHandler oauthHandler, PeopleService peopleService) {
+    AuthenticationService(OAuthHandler oauthHandler) {
         super(oauthHandler);
-        this.peopleService = peopleService;
     }
 
-    public UserInfos authenticate() throws FlickrException {
+    public BaseUser authenticate() throws FlickrException {
         CommandArguments args = new CommandArguments("flickr.test.login");
         LoginResponse response = doGet(args, LoginResponse.class);
-        BaseUser identifier = response.getIdentifier();
+        return response.getIdentifier();
 
-        return peopleService.getUserInfo(identifier);
     }
 }

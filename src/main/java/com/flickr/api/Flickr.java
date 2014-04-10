@@ -21,8 +21,8 @@
  */
 package com.flickr.api;
 
+import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.UserInfos;
-import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +36,7 @@ import org.scribe.model.OAuthConstants;
 public final class Flickr {
 
     public static final boolean debug = Boolean.parseBoolean(System.getProperty("flickr.api.debug", "false"));
+    private static final String PROP_USER_ID = "user.id";
     //
     private final OAuthHandler oauthHandler;
     private final FlickrProperties props;
@@ -60,12 +61,13 @@ public final class Flickr {
      * @param apiSecret The flickr API secret
      * @param callbackUrl The callback URL where the user will be redirected when he will grant the access of the
      * application (see {@link Flickr#verifyToken(java.lang.String)}).
-     * @param configurationFile The configuration file used to store the OAuth
+     * @param props The configuration used to store the Flickr informations
      * @param permission The permission to use (read, write or delete) data. At the beginning, this file
      * <b>must</b> not exists.
      */
-    public Flickr(String apiKey, String apiSecret, String callbackUrl, String permission, File configurationFile) {
-        props = new FlickrProperties(configurationFile);
+    public Flickr(String apiKey, String apiSecret, String callbackUrl, String permission, FlickrProperties props) {
+        props.load();
+        this.props = props;
         oauthHandler = new OAuthHandler(props, apiKey, apiSecret, callbackUrl, permission);
 
         contactsService = new ContactsService(oauthHandler);
@@ -73,7 +75,7 @@ public final class Flickr {
         photosService = new PhotosService(oauthHandler);
         photosetsService = new PhotosetsService(oauthHandler);
         favoritesService = new FavoritesService(oauthHandler);
-        authenticationService = new AuthenticationService(oauthHandler, peoplesService);
+        authenticationService = new AuthenticationService(oauthHandler);
         statsService = new StatsService(oauthHandler);
         groupsService = new GroupsService(oauthHandler);
         cameraService = new CameraService(oauthHandler);
@@ -83,12 +85,12 @@ public final class Flickr {
     }
 
     /**
-     * Indicates if a user is already logged
+     * Indicates if this is the first start of the API
      *
-     * @return true if a user is logger, false otherwise
+     * @return true if it is the first start, false otherwise
      */
-    public boolean isLogged() {
-        return oauthHandler.getAccessToken() != null;
+    public boolean isFirstStart() {
+        return oauthHandler.getAccessToken() == null;
     }
 
     /**
@@ -105,8 +107,9 @@ public final class Flickr {
      * '[callbackUrl]?oauth_verifier=...&oauth_token=...'.
      *
      * @param url The callback URL with the authorization parameters to verify
+     * @throws FlickrException Error getting the user informations
      */
-    public void verifyToken(String url) {
+    public void verifyToken(String url) throws FlickrException {
         URI uri = URI.create(url);
 
         Map<String, String> queryParams = new HashMap<String, String>();
@@ -119,23 +122,31 @@ public final class Flickr {
     }
 
     /**
-     * Verify the token returned in the callback URL
+     * Verify the token returned in the callback URL. This method ask the server the user informations and store them.
      *
      * @param verifier The verifier value to verify
      * @param token The token value to verify
+     * @throws FlickrException Error getting the user informations
      */
-    public void verifyToken(String verifier, String token) {
+    public void verifyToken(String verifier, String token) throws FlickrException {
         oauthHandler.retrieveAccessToken(verifier, token);
+        BaseUser user = authenticationService.authenticate();
+        props.putString(PROP_USER_ID, user.getId());
+        props.commit();
     }
 
     /**
-     * Authenticate the user
+     * Get the user identifier.
      *
-     * @return The user informations
-     * @throws FlickrException Authentication error
+     * @return The user identifier
+     * @throws FlickrException Error getting the user infos
      */
-    public UserInfos authenticate() throws FlickrException {
-        return authenticationService.authenticate();
+    public UserInfos getUser() throws FlickrException {
+        String userId = props.getString(PROP_USER_ID, null);
+        if (userId == null) {
+            return null;
+        }
+        return peoplesService.getUserInfo(userId);
     }
 
     /**

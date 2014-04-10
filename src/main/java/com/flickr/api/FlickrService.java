@@ -32,7 +32,7 @@ import org.scribe.model.Verb;
 public abstract class FlickrService {
 
     public static final int MAX_PER_PAGE = Integer.MAX_VALUE;
-    private static final String URL_PREFIX = "http://api.flickr.com/services/rest";
+    private static final String URL_PREFIX = "https://api.flickr.com/services/rest";
     private final OAuthHandler oauth;
 
     FlickrService(OAuthHandler oauth) {

@@ -31,10 +31,10 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 /**
- *
+ * 
  * @author Fabien Barbero
  */
-class FlickrProperties {
+public class FlickrProperties {
 
     private final Properties props;
     private final File file;
@@ -42,11 +42,29 @@ class FlickrProperties {
     public FlickrProperties(File file) {
         this.props = new Properties();
         this.file = file;
+    }
 
+    final boolean contains(String key) {
+        return props.containsKey(key);
+    }
+
+    final String getString(String key, String def) {
+        return props.getProperty(key, def);
+    }
+
+    final void putString(String key, String value) {
+        props.setProperty(key, value);
+    }
+
+    final void remove(String key) {
+        props.remove(key);
+    }
+
+    final void load() {
         if (file.exists()) {
             InputStream is = null;
             try {
-                is = new FileInputStream(file);
+                is = getInputStream(file);
                 props.load(is);
 
             } catch (IOException ex) {
@@ -57,32 +75,24 @@ class FlickrProperties {
         }
     }
 
-    public boolean contains(String key) {
-        return props.containsKey(key);
-    }
-
-    public String getString(String key, String def) {
-        return props.getProperty(key, def);
-    }
-
-    public void putString(String key, String value) {
-        props.setProperty(key, value);
-    }
-
-    public void remove(String key) {
-        props.remove(key);
-    }
-
-    public void commit() {
+    final void commit() {
         OutputStream os = null;
         try {
-            os = new FileOutputStream(file);
+            os = getOutputStream(file);
             props.store(os, "Flickr configuration");
-            
+
         } catch (IOException ex) {
             throw new UnsupportedOperationException("Error saving configuration", ex);
         } finally {
             IOUtils.closeQuietly(os);
         }
+    }
+
+    protected InputStream getInputStream(File file) throws IOException {
+        return new FileInputStream(file);
+    }
+
+    protected OutputStream getOutputStream(File file) throws IOException {
+        return new FileOutputStream(file);
     }
 }

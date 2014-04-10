@@ -31,20 +31,20 @@ import static org.junit.Assert.*;
 /**
  * Unit test for simple App.
  */
-public class AppTest {
+public class BasicTest {
 
     @Test
     public void testApi() {
         try {
 //            System.setProperty("flickr.api.debug", "true");
 
-            Flickr flickr = new Flickr(
-                    "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "http://localhost", "write",
-                    new File(System.getProperty("user.home"), ".flickr-api/flickr.conf"));
+            FlickrProperties props = new FlickrProperties(new File(System.getProperty("user.home"), ".flickr-api/flickr.conf"));
+            Flickr flickr = new Flickr( "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "http://localhost", "write", props);
 
-            if (!flickr.isLogged()) {
+            if (flickr.isFirstStart()) {
                 String url = flickr.getAuthorizationUrl();
                 System.out.println(url);
+                assertNull(flickr.getUser());
 
                 String verifier = JOptionPane.showInputDialog("Verifier");
                 String token = JOptionPane.showInputDialog("Token");
@@ -52,7 +52,7 @@ public class AppTest {
             }
 
             // Auth
-            UserInfos caller = flickr.authenticate();
+            UserInfos caller = flickr.getUser();
             assertNotNull(caller);
             assertNotNull(caller.getPhotosInfo().getFirstDate());
             assertTrue(caller.getPhotosInfo().getCount() > 0);
