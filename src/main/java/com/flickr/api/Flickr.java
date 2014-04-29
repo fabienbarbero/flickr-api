@@ -23,6 +23,8 @@ package com.flickr.api;
 
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.UserInfos;
+
+import java.net.Proxy;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,6 +84,22 @@ public final class Flickr {
         interestingnessService = new InterestingnessService(oauthHandler);
         galleriesService = new GalleriesService(oauthHandler);
         uploadService = new UploadService(oauthHandler);
+    }
+    
+    public void setProxy(Proxy proxy)
+    {
+        contactsService.setProxy(proxy);
+        peoplesService.setProxy(proxy);
+        photosService.setProxy(proxy);
+        photosetsService.setProxy(proxy);
+        authenticationService.setProxy(proxy);
+        favoritesService.setProxy(proxy);
+        statsService.setProxy(proxy);
+        groupsService.setProxy(proxy);
+        cameraService.setProxy(proxy);
+        interestingnessService.setProxy(proxy);
+        galleriesService.setProxy(proxy);
+        uploadService.setProxy(proxy);
     }
 
     /**
