@@ -19,6 +19,7 @@ package com.flickr.api;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.Proxy;
 import java.util.Map;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.scribe.model.OAuthRequest;
@@ -34,13 +35,27 @@ public abstract class FlickrService {
     public static final int MAX_PER_PAGE = Integer.MAX_VALUE;
     private static final String URL_PREFIX = "https://api.flickr.com/services/rest";
     private final OAuthHandler oauth;
+    
+    private Proxy proxy = null;
 
     FlickrService(OAuthHandler oauth) {
         this.oauth = oauth;
     }
+    
+    public void setProxy( Proxy proxy)
+    {
+        this.proxy = proxy;
+    }
 
     final <T extends ServerResponse> T doGet(CommandArguments args, Class<T> clazz) throws FlickrException {
         OAuthRequest request = new OAuthRequest(Verb.GET, URL_PREFIX);
+
+        // check for proxy, use if available
+        if (proxy != null)
+        {
+            request.setProxy(proxy);
+        }
+
         for (Map.Entry<String, Object> param : args.getParameters().entrySet()) {
             request.addQuerystringParameter(param.getKey(), String.valueOf(param.getValue()));
         }
@@ -59,6 +74,13 @@ public abstract class FlickrService {
     final <T extends ServerResponse> T doPost(CommandArguments args, Class<T> clazz, String url) throws FlickrException {
         try {
             OAuthRequest request = new OAuthRequest(Verb.POST, url);
+            
+            // check for proxy, use if available
+            if (proxy != null)
+            {
+                request.setProxy(proxy);
+            }
+            
             for (Map.Entry<String, Object> param : args.getParameters().entrySet()) {
                 if (param.getValue() instanceof String) {
                     request.addQuerystringParameter(param.getKey(), (String) param.getValue());

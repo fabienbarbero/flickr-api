@@ -98,7 +98,7 @@ public class PeopleService extends FlickrService {
         return doGet(args, UserInfoResponse.class).getUserInfo();
     }
     
-    UserInfos getUserInfo(String userId) throws FlickrException {
+    public UserInfos getUserInfo(String userId) throws FlickrException {
         CommandArguments args = new CommandArguments("flickr.people.getInfo");
         args.addParam("user_id", userId);
         return doGet(args, UserInfoResponse.class).getUserInfo();
