@@ -88,6 +88,8 @@ public final class Flickr {
     
     public void setProxy(Proxy proxy)
     {
+        oauthHandler.setProxy(proxy);
+        
         contactsService.setProxy(proxy);
         peoplesService.setProxy(proxy);
         photosService.setProxy(proxy);
