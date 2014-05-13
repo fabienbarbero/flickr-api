@@ -38,7 +38,7 @@ class FlickrPermsApi extends FlickrApi {
 
     @Override
     public String getAuthorizationUrl(Token requestToken) {
-        return "http://www.flickr.com/services/oauth/authorize?perms=" + perms + "&oauth_token=" + requestToken.getToken();
+        return "https://www.flickr.com/services/oauth/authorize?perms=" + perms + "&oauth_token=" + requestToken.getToken();
     }
 
 }
