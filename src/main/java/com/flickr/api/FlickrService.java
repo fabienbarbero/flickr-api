@@ -42,7 +42,7 @@ public abstract class FlickrService {
         this.oauth = oauth;
     }
     
-    public void setProxy( Proxy proxy)
+    void setProxy( Proxy proxy)
     {
         this.proxy = proxy;
     }
@@ -51,9 +51,8 @@ public abstract class FlickrService {
         OAuthRequest request = new OAuthRequest(Verb.GET, URL_PREFIX);
 
         // check for proxy, use if available
-        if (proxy != null)
-        {
-            request.setProxy(proxy);
+        if (proxy != null) {
+//            request.setProxy(proxy);
         }
 
         for (Map.Entry<String, Object> param : args.getParameters().entrySet()) {
@@ -76,9 +75,8 @@ public abstract class FlickrService {
             OAuthRequest request = new OAuthRequest(Verb.POST, url);
             
             // check for proxy, use if available
-            if (proxy != null)
-            {
-                request.setProxy(proxy);
+            if (proxy != null) {
+//                request.setProxy(proxy);
             }
             
             for (Map.Entry<String, Object> param : args.getParameters().entrySet()) {

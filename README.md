@@ -14,10 +14,10 @@ The API use the following dependencies:
 The calls to Flickr are quiet easy:
 
 ```java
-Flickr flickr = new Flickr("my.api.key", "my.api.secret", "http://localhost/callback", new File("flickr.conf"));
+Flickr flickr = new Flickr("my.api.key", "my.api.secret", "http://localhost/callback", "read", new File("flickr.conf"));
 
 // Check if a user is already logged
-if(!flickr.isLogged()) {
+if(!flickr.isFirstStart()) {
     // Get the authorization URL to allow the application to use the Flickr services
     String url = flickr.getAuthorizationUrl();
     // Show the previous URL in a browser
@@ -31,7 +31,7 @@ if(!flickr.isLogged()) {
 }
 
 // Authenticate the user
-UserInfo user = flickr.authenticate();
+UserInfo user = flickr.getUser();
 
 // Use the services
 Paginated<Photo> photos = flickr.getPhotosService().getRecentlyUpdated(50, 0);

@@ -38,7 +38,7 @@ public class BasicTest {
         try {
 //            System.setProperty("flickr.api.debug", "true");
 
-            FlickrProperties props = new FlickrProperties(new File(System.getProperty("user.home"), ".flickr-api/flickr.conf"));
+            File props = new File(System.getProperty("user.home"), ".flickr-api/flickr.conf");
             Flickr flickr = new Flickr( "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "http://localhost", "write", props);
 
             if (flickr.isFirstStart()) {

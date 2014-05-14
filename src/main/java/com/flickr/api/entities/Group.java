@@ -43,7 +43,7 @@ public class Group implements IdObject {
         name = json.getString("name");
         photos = json.optInt("photos", -1);
 
-        cover = URLUtils.fromString(MessageFormat.format("http://farm{0}.staticflickr.com/{1}/coverphoto/{2}_s.jpg",
+        cover = URLUtils.fromString(MessageFormat.format("https://farm{0}.staticflickr.com/{1}/coverphoto/{2}_s.jpg",
                 json.getString("iconfarm"), json.getString("iconserver"), id));
     }
 

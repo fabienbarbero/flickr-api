@@ -35,7 +35,7 @@ public class Avatar implements Serializable {
     /**
      * The default avatar URL (must be used if a user did not set any avatar).
      */
-    public static final URL DEFAULT_AVATAR = URLUtils.fromString("http://www.flickr.com/images/buddyicon.gif");
+    public static final URL DEFAULT_AVATAR = URLUtils.fromString("https://www.flickr.com/images/buddyicon.gif");
 
     /**
      * Small square (48x48)
@@ -69,9 +69,9 @@ public class Avatar implements Serializable {
     public URL getUrl(String size) {
         if (iconServer > 0 && iconFarm != null) {
             if (size.equals(SMALL_SQUARE)) {
-                return URLUtils.fromString("http://farm" + iconFarm + ".staticflickr.com/" + iconServer + "/buddyicons/" + userId + ".jpg");
+                return URLUtils.fromString("https://farm" + iconFarm + ".staticflickr.com/" + iconServer + "/buddyicons/" + userId + ".jpg");
             } else {
-                return URLUtils.fromString("http://farm" + iconFarm + ".staticflickr.com/" + iconServer + "/buddyicons/" + userId + "_" + size + ".jpg");
+                return URLUtils.fromString("https://farm" + iconFarm + ".staticflickr.com/" + iconServer + "/buddyicons/" + userId + "_" + size + ".jpg");
             }
         } else {
             return DEFAULT_AVATAR;

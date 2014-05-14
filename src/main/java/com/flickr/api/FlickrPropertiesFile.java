@@ -19,26 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api.entities;
+package com.flickr.api;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
- *
+ * Simple implentation of {@link FlickrProperties} which store the data in a file.
+ * 
  * @author Fabien Barbero
  */
-public class PhotosetInfosResponse extends JSONResponse {
+public class FlickrPropertiesFile extends FlickrProperties {
 
-    private PhotosetInfos infos;
-    
+    private final File file;
+
+    public FlickrPropertiesFile(File file) {
+        this.file = file;
+    }
+
     @Override
-    protected void readObject(JSONObject json) throws JSONException {
-        infos = new PhotosetInfos(json.getJSONObject("photoset"));
+    protected boolean isConfigExists() {
+        return file.exists();
     }
 
-    public PhotosetInfos getInfos() {
-        return infos;
+    @Override
+    protected InputStream getInputStream() throws IOException {
+        return new FileInputStream(file);
     }
-    
+
+    @Override
+    protected OutputStream getOutputStream() throws IOException {
+        return new FileOutputStream(file);
+    }
+
 }

@@ -21,10 +21,7 @@
  */
 package com.flickr.api;
 
-import java.net.HttpURLConnection;
 import java.net.Proxy;
-import java.net.URL;
-
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.OAuthRequest;
@@ -60,10 +57,9 @@ class OAuthHandler {
                 .build();
         load();
     }
-    
-    public void setProxy(Proxy proxy)
-    {
-        service.setProxy(proxy);
+
+    void setProxy(Proxy proxy) {
+//        service.setProxy(proxy);
     }
 
     private void load() {

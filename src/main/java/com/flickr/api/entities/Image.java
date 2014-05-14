@@ -78,7 +78,7 @@ public class Image implements Serializable {
     }
 
     Image(String farm, String server, String primary, String secret) {
-        prefix = MessageFormat.format("http://farm{0}.staticflickr.com/{1}/{2}_{3}_", farm, server, primary, secret);
+        prefix = MessageFormat.format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_", farm, server, primary, secret);
     }
 
     Image(JSONObject json) throws JSONException {
@@ -89,7 +89,7 @@ public class Image implements Serializable {
             id = json.getString("primary");
         }
 
-        prefix = MessageFormat.format("http://farm{0}.static.flickr.com/{1}/{2}_{3}_",
+        prefix = MessageFormat.format("https://farm{0}.static.flickr.com/{1}/{2}_{3}_",
                 json.getString("farm"), json.getString("server"),
                 id,
                 json.getString("secret"));

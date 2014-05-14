@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
 public class ExifInfosResponse extends JSONResponse {
 

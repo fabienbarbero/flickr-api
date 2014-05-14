@@ -23,6 +23,7 @@ package com.flickr.api;
 
 import com.flickr.api.entities.BaseUser;
 import com.flickr.api.entities.UserInfos;
+import java.io.File;
 
 import java.net.Proxy;
 import java.net.URI;
@@ -56,6 +57,10 @@ public final class Flickr {
     private final GalleriesService galleriesService;
     private final UploadService uploadService;
 
+    public Flickr(String apiKey, String apiSecret, String callbackUrl, String permission, File configFile) {
+        this(apiKey, apiSecret, callbackUrl, permission, new FlickrPropertiesFile(configFile));
+    }
+
     /**
      * Create a new Flickr instance
      *
@@ -85,11 +90,16 @@ public final class Flickr {
         galleriesService = new GalleriesService(oauthHandler);
         uploadService = new UploadService(oauthHandler);
     }
-    
-    public void setProxy(Proxy proxy)
-    {
+
+    /**
+     * Set a proxy to access the services.<br/>
+     * <b>WARNING:</b> This method is not yet effective
+     *
+     * @param proxy The proxy to use
+     */
+    public void setProxy(Proxy proxy) {
         oauthHandler.setProxy(proxy);
-        
+
         contactsService.setProxy(proxy);
         peoplesService.setProxy(proxy);
         photosService.setProxy(proxy);

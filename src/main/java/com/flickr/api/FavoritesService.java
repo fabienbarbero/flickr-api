@@ -29,7 +29,7 @@ import com.flickr.api.entities.VoidResponse;
 
 /**
  *
- * @author fabien
+ * @author Fabien Barbero
  */
 public class FavoritesService extends FlickrService {
 

@@ -22,26 +22,22 @@
 package com.flickr.api;
 
 import com.flickr.api.utils.IOUtils;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
 /**
- * 
+ * This class handle the configuration read and storage.
+ *
  * @author Fabien Barbero
  */
-public class FlickrProperties {
+public abstract class FlickrProperties {
 
     private final Properties props;
-    private final File file;
 
-    public FlickrProperties(File file) {
+    public FlickrProperties() {
         this.props = new Properties();
-        this.file = file;
     }
 
     final boolean contains(String key) {
@@ -61,10 +57,10 @@ public class FlickrProperties {
     }
 
     final void load() {
-        if (file.exists()) {
+        if (isConfigExists()) {
             InputStream is = null;
             try {
-                is = getInputStream(file);
+                is = getInputStream();
                 props.load(is);
 
             } catch (IOException ex) {
@@ -78,7 +74,7 @@ public class FlickrProperties {
     final void commit() {
         OutputStream os = null;
         try {
-            os = getOutputStream(file);
+            os = getOutputStream();
             props.store(os, "Flickr configuration");
 
         } catch (IOException ex) {
@@ -88,11 +84,26 @@ public class FlickrProperties {
         }
     }
 
-    protected InputStream getInputStream(File file) throws IOException {
-        return new FileInputStream(file);
-    }
+    /**
+     * Indicates if the configuration has already been defined
+     *
+     * @return true if the configuration has already been defined
+     */
+    protected abstract boolean isConfigExists();
 
-    protected OutputStream getOutputStream(File file) throws IOException {
-        return new FileOutputStream(file);
-    }
+    /**
+     * Open an InputStream to read the configuration
+     *
+     * @return The stream
+     * @throws IOException Error opening the stream
+     */
+    protected abstract InputStream getInputStream() throws IOException;
+
+    /**
+     * Open an OutputStream to write the configuration
+     *
+     * @return The stream
+     * @throws IOException Error opening the stream
+     */
+    protected abstract OutputStream getOutputStream() throws IOException;
 }
