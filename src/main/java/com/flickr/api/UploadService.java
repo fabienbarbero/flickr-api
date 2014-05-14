@@ -54,7 +54,7 @@ public class UploadService extends FlickrService {
             args.addParam("description", description);
         }
 
-        return doPost(args, UploadedPhotoResponse.class, "http://up.flickr.com/services/upload").getPhotoId();
+        return doPost(args, UploadedPhotoResponse.class, "https://up.flickr.com/services/upload").getPhotoId();
     }
 
 }
