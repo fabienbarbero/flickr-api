@@ -31,10 +31,13 @@ import java.util.List;
  *
  * @author Fabien Barbero
  */
-public class CameraService extends FlickrService {
+public class CameraService
+        extends FlickrService
+{
 
-    CameraService(OAuthHandler oauth) {
-        super(oauth);
+    CameraService( OAuthHandler oauth )
+    {
+        super( oauth );
     }
 
     /**
@@ -43,9 +46,11 @@ public class CameraService extends FlickrService {
      * @return The brands
      * @throws FlickrException Error getting the brands
      */
-    public List<CameraBrand> getBrands() throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.cameras.getBrands");
-        return doGet(args, CameraBrandsResponse.class).getList();
+    public List<CameraBrand> getBrands()
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.cameras.getBrands" );
+        return doGet( args, CameraBrandsResponse.class ).getList();
     }
 
     /**
@@ -55,10 +60,12 @@ public class CameraService extends FlickrService {
      * @return The models
      * @throws FlickrException Error getting the models
      */
-    public List<CameraBrandModel> getBrandModels(CameraBrand brand) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.cameras.getBrandModels");
-        args.addParam("brand", brand.getId());
-        return doGet(args, CameraBrandModelsResponse.class).getList();
+    public List<CameraBrandModel> getBrandModels( CameraBrand brand )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.cameras.getBrandModels" );
+        args.addParam( "brand", brand.getId() );
+        return doGet( args, CameraBrandModelsResponse.class ).getList();
     }
 
 }

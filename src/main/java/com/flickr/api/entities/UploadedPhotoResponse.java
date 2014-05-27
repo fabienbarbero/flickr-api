@@ -31,15 +31,15 @@ import org.w3c.dom.Element;
  */
 public class UploadedPhotoResponse extends XMLResponse {
 
-    private String photoId;
+    private UploadedPhoto photoId;
 
     @Override
     protected void readObject(Document document) {
         Element photoEl = XMLUtils.getChildElement(document.getDocumentElement(), "photoid");
-        photoId = photoEl.getTextContent();
+        photoId = new UploadedPhoto(photoEl.getTextContent());
     }
 
-    public String getPhotoId() {
+    public UploadedPhoto getPhoto() {
         return photoId;
     }
 

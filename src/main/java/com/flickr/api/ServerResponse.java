@@ -25,14 +25,17 @@ package com.flickr.api;
  *
  * @author Fabien Barbero
  */
-public interface ServerResponse {
+public interface ServerResponse
+{
 
-    void read(String data, String method) throws FlickrException;
-    
-    public enum ResponseStatus {
+    void read( String data, String method )
+            throws FlickrException;
+
+    public enum ResponseStatus
+    {
 
         fail,
         ok;
     }
-    
+
 }

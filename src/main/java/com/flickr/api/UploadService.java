@@ -21,6 +21,7 @@
  */
 package com.flickr.api;
 
+import com.flickr.api.entities.UploadedPhoto;
 import com.flickr.api.entities.UploadedPhotoResponse;
 import java.io.File;
 
@@ -28,10 +29,13 @@ import java.io.File;
  *
  * @author Fabien Barbero
  */
-public class UploadService extends FlickrService {
+public class UploadService
+        extends FlickrService
+{
 
-    UploadService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    UploadService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -43,18 +47,20 @@ public class UploadService extends FlickrService {
      * @return The new photo identifier
      * @throws FlickrException Upload error
      */
-    public String uploadPhoto(File file, String title, String description) throws FlickrException {
+    public UploadedPhoto uploadPhoto( File file, String title, String description )
+            throws FlickrException
+    {
         CommandArguments args = new CommandArguments();
-        args.addParam("photo", file);
-        args.addParam("content_type", 1);
-        if (title != null) {
-            args.addParam("title", title);
+        args.addParam( "photo", file );
+        args.addParam( "content_type", 1 );
+        if ( title != null ) {
+            args.addParam( "title", title );
         }
-        if (description != null) {
-            args.addParam("description", description);
+        if ( description != null ) {
+            args.addParam( "description", description );
         }
 
-        return doPost(args, UploadedPhotoResponse.class, "https://up.flickr.com/services/upload").getPhotoId();
+        return doPost( args, UploadedPhotoResponse.class, "https://up.flickr.com/services/upload" ).getPhoto();
     }
 
 }

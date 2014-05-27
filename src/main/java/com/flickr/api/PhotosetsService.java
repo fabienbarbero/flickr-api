@@ -40,10 +40,13 @@ import java.util.List;
  *
  * @author Fabien Barbero
  */
-public class PhotosetsService extends FlickrService {
+public class PhotosetsService
+        extends FlickrService
+{
 
-    PhotosetsService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    PhotosetsService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -55,12 +58,14 @@ public class PhotosetsService extends FlickrService {
      * @return The sets
      * @throws FlickrException Error getting the sets
      */
-    public Paginated<Photoset> getPhotosets(BaseUser user, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getList");
-        args.addParam("user_id", user.getId());
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        return doGet(args, PhotosetsResponse.class).getPaginated();
+    public Paginated<Photoset> getPhotosets( BaseUser user, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.getList" );
+        args.addParam( "user_id", user.getId() );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        return doGet( args, PhotosetsResponse.class ).getPaginated();
     }
 
     /**
@@ -72,12 +77,14 @@ public class PhotosetsService extends FlickrService {
      * @return The photos
      * @throws FlickrException Error getting the photos
      */
-    public Paginated<Photo> getPhotos(Photoset photoset, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getPhotos");
-        args.addParam("photoset_id", photoset.getId());
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        return doGet(args, PhotosResponse.class).getPaginated();
+    public Paginated<Photo> getPhotos( Photoset photoset, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.getPhotos" );
+        args.addParam( "photoset_id", photoset.getId() );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        return doGet( args, PhotosResponse.class ).getPaginated();
     }
 
     /**
@@ -87,10 +94,12 @@ public class PhotosetsService extends FlickrService {
      * @return The photoset
      * @throws FlickrException Error getting the set
      */
-    public PhotosetInfos getInfos(Photoset photoset) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.getInfo");
-        args.addParam("photoset_id", photoset.getId());
-        return doGet(args, PhotosetInfosResponse.class).getInfos();
+    public PhotosetInfos getInfos( Photoset photoset )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.getInfo" );
+        args.addParam( "photoset_id", photoset.getId() );
+        return doGet( args, PhotosetInfosResponse.class ).getInfos();
     }
 
     /**
@@ -100,10 +109,12 @@ public class PhotosetsService extends FlickrService {
      * @return The comments
      * @throws FlickrException Error getting the comments
      */
-    public List<Comment> getComments(Photoset photoset) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.comments.getList");
-        args.addParam("photoset_id", photoset.getId());
-        return doGet(args, CommentsResponse.class).getList();
+    public List<Comment> getComments( Photoset photoset )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.comments.getList" );
+        args.addParam( "photoset_id", photoset.getId() );
+        return doGet( args, CommentsResponse.class ).getList();
     }
 
     /**
@@ -115,12 +126,14 @@ public class PhotosetsService extends FlickrService {
      * @return The new photoset
      * @throws FlickrException Error creating the photoset
      */
-    public Photoset createPhotoset(String title, String description, Photo primaryPhoto) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.create");
-        args.addParam("title", title);
-        args.addParam("description", description);
-        args.addParam("primary_photo_id", primaryPhoto.getId());
-        return doPost(args, PhotosetResponse.class).getPhotoset();
+    public Photoset createPhotoset( String title, String description, Photo primaryPhoto )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.create" );
+        args.addParam( "title", title );
+        args.addParam( "description", description );
+        args.addParam( "primary_photo_id", primaryPhoto.getId() );
+        return doPost( args, PhotosetResponse.class ).getPhotoset();
     }
 
     /**
@@ -129,10 +142,12 @@ public class PhotosetsService extends FlickrService {
      * @param photoset The photoset to delete
      * @throws FlickrException Error deleting the photoset
      */
-    public void deletePhotoset(Photoset photoset) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.delete");
-        args.addParam("photoset_id", photoset.getId());
-        doPost(args, VoidResponse.class);
+    public void deletePhotoset( Photoset photoset )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.delete" );
+        args.addParam( "photoset_id", photoset.getId() );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -143,12 +158,14 @@ public class PhotosetsService extends FlickrService {
      * @param description The new description
      * @throws FlickrException Error editing the meta
      */
-    public void editPhotosetMeta(Photoset photoset, String title, String description) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.editMeta");
-        args.addParam("photoset_id", photoset.getId());
-        args.addParam("title", title);
-        args.addParam("description", description);
-        doPost(args, VoidResponse.class);
+    public void editPhotosetMeta( Photoset photoset, String title, String description )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.editMeta" );
+        args.addParam( "photoset_id", photoset.getId() );
+        args.addParam( "title", title );
+        args.addParam( "description", description );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -158,11 +175,13 @@ public class PhotosetsService extends FlickrService {
      * @param primaryPhoto The new primary photo
      * @throws FlickrException Error setting the primary photo
      */
-    public void setPrimaryPhoto(Photoset photoset, Photo primaryPhoto) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.setPrimaryPhoto");
-        args.addParam("photoset_id", photoset.getId());
-        args.addParam("photo_id", primaryPhoto.getId());
-        doPost(args, VoidResponse.class);
+    public void setPrimaryPhoto( Photoset photoset, Photo primaryPhoto )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.setPrimaryPhoto" );
+        args.addParam( "photoset_id", photoset.getId() );
+        args.addParam( "photo_id", primaryPhoto.getId() );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -172,11 +191,13 @@ public class PhotosetsService extends FlickrService {
      * @param photo The photo to add
      * @throws FlickrException Error adding the photo
      */
-    public void addPhotoToSet(Photoset photoset, Photo photo) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.addPhoto");
-        args.addParam("photoset_id", photoset.getId());
-        args.addParam("photo_id", photo.getId());
-        doPost(args, VoidResponse.class);
+    public void addPhotoToSet( Photoset photoset, Photo photo )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.addPhoto" );
+        args.addParam( "photoset_id", photoset.getId() );
+        args.addParam( "photo_id", photo.getId() );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -186,16 +207,18 @@ public class PhotosetsService extends FlickrService {
      * @param photos The photos to remove
      * @throws FlickrException Error removing the photos
      */
-    public void removePhotosFromSet(Photoset photoset, Photo... photos) throws FlickrException {
+    public void removePhotosFromSet( Photoset photoset, Photo... photos )
+            throws FlickrException
+    {
         StringBuilder builder = new StringBuilder();
-        for (Photo photo : photos) {
-            builder.append(photo.getId()).append(",");
+        for ( Photo photo : photos ) {
+            builder.append( photo.getId() ).append( "," );
         }
 
-        CommandArguments args = new CommandArguments("flickr.photosets.removePhotos");
-        args.addParam("photoset_id", photoset.getId());
-        args.addParam("photo_ids", builder);
-        doPost(args, VoidResponse.class);
+        CommandArguments args = new CommandArguments( "flickr.photosets.removePhotos" );
+        args.addParam( "photoset_id", photoset.getId() );
+        args.addParam( "photo_ids", builder );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -206,11 +229,13 @@ public class PhotosetsService extends FlickrService {
      * @return The created comment
      * @throws FlickrException Error adding the comment
      */
-    public Comment addComment(Photoset photoset, String text) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.comments.addComment");
-        args.addParam("photoset_id", photoset.getId());
-        args.addParam("comment_text", text);
-        return doPost(args, CommentResponse.class).getComment();
+    public Comment addComment( Photoset photoset, String text )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.comments.addComment" );
+        args.addParam( "photoset_id", photoset.getId() );
+        args.addParam( "comment_text", text );
+        return doPost( args, CommentResponse.class ).getComment();
     }
 
     /**
@@ -219,10 +244,12 @@ public class PhotosetsService extends FlickrService {
      * @param comment The comment to delete
      * @throws FlickrException Error deleting the comment
      */
-    public void deleteComment(Comment comment) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.comments.deleteComment");
-        args.addParam("comment_id", comment.getId());
-        doPost(args, VoidResponse.class);
+    public void deleteComment( Comment comment )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.comments.deleteComment" );
+        args.addParam( "comment_id", comment.getId() );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -232,10 +259,13 @@ public class PhotosetsService extends FlickrService {
      * @param text The new comment text
      * @throws FlickrException Error editing the comment
      */
-    public void editComment(Comment comment, String text) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.photosets.comments.editComment");
-        args.addParam("comment_id", comment.getId());
-        args.addParam("comment_text", text);
-        doPost(args, VoidResponse.class);
+    public void editComment( Comment comment, String text )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.photosets.comments.editComment" );
+        args.addParam( "comment_id", comment.getId() );
+        args.addParam( "comment_text", text );
+        doPost( args, VoidResponse.class );
     }
+
 }

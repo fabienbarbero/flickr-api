@@ -49,7 +49,7 @@ public abstract class JSONResponse implements ServerResponse {
             readObject(json);
             
         } catch (JSONException ex) {
-            throw new FlickrException("Error parsing JSON response", ex);
+            throw new FlickrException("Error parsing JSON response: " + data, ex);
         }
     }
 

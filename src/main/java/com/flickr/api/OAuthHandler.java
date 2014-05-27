@@ -33,7 +33,8 @@ import org.scribe.oauth.OAuthService;
  *
  * @author Fabien Barbero
  */
-class OAuthHandler {
+class OAuthHandler
+{
 
     private static final String PROPERTY_REQUEST_TOKEN = "oauth.request.token";
     private static final String PROPERTY_REQUEST_SECRET = "oauth.request.secret";
@@ -48,93 +49,107 @@ class OAuthHandler {
     private Token accessToken;
     private String token;
 
-    OAuthHandler(FlickrProperties props, String apiKey, String apiSecret, String callbackUrl, String perms) {
+    OAuthHandler( FlickrProperties props, String apiKey, String apiSecret, String callbackUrl, String perms )
+    {
         this.props = props;
         service = new ServiceBuilder()
-                .provider(new FlickrPermsApi(perms))
-                .apiKey(apiKey).apiSecret(apiSecret)
-                .callback(callbackUrl)
+                .provider( new FlickrPermsApi( perms ) )
+                .apiKey( apiKey ).apiSecret( apiSecret )
+                .callback( callbackUrl )
                 .build();
         load();
     }
 
-    void setProxy(Proxy proxy) {
+    void setProxy( Proxy proxy )
+    {
 //        service.setProxy(proxy);
     }
 
-    private void load() {
-        if (props.contains(PROPERTY_REQUEST_TOKEN) && props.contains(PROPERTY_REQUEST_SECRET)) {
-            requestToken = new Token(props.getString(PROPERTY_REQUEST_TOKEN, null), props.getString(PROPERTY_REQUEST_SECRET, null));
+    private void load()
+    {
+        if ( props.contains( PROPERTY_REQUEST_TOKEN ) && props.contains( PROPERTY_REQUEST_SECRET ) ) {
+            requestToken = new Token( props.getString( PROPERTY_REQUEST_TOKEN, null ), props.getString( PROPERTY_REQUEST_SECRET, null ) );
 
-        } else if (props.contains(PROPERTY_ACCESS_TOKEN) && props.contains(PROPERTY_ACCESS_SECRET)) {
-            accessToken = new Token(props.getString(PROPERTY_ACCESS_TOKEN, null), props.getString(PROPERTY_ACCESS_SECRET, null));
+        } else if ( props.contains( PROPERTY_ACCESS_TOKEN ) && props.contains( PROPERTY_ACCESS_SECRET ) ) {
+            accessToken = new Token( props.getString( PROPERTY_ACCESS_TOKEN, null ), props.getString( PROPERTY_ACCESS_SECRET, null ) );
         }
 
-        token = props.getString(PROPERTY_TOKEN, null);
+        token = props.getString( PROPERTY_TOKEN, null );
     }
 
-    public String getOAuthToken() {
+    public String getOAuthToken()
+    {
         return token;
     }
 
-    private void save() {
-        if (requestToken != null) {
-            props.putString(PROPERTY_REQUEST_TOKEN, requestToken.getToken());
-            props.putString(PROPERTY_REQUEST_SECRET, requestToken.getSecret());
+    private void save()
+    {
+        if ( requestToken != null ) {
+            props.putString( PROPERTY_REQUEST_TOKEN, requestToken.getToken() );
+            props.putString( PROPERTY_REQUEST_SECRET, requestToken.getSecret() );
         } else {
-            props.remove(PROPERTY_REQUEST_TOKEN);
-            props.remove(PROPERTY_REQUEST_SECRET);
+            props.remove( PROPERTY_REQUEST_TOKEN );
+            props.remove( PROPERTY_REQUEST_SECRET );
         }
 
-        if (accessToken != null) {
-            props.putString(PROPERTY_ACCESS_TOKEN, accessToken.getToken());
-            props.putString(PROPERTY_ACCESS_SECRET, accessToken.getSecret());
+        if ( accessToken != null ) {
+            props.putString( PROPERTY_ACCESS_TOKEN, accessToken.getToken() );
+            props.putString( PROPERTY_ACCESS_SECRET, accessToken.getSecret() );
         } else {
-            props.remove(PROPERTY_ACCESS_TOKEN);
-            props.remove(PROPERTY_ACCESS_SECRET);
+            props.remove( PROPERTY_ACCESS_TOKEN );
+            props.remove( PROPERTY_ACCESS_SECRET );
         }
 
-        if (token != null) {
-            props.putString(PROPERTY_TOKEN, token);
+        if ( token != null ) {
+            props.putString( PROPERTY_TOKEN, token );
         } else {
-            props.remove(PROPERTY_TOKEN);
+            props.remove( PROPERTY_TOKEN );
         }
 
         props.commit();
     }
 
-    public Token getAccessToken() {
+    public Token getAccessToken()
+    {
         return accessToken;
     }
 
-    public Token getRequestToken() {
+    public Token getRequestToken()
+    {
         return requestToken;
     }
 
-    void signRequest(OAuthRequest request) {
-        service.signRequest(accessToken, request);
+    void signRequest( OAuthRequest request )
+    {
+        service.signRequest( accessToken, request );
     }
 
-    String retrieveAuthorizationUrl() throws OAuthException {
+    String retrieveAuthorizationUrl()
+            throws OAuthException
+    {
         requestToken = service.getRequestToken();
-        String authorizationUrl = service.getAuthorizationUrl(requestToken);
+        String authorizationUrl = service.getAuthorizationUrl( requestToken );
 
         save();
         return authorizationUrl;
     }
 
-    void retrieveAccessToken(String verifier, String token) throws OAuthException {
-        accessToken = service.getAccessToken(requestToken, new Verifier(verifier));
+    void retrieveAccessToken( String verifier, String token )
+            throws OAuthException
+    {
+        accessToken = service.getAccessToken( requestToken, new Verifier( verifier ) );
 
         this.token = token;
         requestToken = null; // Invalidate
         save();
     }
 
-    public void clear() {
+    public void clear()
+    {
         requestToken = null;
         accessToken = null;
         token = null;
         save();
     }
+
 }

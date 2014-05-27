@@ -37,10 +37,13 @@ import java.util.Locale;
  *
  * @author Fabien Barbero
  */
-public class GroupsService extends FlickrService {
+public class GroupsService
+        extends FlickrService
+{
 
-    GroupsService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    GroupsService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -51,11 +54,13 @@ public class GroupsService extends FlickrService {
      * @return The groups
      * @throws FlickrException Error getting the groups
      */
-    public Paginated<Group> getGroups(int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.groups.pools.getGroups");
-        args.addParam("page", page);
-        args.addParam("per_page", perPage);
-        return doGet(args, GroupsResponse.class).getPaginated();
+    public Paginated<Group> getGroups( int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.groups.pools.getGroups" );
+        args.addParam( "page", page );
+        args.addParam( "per_page", perPage );
+        return doGet( args, GroupsResponse.class ).getPaginated();
     }
 
     /**
@@ -65,12 +70,14 @@ public class GroupsService extends FlickrService {
      * @return The group informations
      * @throws FlickrException Error getting the informations
      */
-    public GroupInfos getGroupInfos(Group group) throws FlickrException {
+    public GroupInfos getGroupInfos( Group group )
+            throws FlickrException
+    {
         Locale locale = Locale.getDefault();
-        CommandArguments args = new CommandArguments("flickr.groups.getInfo");
-        args.addParam("group_id", group.getId());
-        args.addParam("lang", locale.getCountry().toLowerCase() + "-" + locale.getLanguage());
-        return doGet(args, GroupInfosResponse.class).getInfos();
+        CommandArguments args = new CommandArguments( "flickr.groups.getInfo" );
+        args.addParam( "group_id", group.getId() );
+        args.addParam( "lang", locale.getCountry().toLowerCase() + "-" + locale.getLanguage() );
+        return doGet( args, GroupInfosResponse.class ).getInfos();
     }
 
     /**
@@ -83,12 +90,14 @@ public class GroupsService extends FlickrService {
      * @return The photos
      * @throws FlickrException Error getting the photos
      */
-    public Paginated<Photo> getGroupPhotos(Group group, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.groups.pools.getPhotos");
-        args.addParam("group_id", group.getId());
-        args.addParam("page", page);
-        args.addParam("per_page", perPage);
-        return doGet(args, PhotosResponse.class).getPaginated();
+    public Paginated<Photo> getGroupPhotos( Group group, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.groups.pools.getPhotos" );
+        args.addParam( "group_id", group.getId() );
+        args.addParam( "page", page );
+        args.addParam( "per_page", perPage );
+        return doGet( args, PhotosResponse.class ).getPaginated();
     }
 
     /**
@@ -101,12 +110,14 @@ public class GroupsService extends FlickrService {
      * @return The members
      * @throws FlickrException Error getting the members
      */
-    public Paginated<Member> getGroupMembers(Group group, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.groups.members.getList");
-        args.addParam("group_id", group.getId());
-        args.addParam("page", page);
-        args.addParam("per_page", perPage);
-        return doGet(args, MembersResponse.class).getPaginated();
+    public Paginated<Member> getGroupMembers( Group group, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.groups.members.getList" );
+        args.addParam( "group_id", group.getId() );
+        args.addParam( "page", page );
+        args.addParam( "per_page", perPage );
+        return doGet( args, MembersResponse.class ).getPaginated();
     }
 
     /**
@@ -119,12 +130,14 @@ public class GroupsService extends FlickrService {
      * @return The groups found
      * @throws FlickrException Error searching the groups
      */
-    public Paginated<Group> searchGroup(String search, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.groups.search");
-        args.addParam("text", search);
-        args.addParam("page", page);
-        args.addParam("per_page", perPage);
-        return doGet(args, GroupsResponse.class).getPaginated();
+    public Paginated<Group> searchGroup( String search, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.groups.search" );
+        args.addParam( "text", search );
+        args.addParam( "page", page );
+        args.addParam( "per_page", perPage );
+        return doGet( args, GroupsResponse.class ).getPaginated();
     }
 
     /**
@@ -136,11 +149,13 @@ public class GroupsService extends FlickrService {
      * user has agreed to them.
      * @throws FlickrException Error joining the group
      */
-    public void joinGroup(Group group, boolean acceptRules) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.groups.join");
-        args.addParam("group_id", group.getId());
-        args.addParam("accept_rules", acceptRules);
-        doPost(args, VoidResponse.class);
+    public void joinGroup( Group group, boolean acceptRules )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.groups.join" );
+        args.addParam( "group_id", group.getId() );
+        args.addParam( "accept_rules", acceptRules );
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -151,11 +166,13 @@ public class GroupsService extends FlickrService {
      * @param deleteUserPhotos true to delete the user photos, false otherwise
      * @throws FlickrException Error leaving the group
      */
-    public void leaveGroup(Group group, boolean deleteUserPhotos) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.groups.leave");
-        args.addParam("group_id", group.getId());
-        args.addParam("delete_photos", deleteUserPhotos);
-        doPost(args, VoidResponse.class);
+    public void leaveGroup( Group group, boolean deleteUserPhotos )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.groups.leave" );
+        args.addParam( "group_id", group.getId() );
+        args.addParam( "delete_photos", deleteUserPhotos );
+        doPost( args, VoidResponse.class );
     }
 
 }

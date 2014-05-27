@@ -19,40 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flickr.api;
-
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotosResponse;
+package com.flickr.api.entities;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class InterestingnessService
-        extends FlickrService
-{
+public class UploadedPhoto implements BasePhoto {
 
-    InterestingnessService( OAuthHandler oauthHandler )
-    {
-        super( oauthHandler );
+    private final String id;
+
+    UploadedPhoto(String id) {
+        this.id = id;
     }
 
-    /**
-     * Returns the list of interesting photos for the most recent day or a user-specified date.
-     *
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
-     * @param page The page of results to return
-     * @return The photos
-     * @throws FlickrException Error getting the photos
-     */
-    public Paginated<Photo> getInterestingPhotos( int perPage, int page )
-            throws FlickrException
-    {
-        CommandArguments args = new CommandArguments( "flickr.interestingness.getList" );
-        args.addParam( "page", page );
-        args.addParam( "per_page", perPage );
-        return doGet( args, PhotosResponse.class ).getPaginated();
+    @Override
+    public String getId() {
+        return id;
     }
 
 }

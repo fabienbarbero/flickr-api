@@ -34,12 +34,15 @@ import java.util.Date;
  *
  * @author Fabien Barbero
  */
-public class StatsService extends FlickrService {
+public class StatsService
+        extends FlickrService
+{
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat( "yyyy-MM-dd" );
 
-    StatsService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    StatsService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -51,14 +54,16 @@ public class StatsService extends FlickrService {
      * @return The stats
      * @throws FlickrException Error getting the stats
      */
-    public Paginated<PhotoStats> getPopularPhotos(Date date, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.stats.getPopularPhotos");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        if (date != null) {
-            args.addParam("date", DATE_FORMAT.format(date));
+    public Paginated<PhotoStats> getPopularPhotos( Date date, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.stats.getPopularPhotos" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        if ( date != null ) {
+            args.addParam( "date", DATE_FORMAT.format( date ) );
         }
-        return doGet(args, PhotoStatsResponse.class).getPaginated();
+        return doGet( args, PhotoStatsResponse.class ).getPaginated();
     }
 
     /**
@@ -68,12 +73,14 @@ public class StatsService extends FlickrService {
      * @return The views
      * @throws FlickrException
      */
-    public TotalViews getTotalViews(Date date) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.stats.getTotalViews");
-        if (date != null) {
-            args.addParam("date", DATE_FORMAT.format(date));
+    public TotalViews getTotalViews( Date date )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.stats.getTotalViews" );
+        if ( date != null ) {
+            args.addParam( "date", DATE_FORMAT.format( date ) );
         }
-        return doGet(args, TotalViewsResponse.class).getViews();
+        return doGet( args, TotalViewsResponse.class ).getViews();
     }
 
 }

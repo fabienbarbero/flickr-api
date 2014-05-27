@@ -21,38 +21,43 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotosResponse;
+import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.junit.Before;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class InterestingnessService
-        extends FlickrService
+public abstract class AbstractTest
 {
 
-    InterestingnessService( OAuthHandler oauthHandler )
+    protected Flickr flickr;
+
+    @Before
+    public void setUp()
+            throws Exception
     {
-        super( oauthHandler );
+        // System.setProperty("flickr.api.debug", "true");
+
+        File props = new File( System.getProperty( "user.home" ), ".flickr-api/flickr.conf" );
+        flickr = new Flickr( "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "http://localhost", "delete", props );
     }
 
-    /**
-     * Returns the list of interesting photos for the most recent day or a user-specified date.
-     *
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
-     * @param page The page of results to return
-     * @return The photos
-     * @throws FlickrException Error getting the photos
-     */
-    public Paginated<Photo> getInterestingPhotos( int perPage, int page )
-            throws FlickrException
+    protected boolean isAccessible( URL url )
+            throws IOException
     {
-        CommandArguments args = new CommandArguments( "flickr.interestingness.getList" );
-        args.addParam( "page", page );
-        args.addParam( "per_page", perPage );
-        return doGet( args, PhotosResponse.class ).getPaginated();
+        HttpURLConnection conn = null;
+        try {
+            conn = ( HttpURLConnection ) url.openConnection();
+            conn.connect();
+            return conn.getResponseCode() == 200;
+
+        } finally {
+            conn.disconnect();
+        }
     }
 
 }

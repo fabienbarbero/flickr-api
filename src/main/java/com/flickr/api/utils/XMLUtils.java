@@ -29,21 +29,25 @@ import org.w3c.dom.NodeList;
  *
  * @author Fabien Barbero
  */
-public class XMLUtils {
+public class XMLUtils
+{
 
-    private XMLUtils() {
+    private XMLUtils()
+    {
     }
 
-    public static Element getChildElement(Element parent, String childName) {
-        NodeList list = parent.getElementsByTagName(childName);
+    public static Element getChildElement( Element parent, String childName )
+    {
+        NodeList list = parent.getElementsByTagName( childName );
 
         Node node;
-        for (int i = 0; i < list.getLength(); i++) {
-            node = list.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                return (Element) node;
+        for ( int i = 0; i < list.getLength(); i++ ) {
+            node = list.item( i );
+            if ( node.getNodeType() == Node.ELEMENT_NODE ) {
+                return ( Element ) node;
             }
         }
         return null;
     }
+
 }

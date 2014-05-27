@@ -36,9 +36,10 @@ import org.scribe.model.OAuthConstants;
  *
  * @author Fabien Barbero
  */
-public final class Flickr {
+public final class Flickr
+{
 
-    public static final boolean debug = Boolean.parseBoolean(System.getProperty("flickr.api.debug", "false"));
+    public static final boolean debug = Boolean.parseBoolean( System.getProperty( "flickr.api.debug", "false" ) );
     private static final String PROP_USER_ID = "user.id";
     //
     private final OAuthHandler oauthHandler;
@@ -57,8 +58,20 @@ public final class Flickr {
     private final GalleriesService galleriesService;
     private final UploadService uploadService;
 
-    public Flickr(String apiKey, String apiSecret, String callbackUrl, String permission, File configFile) {
-        this(apiKey, apiSecret, callbackUrl, permission, new FlickrPropertiesFile(configFile));
+    /**
+     * Create a new Flickr instance
+     *
+     * @param apiKey The flickr API key
+     * @param apiSecret The flickr API secret
+     * @param callbackUrl The callback URL where the user will be redirected when he will grant the access of the
+     * application (see {@link Flickr#verifyToken(java.lang.String)}).
+     * @param configFile The file where the API will store the internal data (it will be written in clear)s
+     * @param permission The permission to use (read, write or delete) data. At the beginning, this file
+     * <b>must</b> not exists.
+     */
+    public Flickr( String apiKey, String apiSecret, String callbackUrl, String permission, File configFile )
+    {
+        this( apiKey, apiSecret, callbackUrl, permission, new FlickrPropertiesFile( configFile ) );
     }
 
     /**
@@ -72,23 +85,24 @@ public final class Flickr {
      * @param permission The permission to use (read, write or delete) data. At the beginning, this file
      * <b>must</b> not exists.
      */
-    public Flickr(String apiKey, String apiSecret, String callbackUrl, String permission, FlickrProperties props) {
+    public Flickr( String apiKey, String apiSecret, String callbackUrl, String permission, FlickrProperties props )
+    {
         props.load();
         this.props = props;
-        oauthHandler = new OAuthHandler(props, apiKey, apiSecret, callbackUrl, permission);
+        oauthHandler = new OAuthHandler( props, apiKey, apiSecret, callbackUrl, permission );
 
-        contactsService = new ContactsService(oauthHandler);
-        peoplesService = new PeopleService(oauthHandler);
-        photosService = new PhotosService(oauthHandler);
-        photosetsService = new PhotosetsService(oauthHandler);
-        favoritesService = new FavoritesService(oauthHandler);
-        authenticationService = new AuthenticationService(oauthHandler);
-        statsService = new StatsService(oauthHandler);
-        groupsService = new GroupsService(oauthHandler);
-        cameraService = new CameraService(oauthHandler);
-        interestingnessService = new InterestingnessService(oauthHandler);
-        galleriesService = new GalleriesService(oauthHandler);
-        uploadService = new UploadService(oauthHandler);
+        contactsService = new ContactsService( oauthHandler );
+        peoplesService = new PeopleService( oauthHandler );
+        photosService = new PhotosService( oauthHandler );
+        photosetsService = new PhotosetsService( oauthHandler );
+        favoritesService = new FavoritesService( oauthHandler );
+        authenticationService = new AuthenticationService( oauthHandler );
+        statsService = new StatsService( oauthHandler );
+        groupsService = new GroupsService( oauthHandler );
+        cameraService = new CameraService( oauthHandler );
+        interestingnessService = new InterestingnessService( oauthHandler );
+        galleriesService = new GalleriesService( oauthHandler );
+        uploadService = new UploadService( oauthHandler );
     }
 
     /**
@@ -97,21 +111,22 @@ public final class Flickr {
      *
      * @param proxy The proxy to use
      */
-    public void setProxy(Proxy proxy) {
-        oauthHandler.setProxy(proxy);
+    public void setProxy( Proxy proxy )
+    {
+        oauthHandler.setProxy( proxy );
 
-        contactsService.setProxy(proxy);
-        peoplesService.setProxy(proxy);
-        photosService.setProxy(proxy);
-        photosetsService.setProxy(proxy);
-        authenticationService.setProxy(proxy);
-        favoritesService.setProxy(proxy);
-        statsService.setProxy(proxy);
-        groupsService.setProxy(proxy);
-        cameraService.setProxy(proxy);
-        interestingnessService.setProxy(proxy);
-        galleriesService.setProxy(proxy);
-        uploadService.setProxy(proxy);
+        contactsService.setProxy( proxy );
+        peoplesService.setProxy( proxy );
+        photosService.setProxy( proxy );
+        photosetsService.setProxy( proxy );
+        authenticationService.setProxy( proxy );
+        favoritesService.setProxy( proxy );
+        statsService.setProxy( proxy );
+        groupsService.setProxy( proxy );
+        cameraService.setProxy( proxy );
+        interestingnessService.setProxy( proxy );
+        galleriesService.setProxy( proxy );
+        uploadService.setProxy( proxy );
     }
 
     /**
@@ -119,7 +134,8 @@ public final class Flickr {
      *
      * @return true if it is the first start, false otherwise
      */
-    public boolean isFirstStart() {
+    public boolean isFirstStart()
+    {
         return oauthHandler.getAccessToken() == null;
     }
 
@@ -128,7 +144,8 @@ public final class Flickr {
      *
      * @return The authorization URL to open in the browser
      */
-    public String getAuthorizationUrl() {
+    public String getAuthorizationUrl()
+    {
         return oauthHandler.retrieveAuthorizationUrl();
     }
 
@@ -139,16 +156,18 @@ public final class Flickr {
      * @param url The callback URL with the authorization parameters to verify
      * @throws FlickrException Error getting the user informations
      */
-    public void verifyToken(String url) throws FlickrException {
-        URI uri = URI.create(url);
+    public void verifyToken( String url )
+            throws FlickrException
+    {
+        URI uri = URI.create( url );
 
         Map<String, String> queryParams = new HashMap<String, String>();
         String[] split;
-        for (String param : uri.getQuery().split("&")) {
-            split = param.split("=");
-            queryParams.put(split[0], split[1]);
+        for ( String param : uri.getQuery().split( "&" ) ) {
+            split = param.split( "=" );
+            queryParams.put( split[0], split[1] );
         }
-        verifyToken(queryParams.get(OAuthConstants.VERIFIER), queryParams.get(OAuthConstants.TOKEN));
+        verifyToken( queryParams.get( OAuthConstants.VERIFIER ), queryParams.get( OAuthConstants.TOKEN ) );
     }
 
     /**
@@ -158,10 +177,12 @@ public final class Flickr {
      * @param token The token value to verify
      * @throws FlickrException Error getting the user informations
      */
-    public void verifyToken(String verifier, String token) throws FlickrException {
-        oauthHandler.retrieveAccessToken(verifier, token);
+    public void verifyToken( String verifier, String token )
+            throws FlickrException
+    {
+        oauthHandler.retrieveAccessToken( verifier, token );
         BaseUser user = authenticationService.authenticate();
-        props.putString(PROP_USER_ID, user.getId());
+        props.putString( PROP_USER_ID, user.getId() );
         props.commit();
     }
 
@@ -171,12 +192,14 @@ public final class Flickr {
      * @return The user identifier
      * @throws FlickrException Error getting the user infos
      */
-    public UserInfos getUser() throws FlickrException {
-        String userId = props.getString(PROP_USER_ID, null);
-        if (userId == null) {
+    public UserInfos getUser()
+            throws FlickrException
+    {
+        String userId = props.getString( PROP_USER_ID, null );
+        if ( userId == null ) {
             return null;
         }
-        return peoplesService.getUserInfo(userId);
+        return peoplesService.getUserInfo( userId );
     }
 
     /**
@@ -184,7 +207,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public ContactsService getContactsService() {
+    public ContactsService getContactsService()
+    {
         return contactsService;
     }
 
@@ -193,7 +217,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public PeopleService getPeopleService() {
+    public PeopleService getPeopleService()
+    {
         return peoplesService;
     }
 
@@ -202,7 +227,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public PhotosService getPhotosService() {
+    public PhotosService getPhotosService()
+    {
         return photosService;
     }
 
@@ -211,7 +237,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public PhotosetsService getPhotosetsService() {
+    public PhotosetsService getPhotosetsService()
+    {
         return photosetsService;
     }
 
@@ -220,7 +247,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public StatsService getStatsService() {
+    public StatsService getStatsService()
+    {
         return statsService;
     }
 
@@ -229,7 +257,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public GroupsService getGroupsService() {
+    public GroupsService getGroupsService()
+    {
         return groupsService;
     }
 
@@ -238,7 +267,8 @@ public final class Flickr {
      *
      * @return The service
      */
-    public FavoritesService getFavoritesService() {
+    public FavoritesService getFavoritesService()
+    {
         return favoritesService;
     }
 
@@ -247,7 +277,8 @@ public final class Flickr {
      *
      * @return The camera service
      */
-    public CameraService getCameraService() {
+    public CameraService getCameraService()
+    {
         return cameraService;
     }
 
@@ -256,7 +287,8 @@ public final class Flickr {
      *
      * @return The interestingness service
      */
-    public InterestingnessService getInterestingnessService() {
+    public InterestingnessService getInterestingnessService()
+    {
         return interestingnessService;
     }
 
@@ -265,11 +297,13 @@ public final class Flickr {
      *
      * @return The galleries service
      */
-    public GalleriesService getGalleriesService() {
+    public GalleriesService getGalleriesService()
+    {
         return galleriesService;
     }
 
-    public UploadService getUploadService() {
+    public UploadService getUploadService()
+    {
         return uploadService;
     }
 

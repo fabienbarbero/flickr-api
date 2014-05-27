@@ -39,38 +39,42 @@ import org.xml.sax.SAXException;
  *
  * @author Fabien Barbero
  */
-public abstract class XMLResponse implements ServerResponse {
+public abstract class XMLResponse
+        implements ServerResponse
+{
 
     @Override
-    public final void read(String data, String method) throws FlickrException {
+    public final void read( String data, String method )
+            throws FlickrException
+    {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new InputSource(new StringReader(data)));
-            
+            Document document = builder.parse( new InputSource( new StringReader( data ) ) );
+
             Element rootElement = document.getDocumentElement();
-            
-            ResponseStatus status = ResponseStatus.valueOf(rootElement.getAttribute("stat"));
-            
-            if(status == ResponseStatus.fail) {
-                Element errEl = XMLUtils.getChildElement(rootElement, "err");
-                
-                FlickrErrorCode code = FlickrErrorCode.fromCode(Integer.parseInt(errEl.getAttribute("code")));
-                String message = errEl.getAttribute("msg");
-                throw new FlickrException("Error calling method '" + method + "' (" + message + ")", code);
+
+            ResponseStatus status = ResponseStatus.valueOf( rootElement.getAttribute( "stat" ) );
+
+            if ( status == ResponseStatus.fail ) {
+                Element errEl = XMLUtils.getChildElement( rootElement, "err" );
+
+                FlickrErrorCode code = FlickrErrorCode.fromCode( Integer.parseInt( errEl.getAttribute( "code" ) ) );
+                String message = errEl.getAttribute( "msg" );
+                throw new FlickrException( "Error calling method '" + method + "' (" + message + ")", code );
             }
-            
-            readObject(document);
-            
-        } catch (SAXException ex) {
-            throw new FlickrException("Error parsing XML response", ex);
-        } catch (IOException ex) {
-            throw new FlickrException("Error parsing XML response", ex);
-        } catch (ParserConfigurationException ex) {
-            throw new FlickrException("Error parsing XML response", ex);
+
+            readObject( document );
+
+        } catch ( SAXException ex ) {
+            throw new FlickrException( "Error parsing XML response: " + data, ex );
+        } catch ( IOException ex ) {
+            throw new FlickrException( "Error parsing XML response: " + data, ex );
+        } catch ( ParserConfigurationException ex ) {
+            throw new FlickrException( "Error parsing XML response: " + data, ex );
         }
     }
-    
-    protected abstract void readObject(Document document);
+
+    protected abstract void readObject( Document document );
 
 }

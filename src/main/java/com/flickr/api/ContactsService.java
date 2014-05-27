@@ -31,10 +31,13 @@ import com.flickr.api.entities.ContactsResponse;
  *
  * @author Fabien Barbero
  */
-public final class ContactsService extends FlickrService {
+public final class ContactsService
+        extends FlickrService
+{
 
-    ContactsService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    ContactsService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -45,11 +48,13 @@ public final class ContactsService extends FlickrService {
      * @return The contacts
      * @throws FlickrException Error getting the contacts
      */
-    public Paginated<Contact> getContacts(int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.contacts.getList");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        return doGet(args, ContactsResponse.class).getPaginated();
+    public Paginated<Contact> getContacts( int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.contacts.getList" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        return doGet( args, ContactsResponse.class ).getPaginated();
     }
 
     /**
@@ -61,11 +66,14 @@ public final class ContactsService extends FlickrService {
      * @return The contacts
      * @throws FlickrException Error getting the contacts
      */
-    public Paginated<Contact> getPublicContacts(BaseUser user, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.contacts.getPublicList");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        args.addParam("user_id", user.getId());
-        return doGet(args, ContactsResponse.class).getPaginated();
+    public Paginated<Contact> getPublicContacts( BaseUser user, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.contacts.getPublicList" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        args.addParam( "user_id", user.getId() );
+        return doGet( args, ContactsResponse.class ).getPaginated();
     }
+
 }

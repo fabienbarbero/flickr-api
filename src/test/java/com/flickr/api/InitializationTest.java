@@ -21,38 +21,38 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotosResponse;
+import com.flickr.api.entities.UserInfos;
+import javax.swing.JOptionPane;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
  * @author Fabien Barbero
  */
-public class InterestingnessService
-        extends FlickrService
+public class InitializationTest
+        extends AbstractTest
 {
 
-    InterestingnessService( OAuthHandler oauthHandler )
+    @Test
+    public void testInitialization()
+            throws Exception
     {
-        super( oauthHandler );
-    }
+        if ( flickr.isFirstStart() ) {
+            String url = flickr.getAuthorizationUrl();
+            System.out.println( url );
+            assertNull( flickr.getUser() );
 
-    /**
-     * Returns the list of interesting photos for the most recent day or a user-specified date.
-     *
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500.
-     * @param page The page of results to return
-     * @return The photos
-     * @throws FlickrException Error getting the photos
-     */
-    public Paginated<Photo> getInterestingPhotos( int perPage, int page )
-            throws FlickrException
-    {
-        CommandArguments args = new CommandArguments( "flickr.interestingness.getList" );
-        args.addParam( "page", page );
-        args.addParam( "per_page", perPage );
-        return doGet( args, PhotosResponse.class ).getPaginated();
+            String verifier = JOptionPane.showInputDialog( "Verifier" );
+            String token = JOptionPane.showInputDialog( "Token" );
+            flickr.verifyToken( verifier, token );
+        }
+
+        // Auth
+        UserInfos caller = flickr.getUser();
+        assertNotNull( caller );
+        assertNotNull( caller.getPhotosInfo().getFirstDate() );
+        assertTrue( caller.getPhotosInfo().getCount() > 0 );
     }
 
 }

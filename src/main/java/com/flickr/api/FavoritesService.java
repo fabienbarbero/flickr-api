@@ -31,10 +31,13 @@ import com.flickr.api.entities.VoidResponse;
  *
  * @author Fabien Barbero
  */
-public class FavoritesService extends FlickrService {
+public class FavoritesService
+        extends FlickrService
+{
 
-    FavoritesService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    FavoritesService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -47,13 +50,15 @@ public class FavoritesService extends FlickrService {
      * @return The favorites photos
      * @throws FlickrException Error getting the favorites
      */
-    public Paginated<Photo> getFavorites(BaseUser user, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.favorites.getList");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        args.addParam("user_id", user.getId());
+    public Paginated<Photo> getFavorites( BaseUser user, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.favorites.getList" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        args.addParam( "user_id", user.getId() );
 
-        return doGet(args, PhotosResponse.class).getPaginated();
+        return doGet( args, PhotosResponse.class ).getPaginated();
     }
 
     /**
@@ -65,13 +70,15 @@ public class FavoritesService extends FlickrService {
      * @return The favorites photos
      * @throws FlickrException Error getting the favorites
      */
-    public Paginated<Photo> getPublicFavorites(BaseUser user, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.favorites.getPublicList");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        args.addParam("user_id", user.getId());
+    public Paginated<Photo> getPublicFavorites( BaseUser user, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.favorites.getPublicList" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        args.addParam( "user_id", user.getId() );
 
-        return doGet(args, PhotosResponse.class).getPaginated();
+        return doGet( args, PhotosResponse.class ).getPaginated();
     }
 
     /**
@@ -80,11 +87,13 @@ public class FavoritesService extends FlickrService {
      * @param photo The photo to set favorite
      * @throws FlickrException Error setting the photo as favorite
      */
-    public void addFavorite(Photo photo) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.favorites.add");
-        args.addParam("photo_id", photo.getId());
+    public void addFavorite( Photo photo )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.favorites.add" );
+        args.addParam( "photo_id", photo.getId() );
 
-        doPost(args, VoidResponse.class);
+        doPost( args, VoidResponse.class );
     }
 
     /**
@@ -93,11 +102,13 @@ public class FavoritesService extends FlickrService {
      * @param photo The photo to remove from favorites
      * @throws FlickrException Error removing the photo from favorite
      */
-    public void removeFavorite(Photo photo) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.favorites.remove");
-        args.addParam("photo_id", photo.getId());
+    public void removeFavorite( Photo photo )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.favorites.remove" );
+        args.addParam( "photo_id", photo.getId() );
 
-        doPost(args, VoidResponse.class);
+        doPost( args, VoidResponse.class );
     }
 
 }

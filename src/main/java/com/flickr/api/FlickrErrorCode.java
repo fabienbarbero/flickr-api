@@ -25,46 +25,51 @@ package com.flickr.api;
  *
  * @author Fabien Barbero
  */
-public enum FlickrErrorCode {
-    
-    not_found(1),
-    general_upload_failure(3),
-    filesize_was_zero(4),
-    filetype_was_not_recognized(5),
-    user_exceeded_upload_limit(6),
-    invalid_signature(96),
-    missing_signature(97),
-    invalid_auth_token(98),
-    user_not_logged_in(99),
-    invalid_api_key(100),
-    service_currently_unavailable(105),
-    invalid_prob(108),
-    format_not_found(111),
-    method_not_found(112),
-    bad_url_found(116);
-    
+public enum FlickrErrorCode
+{
+
+    not_found( 1 ),
+    general_upload_failure( 3 ),
+    filesize_was_zero( 4 ),
+    filetype_was_not_recognized( 5 ),
+    user_exceeded_upload_limit( 6 ),
+    invalid_signature( 96 ),
+    missing_signature( 97 ),
+    invalid_auth_token( 98 ),
+    user_not_logged_in( 99 ),
+    invalid_api_key( 100 ),
+    service_currently_unavailable( 105 ),
+    invalid_prob( 108 ),
+    format_not_found( 111 ),
+    method_not_found( 112 ),
+    bad_url_found( 116 );
+
     private int code;
-    
-    private FlickrErrorCode(int code) {
+
+    private FlickrErrorCode( int code )
+    {
         this.code = code;
     }
-    
-    public int getCode() {
+
+    public int getCode()
+    {
         return code;
     }
-    
+
     /**
      * Get the error code from an integer value.
-     * @param code  The error code as an integer.
-     * @return      The corresponding error code.
+     *
+     * @param code The error code as an integer.
+     * @return The corresponding error code.
      */
-    public static FlickrErrorCode fromCode(int code) {
-        for(FlickrErrorCode flickrCode : values()) {
-            if(flickrCode.getCode() == code) {
+    public static FlickrErrorCode fromCode( int code )
+    {
+        for ( FlickrErrorCode flickrCode : values() ) {
+            if ( flickrCode.getCode() == code ) {
                 return flickrCode;
             }
         }
         return null;    // Should never happen !
     }
-    
+
 }

@@ -34,10 +34,13 @@ import com.flickr.api.entities.VoidResponse;
  *
  * @author Fabien Barbero
  */
-public class GalleriesService extends FlickrService {
+public class GalleriesService
+        extends FlickrService
+{
 
-    GalleriesService(OAuthHandler oauthHandler) {
-        super(oauthHandler);
+    GalleriesService( OAuthHandler oauthHandler )
+    {
+        super( oauthHandler );
     }
 
     /**
@@ -49,13 +52,15 @@ public class GalleriesService extends FlickrService {
      * @return The galleries
      * @throws FlickrException Error getting the galleries
      */
-    public Paginated<Gallery> getGalleries(BaseUser user, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.galleries.getList");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        args.addParam("user_id", user.getId());
+    public Paginated<Gallery> getGalleries( BaseUser user, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.galleries.getList" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        args.addParam( "user_id", user.getId() );
 
-        return doGet(args, GalleriesResponse.class).getPaginated();
+        return doGet( args, GalleriesResponse.class ).getPaginated();
     }
 
     /**
@@ -67,13 +72,15 @@ public class GalleriesService extends FlickrService {
      * @return The photos
      * @throws FlickrException Error getting the photos
      */
-    public Paginated<Photo> getGalleryPhotos(Gallery gallery, int perPage, int page) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.galleries.getPhotos");
-        args.addParam("per_page", perPage);
-        args.addParam("page", page);
-        args.addParam("gallery_id", gallery.getId());
+    public Paginated<Photo> getGalleryPhotos( Gallery gallery, int perPage, int page )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.galleries.getPhotos" );
+        args.addParam( "per_page", perPage );
+        args.addParam( "page", page );
+        args.addParam( "gallery_id", gallery.getId() );
 
-        return doGet(args, PhotosResponse.class).getPaginated();
+        return doGet( args, PhotosResponse.class ).getPaginated();
     }
 
     /**
@@ -85,15 +92,17 @@ public class GalleriesService extends FlickrService {
      * @return The created gallery
      * @throws FlickrException Error creating the gallery
      */
-    public Gallery createGallery(String title, String description, Photo primaryPhoto) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.galleries.create");
-        args.addParam("title", title);
-        args.addParam("description", description);
-        if (primaryPhoto != null) {
-            args.addParam("primary_photo_id", primaryPhoto.getId());
+    public Gallery createGallery( String title, String description, Photo primaryPhoto )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.galleries.create" );
+        args.addParam( "title", title );
+        args.addParam( "description", description );
+        if ( primaryPhoto != null ) {
+            args.addParam( "primary_photo_id", primaryPhoto.getId() );
         }
 
-        return doPost(args, GalleryResponse.class).getGallery();
+        return doPost( args, GalleryResponse.class ).getGallery();
     }
 
     /**
@@ -104,15 +113,17 @@ public class GalleriesService extends FlickrService {
      * @param comment A comment (optional)
      * @throws FlickrException Error adding the photo
      */
-    public void addPhotoToGallery(Gallery gallery, Photo photo, String comment) throws FlickrException {
-        CommandArguments args = new CommandArguments("flickr.galleries.addPhoto");
-        args.addParam("gallery_id", gallery.getId());
-        args.addParam("photo_id", photo.getId());
-        if (comment != null) {
-            args.addParam("comment", comment);
+    public void addPhotoToGallery( Gallery gallery, Photo photo, String comment )
+            throws FlickrException
+    {
+        CommandArguments args = new CommandArguments( "flickr.galleries.addPhoto" );
+        args.addParam( "gallery_id", gallery.getId() );
+        args.addParam( "photo_id", photo.getId() );
+        if ( comment != null ) {
+            args.addParam( "comment", comment );
         }
 
-        doPost(args, VoidResponse.class);
+        doPost( args, VoidResponse.class );
     }
 
 }

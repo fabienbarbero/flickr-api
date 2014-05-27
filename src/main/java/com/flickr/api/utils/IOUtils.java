@@ -16,53 +16,54 @@ public class IOUtils
     private IOUtils()
     {
     }
-    
-    public static final Charset UTF8 = Charset.forName("UTF-8");
+
+    public static final Charset UTF8 = Charset.forName( "UTF-8" );
 
     /**
      * Convert a string into a byte array using the UTF-8 charset.
-     * 
+     *
      * @param str The string to convert.
      * @return The corresponding byte array.
      */
-    public static byte[] toByteArray(String str)
+    public static byte[] toByteArray( String str )
     {
-        return str.getBytes(UTF8);
+        return str.getBytes( UTF8 );
     }
 
     /**
      * Close silently a stream.
-     * 
+     *
      * @param closeable The stream to close.
      */
-    public static void closeQuietly(Closeable closeable)
+    public static void closeQuietly( Closeable closeable )
     {
-        if (closeable != null) {
+        if ( closeable != null ) {
             try {
                 closeable.close();
-            } catch (IOException e) {
+            } catch ( IOException e ) {
             }
         }
     }
 
     /**
      * Read a String from an InputStream.
-     * 
+     *
      * @param is The InputStream to read.
      * @param charset The Charset to use.
      * @return The String.
      * @throws IOException Error reading stream.
      */
-    public static String toString(InputStream is, String charset) throws IOException
+    public static String toString( InputStream is, String charset )
+            throws IOException
     {
         StringWriter sw = new StringWriter();
-        InputStreamReader reader = new InputStreamReader(is, charset);
+        InputStreamReader reader = new InputStreamReader( is, charset );
 
-        char[] buffer = new char[DEFAULT_BUFFER_SIZE];
+        char[] buffer = new char[ DEFAULT_BUFFER_SIZE ];
         long count = 0;
         int n = 0;
-        while (-1 != (n = reader.read(buffer))) {
-            sw.write(buffer, 0, n);
+        while ( -1 != ( n = reader.read( buffer ) ) ) {
+            sw.write( buffer, 0, n );
             count += n;
         }
         return sw.toString();
@@ -70,17 +71,19 @@ public class IOUtils
 
     /**
      * Copy the content of an {@link InputStream} into a {@link OutputStream}.
-     * 
+     *
      * @param is The stream to read.
      * @param os The output stream.
      * @throws IOException Copy error.
      */
-    public static void copy(InputStream is, OutputStream os) throws IOException
+    public static void copy( InputStream is, OutputStream os )
+            throws IOException
     {
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        byte[] buffer = new byte[ DEFAULT_BUFFER_SIZE ];
         int len;
-        while ((len = is.read(buffer)) != -1) {
-            os.write(buffer, 0, len);
+        while ( ( len = is.read( buffer ) ) != -1 ) {
+            os.write( buffer, 0, len );
         }
     }
+
 }

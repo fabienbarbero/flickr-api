@@ -28,16 +28,20 @@ import org.scribe.model.Token;
  *
  * @author Fabien Barbero
  */
-class FlickrPermsApi extends FlickrApi {
+class FlickrPermsApi
+        extends FlickrApi
+{
 
     private final String perms;
 
-    FlickrPermsApi(String perms) {
+    FlickrPermsApi( String perms )
+    {
         this.perms = perms;
     }
 
     @Override
-    public String getAuthorizationUrl(Token requestToken) {
+    public String getAuthorizationUrl( Token requestToken )
+    {
         return "https://www.flickr.com/services/oauth/authorize?perms=" + perms + "&oauth_token=" + requestToken.getToken();
     }
 

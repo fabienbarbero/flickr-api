@@ -28,7 +28,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Photo implements IdObject {
+public class Photo implements BasePhoto {
 
     private static final long serialVersionUID = 5438438431425L;
     //

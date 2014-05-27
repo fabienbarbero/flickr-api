@@ -32,55 +32,63 @@ import java.util.Properties;
  *
  * @author Fabien Barbero
  */
-public abstract class FlickrProperties {
+public abstract class FlickrProperties
+{
 
     private final Properties props;
 
-    public FlickrProperties() {
+    public FlickrProperties()
+    {
         this.props = new Properties();
     }
 
-    final boolean contains(String key) {
-        return props.containsKey(key);
+    final boolean contains( String key )
+    {
+        return props.containsKey( key );
     }
 
-    final String getString(String key, String def) {
-        return props.getProperty(key, def);
+    final String getString( String key, String def )
+    {
+        return props.getProperty( key, def );
     }
 
-    final void putString(String key, String value) {
-        props.setProperty(key, value);
+    final void putString( String key, String value )
+    {
+        props.setProperty( key, value );
     }
 
-    final void remove(String key) {
-        props.remove(key);
+    final void remove( String key )
+    {
+        props.remove( key );
     }
 
-    final void load() {
-        if (isConfigExists()) {
+    final void load()
+    {
+        if ( isConfigExists() ) {
             InputStream is = null;
             try {
                 is = getInputStream();
-                props.load(is);
+                props.load( is );
 
-            } catch (IOException ex) {
-                throw new UnsupportedOperationException("Error reading flickr properties", ex);
+            } catch ( IOException ex ) {
+                throw new UnsupportedOperationException( "Error reading flickr properties", ex );
             } finally {
-                IOUtils.closeQuietly(is);
+                IOUtils.closeQuietly( is );
             }
         }
     }
 
-    final void commit() {
+    final void commit()
+    {
         OutputStream os = null;
         try {
             os = getOutputStream();
-            props.store(os, "Flickr configuration");
+            props.store( os, "Flickr configuration" );
 
-        } catch (IOException ex) {
-            throw new UnsupportedOperationException("Error saving configuration", ex);
+        } catch ( IOException ex ) {
+            throw new UnsupportedOperationException( "Error saving configuration", ex );
         } finally {
-            IOUtils.closeQuietly(os);
+            IOUtils.closeQuietly( os );
         }
     }
 
@@ -97,7 +105,8 @@ public abstract class FlickrProperties {
      * @return The stream
      * @throws IOException Error opening the stream
      */
-    protected abstract InputStream getInputStream() throws IOException;
+    protected abstract InputStream getInputStream()
+            throws IOException;
 
     /**
      * Open an OutputStream to write the configuration
@@ -105,5 +114,7 @@ public abstract class FlickrProperties {
      * @return The stream
      * @throws IOException Error opening the stream
      */
-    protected abstract OutputStream getOutputStream() throws IOException;
+    protected abstract OutputStream getOutputStream()
+            throws IOException;
+
 }

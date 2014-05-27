@@ -30,30 +30,38 @@ import java.io.OutputStream;
 
 /**
  * Simple implentation of {@link FlickrProperties} which store the data in a file.
- * 
+ *
  * @author Fabien Barbero
  */
-public class FlickrPropertiesFile extends FlickrProperties {
+public class FlickrPropertiesFile
+        extends FlickrProperties
+{
 
     private final File file;
 
-    public FlickrPropertiesFile(File file) {
+    public FlickrPropertiesFile( File file )
+    {
         this.file = file;
     }
 
     @Override
-    protected boolean isConfigExists() {
+    protected boolean isConfigExists()
+    {
         return file.exists();
     }
 
     @Override
-    protected InputStream getInputStream() throws IOException {
-        return new FileInputStream(file);
+    protected InputStream getInputStream()
+            throws IOException
+    {
+        return new FileInputStream( file );
     }
 
     @Override
-    protected OutputStream getOutputStream() throws IOException {
-        return new FileOutputStream(file);
+    protected OutputStream getOutputStream()
+            throws IOException
+    {
+        return new FileOutputStream( file );
     }
 
 }
