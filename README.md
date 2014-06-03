@@ -5,6 +5,9 @@ Flickr API is a Java / android implementation to access the Flickr web services 
 
 Getting started
 ===============
+
+The last release is 1.0 and can be downloaded [here](https://github.com/fabienbarbero/flickr-api/releases/download/release_1.0/flickr-api-1.0.jar)
+
 The API use the following dependencies:
 
  - [httpmime](http://hc.apache.org/downloads.cgi) to use large data in httpclient
