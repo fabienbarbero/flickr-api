@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) Copyright 2014 Fabien Barbero.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -30,7 +22,9 @@ import com.flickr.api.utils.JSONUtils;
  *
  * @author Fabien Barbero
  */
-public class UserInfos implements BaseUser {
+public class UserInfos
+        implements BaseUser
+{
 
     private static final long serialVersionUID = -5126309551528400272L;
     //
@@ -45,25 +39,28 @@ public class UserInfos implements BaseUser {
     private final UserPhotosInfo photosInfo;
     private final Avatar avatar;
 
-    UserInfos(JSONObject json) throws JSONException {
-        id = json.getString("nsid");
-        isPro = json.getInt("ispro");
-        description = JSONUtils.getContent(json, "description");
-        userName = JSONUtils.getContent(json, "username");
-        if (json.has("realname")) {
-            realName = JSONUtils.getContent(json, "realname");
+    UserInfos( JSONObject json )
+            throws JSONException
+    {
+        id = json.getString( "nsid" );
+        isPro = json.getInt( "ispro" );
+        description = JSONUtils.getContent( json, "description" );
+        userName = JSONUtils.getContent( json, "username" );
+        if ( json.has( "realname" ) ) {
+            realName = JSONUtils.getContent( json, "realname" );
         }
-        if (json.has("location")) {
-            location = JSONUtils.getContent(json, "location");
+        if ( json.has( "location" ) ) {
+            location = JSONUtils.getContent( json, "location" );
         }
-        photosUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "photosurl"));
-        profileUrl = JSONUtils.urlFromString(JSONUtils.getContent(json, "profileurl"));
-        photosInfo = new UserPhotosInfo(json.getJSONObject("photos"));
-        avatar = new Avatar(json, id);
+        photosUrl = JSONUtils.urlFromString( JSONUtils.getContent( json, "photosurl" ) );
+        profileUrl = JSONUtils.urlFromString( JSONUtils.getContent( json, "profileurl" ) );
+        photosInfo = new UserPhotosInfo( json.getJSONObject( "photos" ) );
+        avatar = new Avatar( json, id );
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
@@ -72,7 +69,8 @@ public class UserInfos implements BaseUser {
      *
      * @return The avatar
      */
-    public Avatar getAvatar() {
+    public Avatar getAvatar()
+    {
         return avatar;
     }
 
@@ -81,7 +79,8 @@ public class UserInfos implements BaseUser {
      *
      * @return The location or null
      */
-    public String getLocation() {
+    public String getLocation()
+    {
         return location;
     }
 
@@ -90,7 +89,8 @@ public class UserInfos implements BaseUser {
      *
      * @return true if the user owns a "pro" account.
      */
-    public boolean isPro() {
+    public boolean isPro()
+    {
         return isPro == 1;
     }
 
@@ -99,7 +99,8 @@ public class UserInfos implements BaseUser {
      *
      * @return The description
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
@@ -108,7 +109,8 @@ public class UserInfos implements BaseUser {
      *
      * @return The photos informations.
      */
-    public UserPhotosInfo getPhotosInfo() {
+    public UserPhotosInfo getPhotosInfo()
+    {
         return photosInfo;
     }
 
@@ -117,7 +119,8 @@ public class UserInfos implements BaseUser {
      *
      * @return The URL.
      */
-    public URL getPhotosUrl() {
+    public URL getPhotosUrl()
+    {
         return photosUrl;
     }
 
@@ -126,22 +129,27 @@ public class UserInfos implements BaseUser {
      *
      * @return The URL.
      */
-    public URL getProfileUrl() {
+    public URL getProfileUrl()
+    {
         return profileUrl;
     }
 
     @Override
-    public String getRealName() {
+    public String getRealName()
+    {
         return realName;
     }
 
     @Override
-    public String getUserName() {
+    public String getUserName()
+    {
         return userName;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return userName;
     }
+
 }

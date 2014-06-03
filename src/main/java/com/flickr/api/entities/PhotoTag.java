@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) Copyright 2014 Fabien Barbero.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -29,7 +21,9 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoTag implements IdObject {
+public class PhotoTag
+        implements IdObject
+{
 
     private final String id;
     private final String author;
@@ -37,11 +31,13 @@ public class PhotoTag implements IdObject {
     // FIXME
     private final String tag;
 
-    PhotoTag(JSONObject json) throws JSONException {
-        id = json.getString("id");
-        author = json.getString("author");
-        raw = json.getString("raw");
-        tag = json.getString("_content");
+    PhotoTag( JSONObject json )
+            throws JSONException
+    {
+        id = json.getString( "id" );
+        author = json.getString( "author" );
+        raw = json.getString( "raw" );
+        tag = json.getString( "_content" );
     }
 
     /**
@@ -49,12 +45,14 @@ public class PhotoTag implements IdObject {
      *
      * @return The author
      */
-    public String getAuthorId() {
+    public String getAuthorId()
+    {
         return author;
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
@@ -63,7 +61,8 @@ public class PhotoTag implements IdObject {
      *
      * @return The raw value
      */
-    public String getRaw() {
+    public String getRaw()
+    {
         return raw;
     }
 
@@ -72,12 +71,15 @@ public class PhotoTag implements IdObject {
      *
      * @return The tag value
      */
-    public String getTag() {
+    public String getTag()
+    {
         return tag;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return raw;
     }
+
 }

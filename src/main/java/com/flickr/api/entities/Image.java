@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2012 Fabien Barbero
+ * (C) Copyright 2014 Fabien Barbero.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights 
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -32,7 +24,9 @@ import com.flickr.api.utils.URLUtils;
  * This class represents an URL of an image as described in the Flickr API. see
  * http://www.flickr.com/services/api/misc.urls.html
  */
-public class Image implements Serializable {
+public class Image
+        implements Serializable
+{
 
     private static final long serialVersionUID = 6546344763489L;
     /**
@@ -73,26 +67,30 @@ public class Image implements Serializable {
     public static final String ORIGINAL = "0";
     private final String prefix;
 
-    Image(String prefix) {
+    Image( String prefix )
+    {
         this.prefix = prefix;
     }
 
-    Image(String farm, String server, String primary, String secret) {
-        prefix = MessageFormat.format("https://farm{0}.staticflickr.com/{1}/{2}_{3}_", farm, server, primary, secret);
+    Image( String farm, String server, String primary, String secret )
+    {
+        prefix = MessageFormat.format( "https://farm{0}.staticflickr.com/{1}/{2}_{3}_", farm, server, primary, secret );
     }
 
-    Image(JSONObject json) throws JSONException {
+    Image( JSONObject json )
+            throws JSONException
+    {
         String id;
-        if (json.has("id")) {
-            id = json.getString("id");
+        if ( json.has( "id" ) ) {
+            id = json.getString( "id" );
         } else {
-            id = json.getString("primary");
+            id = json.getString( "primary" );
         }
 
-        prefix = MessageFormat.format("https://farm{0}.static.flickr.com/{1}/{2}_{3}_",
-                json.getString("farm"), json.getString("server"),
-                id,
-                json.getString("secret"));
+        prefix = MessageFormat.format( "https://farm{0}.static.flickr.com/{1}/{2}_{3}_",
+                                       json.getString( "farm" ), json.getString( "server" ),
+                                       id,
+                                       json.getString( "secret" ) );
     }
 
     /**
@@ -101,8 +99,9 @@ public class Image implements Serializable {
      * @param size The size
      * @return The resulting URL
      */
-    public URL getURL(String size) {
-        return URLUtils.fromString(prefix + size + ".jpg");
+    public URL getURL( String size )
+    {
+        return URLUtils.fromString( prefix + size + ".jpg" );
     }
 
 }

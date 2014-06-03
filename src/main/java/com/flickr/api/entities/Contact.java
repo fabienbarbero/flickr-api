@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) Copyright 2014 Fabien Barbero.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -29,7 +21,9 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Contact implements BaseUser {
+public class Contact
+        implements BaseUser
+{
 
     private final String id;
     private final String username;
@@ -40,15 +34,17 @@ public class Contact implements BaseUser {
     private final Avatar avatar;
     private final String realname;
 
-    Contact(JSONObject json) throws JSONException {
-        id = json.getString("nsid");
-        username = json.getString("username");
-        realname = json.optString("realname", null);
-        location = json.optString("location", null);
-        friend = json.optInt("friend", 0);
-        family = json.optInt("family", 0);
-        ignored = json.optInt("ignored", 0);
-        avatar = new Avatar(json, id);
+    Contact( JSONObject json )
+            throws JSONException
+    {
+        id = json.getString( "nsid" );
+        username = json.getString( "username" );
+        realname = json.optString( "realname", null );
+        location = json.optString( "location", null );
+        friend = json.optInt( "friend", 0 );
+        family = json.optInt( "family", 0 );
+        ignored = json.optInt( "ignored", 0 );
+        avatar = new Avatar( json, id );
     }
 
     /**
@@ -56,7 +52,8 @@ public class Contact implements BaseUser {
      *
      * @return The avatar
      */
-    public Avatar getAvatar() {
+    public Avatar getAvatar()
+    {
         return avatar;
     }
 
@@ -65,7 +62,8 @@ public class Contact implements BaseUser {
      *
      * @return true if the contact is a member of the family.
      */
-    public boolean isFamily() {
+    public boolean isFamily()
+    {
         return family == 1;
     }
 
@@ -74,7 +72,8 @@ public class Contact implements BaseUser {
      *
      * @return true if the contact is a friend.
      */
-    public boolean isFriend() {
+    public boolean isFriend()
+    {
         return friend == 1;
     }
 
@@ -83,17 +82,20 @@ public class Contact implements BaseUser {
      *
      * @return true if the contact is ignored.
      */
-    public boolean isIgnored() {
+    public boolean isIgnored()
+    {
         return ignored == 1;
     }
 
     @Override
-    public String getRealName() {
+    public String getRealName()
+    {
         return realname;
     }
 
     @Override
-    public String getUserName() {
+    public String getUserName()
+    {
         return username;
     }
 
@@ -102,17 +104,21 @@ public class Contact implements BaseUser {
      *
      * @return The location or null
      */
-    public String getLocation() {
+    public String getLocation()
+    {
         return location;
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return username;
     }
+
 }

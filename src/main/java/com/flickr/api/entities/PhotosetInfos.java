@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2014 Fabien Barbero
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights 
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * (C) Copyright 2014 Fabien Barbero.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -31,7 +23,9 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotosetInfos implements IdObject {
+public class PhotosetInfos
+        implements IdObject
+{
 
     private final String id;
     private final boolean canComment;
@@ -42,15 +36,17 @@ public class PhotosetInfos implements IdObject {
     private final String description;
     private final String owner;
 
-    PhotosetInfos(JSONObject json) throws JSONException {
-        id = json.getString("id");
-        canComment = json.getInt("can_comment") == 1;
-        commentsCount = json.getInt("count_comments");
-        viewsCount = json.getInt("count_views");
-        createDate = JSONUtils.dateFromString(json.getString("date_create"));
-        updateDate = JSONUtils.dateFromString(json.getString("date_update"));
-        description = JSONUtils.getContent(json, "description");
-        owner = json.getString("owner");
+    PhotosetInfos( JSONObject json )
+            throws JSONException
+    {
+        id = json.getString( "id" );
+        canComment = json.getInt( "can_comment" ) == 1;
+        commentsCount = json.getInt( "count_comments" );
+        viewsCount = json.getInt( "count_views" );
+        createDate = JSONUtils.dateFromString( json.getString( "date_create" ) );
+        updateDate = JSONUtils.dateFromString( json.getString( "date_update" ) );
+        description = JSONUtils.getContent( json, "description" );
+        owner = json.getString( "owner" );
     }
 
     /**
@@ -58,7 +54,8 @@ public class PhotosetInfos implements IdObject {
      *
      * @return The last update
      */
-    public Date getUpdateDate() {
+    public Date getUpdateDate()
+    {
         return updateDate;
     }
 
@@ -67,7 +64,8 @@ public class PhotosetInfos implements IdObject {
      *
      * @return The views count
      */
-    public int getViewsCount() {
+    public int getViewsCount()
+    {
         return viewsCount;
     }
 
@@ -76,7 +74,8 @@ public class PhotosetInfos implements IdObject {
      *
      * @return true if comments can be added, false otherwise
      */
-    public boolean canComment() {
+    public boolean canComment()
+    {
         return canComment;
     }
 
@@ -85,7 +84,8 @@ public class PhotosetInfos implements IdObject {
      *
      * @return The owner
      */
-    public String getOwnerId() {
+    public String getOwnerId()
+    {
         return owner;
     }
 
@@ -94,7 +94,8 @@ public class PhotosetInfos implements IdObject {
      *
      * @return The description
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
@@ -103,7 +104,8 @@ public class PhotosetInfos implements IdObject {
      *
      * @return The creation date
      */
-    public Date getCreateDate() {
+    public Date getCreateDate()
+    {
         return createDate;
     }
 
@@ -112,12 +114,15 @@ public class PhotosetInfos implements IdObject {
      *
      * @return The comments count
      */
-    public int getCommentsCount() {
+    public int getCommentsCount()
+    {
         return commentsCount;
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
+
 }

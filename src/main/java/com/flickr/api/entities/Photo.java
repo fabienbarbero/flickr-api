@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) Copyright 2014 Fabien Barbero.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -28,7 +20,9 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class Photo implements BasePhoto {
+public class Photo
+        implements BasePhoto
+{
 
     private static final long serialVersionUID = 5438438431425L;
     //
@@ -41,15 +35,17 @@ public class Photo implements BasePhoto {
     private final boolean isPrimary;
     private final String owner;
 
-    public Photo(JSONObject json) throws JSONException {
-        id = json.getString("id");
-        title = json.getString("title");
-        url = new Image(json);
-        isFamily = json.optInt("isfamily", 0) == 1;
-        isFriend = json.optInt("isfriend", 0) == 1;
-        isPublic = json.optInt("ispublic", 0) == 1;
-        isPrimary = json.optInt("isprimary", 0) == 1;
-        owner = json.optString("owner");
+    public Photo( JSONObject json )
+            throws JSONException
+    {
+        id = json.getString( "id" );
+        title = json.getString( "title" );
+        url = new Image( json );
+        isFamily = json.optInt( "isfamily", 0 ) == 1;
+        isFriend = json.optInt( "isfriend", 0 ) == 1;
+        isPublic = json.optInt( "ispublic", 0 ) == 1;
+        isPrimary = json.optInt( "isprimary", 0 ) == 1;
+        owner = json.optString( "owner" );
     }
 
     /**
@@ -58,7 +54,8 @@ public class Photo implements BasePhoto {
      * @return The identifier.
      */
     @Override
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
@@ -67,7 +64,8 @@ public class Photo implements BasePhoto {
      *
      * @return The title.
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
@@ -76,7 +74,8 @@ public class Photo implements BasePhoto {
      *
      * @return The image URL
      */
-    public Image getImage() {
+    public Image getImage()
+    {
         return url;
     }
 
@@ -85,7 +84,8 @@ public class Photo implements BasePhoto {
      *
      * @return true if this photo has been taken by a member of the user family, false otherwise
      */
-    public boolean isFamily() {
+    public boolean isFamily()
+    {
         return isFamily;
     }
 
@@ -94,7 +94,8 @@ public class Photo implements BasePhoto {
      *
      * @return true if this photo has been taken by a friend of the user, false otherwise
      */
-    public boolean isFriend() {
+    public boolean isFriend()
+    {
         return isFriend;
     }
 
@@ -103,7 +104,8 @@ public class Photo implements BasePhoto {
      *
      * @return true if this photo is public, false otherwise
      */
-    public boolean isPublic() {
+    public boolean isPublic()
+    {
         return isPublic;
     }
 
@@ -112,33 +114,38 @@ public class Photo implements BasePhoto {
      *
      * @return The owner
      */
-    public String getOwner() {
+    public String getOwner()
+    {
         return owner;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals( Object obj )
+    {
+        if ( obj == null ) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if ( getClass() != obj.getClass() ) {
             return false;
         }
-        final Photo other = (Photo) obj;
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+        final Photo other = ( Photo ) obj;
+        if ( ( this.id == null ) ? ( other.id != null ) : !this.id.equals( other.id ) ) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return title;
     }
+
 }

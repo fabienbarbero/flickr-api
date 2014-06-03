@@ -1,23 +1,15 @@
 /*
- * Copyright (C) 2011 by Fabien Barbero
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) Copyright 2014 Fabien Barbero.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl-2.1.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  */
 package com.flickr.api.entities;
 
@@ -34,7 +26,9 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoInfos implements Serializable {
+public class PhotoInfos
+        implements Serializable
+{
 
     private final Owner owner;
     private final String title;
@@ -52,30 +46,32 @@ public class PhotoInfos implements Serializable {
     private final String license;
     private final PhotoLocation location;
 
-    PhotoInfos(JSONObject json) throws JSONException {
-        owner = new Owner(json.getJSONObject("owner"));
-        title = JSONUtils.getContent(json, "title");
-        description = JSONUtils.getContent(json, "description");
-        visibility = new PhotoVisibility(json.getJSONObject("visibility"));
-        dates = new PhotoDates(json.getJSONObject("dates"));
-        usage = new PhotoUsage(json.getJSONObject("usage"));
-        comments = JSONUtils.getIntegerContent(json, "comments");
-        uploadedDate = JSONUtils.dateFromString(json.getString("dateuploaded"));
-        editability = new PhotoEditability(json.getJSONObject("editability"));
-        publicEditability = new PhotoEditability(json.getJSONObject("publiceditability"));
-        isFavorite = json.getInt("isfavorite") == 1;
-        license = json.getString("license");
-        if (json.has("location")) {
-            location = new PhotoLocation(json.getJSONObject("location"));
+    PhotoInfos( JSONObject json )
+            throws JSONException
+    {
+        owner = new Owner( json.getJSONObject( "owner" ) );
+        title = JSONUtils.getContent( json, "title" );
+        description = JSONUtils.getContent( json, "description" );
+        visibility = new PhotoVisibility( json.getJSONObject( "visibility" ) );
+        dates = new PhotoDates( json.getJSONObject( "dates" ) );
+        usage = new PhotoUsage( json.getJSONObject( "usage" ) );
+        comments = JSONUtils.getIntegerContent( json, "comments" );
+        uploadedDate = JSONUtils.dateFromString( json.getString( "dateuploaded" ) );
+        editability = new PhotoEditability( json.getJSONObject( "editability" ) );
+        publicEditability = new PhotoEditability( json.getJSONObject( "publiceditability" ) );
+        isFavorite = json.getInt( "isfavorite" ) == 1;
+        license = json.getString( "license" );
+        if ( json.has( "location" ) ) {
+            location = new PhotoLocation( json.getJSONObject( "location" ) );
         } else {
             location = null;
         }
-        views = json.getInt("views");
+        views = json.getInt( "views" );
 
         tags = new ArrayList<PhotoTag>();
-        JSONArray array = json.getJSONObject("tags").getJSONArray("tag");
-        for (int i = 0; i < array.length(); i++) {
-            tags.add(new PhotoTag(array.getJSONObject(i)));
+        JSONArray array = json.getJSONObject( "tags" ).getJSONArray( "tag" );
+        for ( int i = 0; i < array.length(); i++ ) {
+            tags.add( new PhotoTag( array.getJSONObject( i ) ) );
         }
     }
 
@@ -84,7 +80,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The number of comments.
      */
-    public int getCommentsCount() {
+    public int getCommentsCount()
+    {
         return comments;
     }
 
@@ -93,7 +90,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The dates of the photo.
      */
-    public PhotoDates getDates() {
+    public PhotoDates getDates()
+    {
         return dates;
     }
 
@@ -102,7 +100,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The description.
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
@@ -111,7 +110,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The owner.
      */
-    public Owner getOwner() {
+    public Owner getOwner()
+    {
         return owner;
     }
 
@@ -120,7 +120,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The tags
      */
-    public List<PhotoTag> getTags() {
+    public List<PhotoTag> getTags()
+    {
         return tags;
     }
 
@@ -129,7 +130,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The informations
      */
-    public PhotoEditability getEditability() {
+    public PhotoEditability getEditability()
+    {
         return editability;
     }
 
@@ -138,7 +140,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The license
      */
-    public String getLicense() {
+    public String getLicense()
+    {
         return license;
     }
 
@@ -147,7 +150,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The location or null if not present
      */
-    public PhotoLocation getLocation() {
+    public PhotoLocation getLocation()
+    {
         return location;
     }
 
@@ -156,7 +160,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The informations
      */
-    public PhotoEditability getPublicEditability() {
+    public PhotoEditability getPublicEditability()
+    {
         return publicEditability;
     }
 
@@ -165,7 +170,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The upload date
      */
-    public Date getUploadedDate() {
+    public Date getUploadedDate()
+    {
         return uploadedDate;
     }
 
@@ -174,7 +180,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The views count
      */
-    public int getViews() {
+    public int getViews()
+    {
         return views;
     }
 
@@ -183,7 +190,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return true if the photo is a favorite, false otherwise
      */
-    public boolean isFavorite() {
+    public boolean isFavorite()
+    {
         return isFavorite;
     }
 
@@ -192,7 +200,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return The title.
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
@@ -201,7 +210,8 @@ public class PhotoInfos implements Serializable {
      *
      * @return the usages
      */
-    public PhotoUsage getUsage() {
+    public PhotoUsage getUsage()
+    {
         return usage;
     }
 
@@ -210,12 +220,15 @@ public class PhotoInfos implements Serializable {
      *
      * @return The visibility
      */
-    public PhotoVisibility getVisibility() {
+    public PhotoVisibility getVisibility()
+    {
         return visibility;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return title + " - " + description;
     }
+
 }
