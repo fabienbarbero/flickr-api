@@ -13,11 +13,11 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.Contact;
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.User;
-import com.flickr.api.entities.UserInfos;
+import easy.flickr.api.entities.Contact;
+import easy.flickr.api.entities.Paginated;
+import easy.flickr.api.entities.Photo;
+import easy.flickr.api.entities.User;
+import easy.flickr.api.entities.UserInfos;
 import static org.junit.Assert.*;
 import org.junit.Test;
 

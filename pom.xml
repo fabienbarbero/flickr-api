@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.flickr</groupId>
+    <groupId>org.easy</groupId>
     <artifactId>flickr-api</artifactId>
     <version>1.1-SNAPSHOT</version>
-    <name>Flickr API</name>
+    <name>Easy Flickr</name>
     <url>https://github.com/fabienbarbero/flickr-api</url>
     
     <licenses>
@@ -17,9 +17,9 @@
     </licenses>
     
     <scm>
-        <connection>scm:git:git@github.com:fabienbarbero/flickr-api.git</connection>
-        <developerConnection>scm:git:git@github.com:fabienbarbero/flickr-api.git</developerConnection>
-        <url>https://github.com/fabienbarbero/flickr-api</url>
+        <connection>scm:git:git@github.com:fabienbarbero/easy-flickr.git</connection>
+        <developerConnection>scm:git:git@github.com:fabienbarbero/easy-flickr.git</developerConnection>
+        <url>https://github.com/fabienbarbero/easy-flickr</url>
     </scm>
     
     <developers>

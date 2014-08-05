@@ -13,6 +13,7 @@
  */
 package com.flickr.api;
 
+import easy.easy.flickr.api.Flickr;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;

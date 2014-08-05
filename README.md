@@ -1,12 +1,12 @@
-Flickr API
-==========
+Easy Flickr
+===========
 
-Flickr API is a Java / android implementation to access the Flickr web services defined [here](http://www.flickr.com/services/api/). The API uses only the REST-JSON requests to have the minimum payload size (which is useful with android device which do not have a high speed network access).
+Easy Flickr is a Java / android API implementation to access the Flickr web services defined [here](http://www.flickr.com/services/api/). The API uses only the REST-JSON requests to have the minimum payload size (which is useful with android device which do not have a high speed network access).
 
 Getting started
 ===============
 
-The last release is 1.0 and can be downloaded [here](https://github.com/fabienbarbero/flickr-api/releases/download/release_1.0/flickr-api-1.0.jar)
+The last release is 1.0 and can be downloaded [here](https://github.com/fabienbarbero/easy-flickr/releases/download/release_1.0/flickr-api-1.0.jar)
 
 The API use the following dependencies:
 

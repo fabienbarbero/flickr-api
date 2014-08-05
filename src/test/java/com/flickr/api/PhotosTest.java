@@ -13,16 +13,16 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.ExifInfos;
-import com.flickr.api.entities.License;
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotoInfos;
-import com.flickr.api.entities.PhotoPermissions;
-import com.flickr.api.entities.PhotoSize;
-import com.flickr.api.entities.Photoset;
-import com.flickr.api.entities.PhotosetInfos;
-import com.flickr.api.entities.UserInfos;
+import easy.flickr.api.entities.ExifInfos;
+import easy.flickr.api.entities.License;
+import easy.flickr.api.entities.Paginated;
+import easy.flickr.api.entities.Photo;
+import easy.flickr.api.entities.PhotoInfos;
+import easy.flickr.api.entities.PhotoPermissions;
+import easy.flickr.api.entities.PhotoSize;
+import easy.flickr.api.entities.Photoset;
+import easy.flickr.api.entities.PhotosetInfos;
+import easy.flickr.api.entities.UserInfos;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;

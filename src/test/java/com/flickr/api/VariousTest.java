@@ -13,15 +13,15 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.CameraBrand;
-import com.flickr.api.entities.CameraBrandModel;
-import com.flickr.api.entities.Group;
-import com.flickr.api.entities.GroupInfos;
-import com.flickr.api.entities.Member;
-import com.flickr.api.entities.Paginated;
-import com.flickr.api.entities.Photo;
-import com.flickr.api.entities.PhotoStats;
-import com.flickr.api.entities.TotalViews;
+import easy.flickr.api.entities.CameraBrand;
+import easy.flickr.api.entities.CameraBrandModel;
+import easy.flickr.api.entities.Group;
+import easy.flickr.api.entities.GroupInfos;
+import easy.flickr.api.entities.Member;
+import easy.flickr.api.entities.Paginated;
+import easy.flickr.api.entities.Photo;
+import easy.flickr.api.entities.PhotoStats;
+import easy.flickr.api.entities.TotalViews;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;

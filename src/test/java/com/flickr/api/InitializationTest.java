@@ -13,7 +13,7 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.UserInfos;
+import easy.flickr.api.entities.UserInfos;
 import javax.swing.JOptionPane;
 import static org.junit.Assert.*;
 import org.junit.Test;

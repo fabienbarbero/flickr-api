@@ -13,8 +13,10 @@
  */
 package com.flickr.api;
 
-import com.flickr.api.entities.PhotoInfos;
-import com.flickr.api.entities.UploadedPhoto;
+import easy.easy.flickr.api.FlickrException;
+import easy.easy.flickr.api.FlickrErrorCode;
+import easy.flickr.api.entities.PhotoInfos;
+import easy.flickr.api.entities.UploadedPhoto;
 import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.*;
