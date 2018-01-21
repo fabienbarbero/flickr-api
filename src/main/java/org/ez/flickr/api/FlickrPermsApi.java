@@ -13,8 +13,9 @@
  */
 package org.ez.flickr.api;
 
-import org.scribe.builder.api.FlickrApi;
-import org.scribe.model.Token;
+
+import com.github.scribejava.apis.FlickrApi;
+import com.github.scribejava.core.model.OAuth1RequestToken;
 
 /**
  *
@@ -32,7 +33,7 @@ class FlickrPermsApi
     }
 
     @Override
-    public String getAuthorizationUrl( Token requestToken )
+    public String getAuthorizationUrl( OAuth1RequestToken requestToken )
     {
         return "https://www.flickr.com/services/oauth/authorize?perms=" + perms + "&oauth_token=" + requestToken.getToken();
     }

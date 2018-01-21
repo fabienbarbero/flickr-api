@@ -23,7 +23,7 @@ public interface ServerResponse
     void read( String data, String method )
             throws FlickrException;
 
-    public enum ResponseStatus
+    enum ResponseStatus
     {
 
         fail,

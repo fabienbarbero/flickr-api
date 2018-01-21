@@ -38,7 +38,7 @@ public enum FlickrErrorCode
 
     private int code;
 
-    private FlickrErrorCode( int code )
+    FlickrErrorCode( int code )
     {
         this.code = code;
     }

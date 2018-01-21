@@ -13,17 +13,17 @@
  */
 package org.ez.flickr.api;
 
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Verb;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.Proxy;
 import java.util.Map;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Verb;
 
 /**
- *
  * @author Fabien Barbero
  */
 public abstract class FlickrService
@@ -31,18 +31,11 @@ public abstract class FlickrService
 
     public static final int MAX_PER_PAGE = Integer.MAX_VALUE;
     private static final String URL_PREFIX = "https://api.flickr.com/services/rest";
-    private final OAuthHandler oauth;
-
-    private Proxy proxy = null;
+    private final OAuthHandler oauthHandler;
 
     FlickrService( OAuthHandler oauth )
     {
-        this.oauth = oauth;
-    }
-
-    void setProxy( Proxy proxy )
-    {
-        this.proxy = proxy;
+        this.oauthHandler = oauth;
     }
 
     final <T extends ServerResponse> T doGet( CommandArguments args, Class<T> clazz )
@@ -50,20 +43,20 @@ public abstract class FlickrService
     {
         OAuthRequest request = new OAuthRequest( Verb.GET, URL_PREFIX );
 
-        // check for proxy, use if available
-        if ( proxy != null ) {
-//            request.setProxy(proxy);
-        }
-
         for ( Map.Entry<String, Object> param : args.getParameters().entrySet() ) {
             request.addQuerystringParameter( param.getKey(), String.valueOf( param.getValue() ) );
         }
 
-        oauth.signRequest( request );
-        Response response = request.send();
-        String body = response.getBody();
+        try {
+            oauthHandler.signRequest( request );
+            Response response = oauthHandler.execute( request );
+            String body = response.getBody();
 
-        return parseBody( args, clazz, body );
+            return parseBody( args, clazz, body );
+
+        } catch ( IOException ex ) {
+            throw new FlickrException( "Error executing request", ex );
+        }
     }
 
     final <T extends ServerResponse> T doPost( CommandArguments args, Class<T> clazz )
@@ -78,33 +71,28 @@ public abstract class FlickrService
         try {
             OAuthRequest request = new OAuthRequest( Verb.POST, url );
 
-            // check for proxy, use if available
-            if ( proxy != null ) {
-//                request.setProxy(proxy);
-            }
-
             for ( Map.Entry<String, Object> param : args.getParameters().entrySet() ) {
                 if ( param.getValue() instanceof String ) {
                     request.addQuerystringParameter( param.getKey(), ( String ) param.getValue() );
                 }
             }
 
-            oauth.signRequest( request );
+            oauthHandler.signRequest( request );
 
-            MultipartEntity multipart = args.getBody( request.getOauthParameters() );
+            HttpEntity multipart = args.getBody( request.getOauthParameters() );
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             multipart.writeTo( baos );
 
-            request.addPayload( baos.toByteArray() );
-            request.addHeader( "Content-type", multipart.getContentType().getValue() );
+            request.setPayload( baos.toByteArray() );
+            request.addHeader( HttpHeaders.CONTENT_TYPE, multipart.getContentType().getValue() );
 
-            Response response = request.send();
+            Response response = oauthHandler.execute( request );
             String body = response.getBody();
 
             return parseBody( args, clazz, body );
 
         } catch ( IOException ex ) {
-            throw new UnsupportedOperationException( "Error preparing multipart request", ex );
+            throw new FlickrException( "Error preparing multipart request", ex );
         }
     }
 
@@ -124,13 +112,7 @@ public abstract class FlickrService
 
             return instance;
 
-        } catch ( FlickrException ex ) {
-            throw ex;
-        } catch ( IllegalStateException ex ) {
-            throw new FlickrException( "Server request error", ex );
-        } catch ( InstantiationException ex ) {
-            throw new FlickrException( "Server request error", ex );
-        } catch ( IllegalAccessException ex ) {
+        } catch ( IllegalStateException | InstantiationException | IllegalAccessException ex ) {
             throw new FlickrException( "Server request error", ex );
         }
     }

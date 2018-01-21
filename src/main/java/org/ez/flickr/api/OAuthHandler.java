@@ -13,19 +13,20 @@
  */
 package org.ez.flickr.api;
 
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.*;
+import com.github.scribejava.core.oauth.OAuth10aService;
+
+import java.io.Closeable;
+import java.io.IOException;
 import java.net.Proxy;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.exceptions.OAuthException;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Token;
-import org.scribe.model.Verifier;
-import org.scribe.oauth.OAuthService;
+import java.util.concurrent.ExecutionException;
 
 /**
- *
  * @author Fabien Barbero
  */
 class OAuthHandler
+        implements Closeable
 {
 
     private static final String PROPERTY_REQUEST_TOKEN = "oauth.request.token";
@@ -33,37 +34,37 @@ class OAuthHandler
     private static final String PROPERTY_ACCESS_TOKEN = "oauth.access.token";
     private static final String PROPERTY_ACCESS_SECRET = "oauth.access.secret";
     private static final String PROPERTY_TOKEN = "oauth.token";
-    //
+
     private final FlickrProperties props;
-    private final OAuthService service;
-    //
-    private Token requestToken;
-    private Token accessToken;
+    private final OAuth10aService service;
+
+    private OAuth1RequestToken requestToken;
+    private OAuth1AccessToken accessToken;
     private String token;
 
-    OAuthHandler( FlickrProperties props, String apiKey, String apiSecret, String callbackUrl, String perms )
+    OAuthHandler( FlickrProperties props,
+                  String apiKey,
+                  String apiSecret,
+                  String callbackUrl,
+                  String perms )
     {
         this.props = props;
-        service = new ServiceBuilder()
-                .provider( new FlickrPermsApi( perms ) )
-                .apiKey( apiKey ).apiSecret( apiSecret )
+        service = new ServiceBuilder( apiKey )
+                .apiSecret( apiSecret )
                 .callback( callbackUrl )
-                .build();
+                .build( new FlickrPermsApi( perms ) );
         load();
-    }
-
-    void setProxy( Proxy proxy )
-    {
-//        service.setProxy(proxy);
     }
 
     private void load()
     {
         if ( props.contains( PROPERTY_REQUEST_TOKEN ) && props.contains( PROPERTY_REQUEST_SECRET ) ) {
-            requestToken = new Token( props.getString( PROPERTY_REQUEST_TOKEN, null ), props.getString( PROPERTY_REQUEST_SECRET, null ) );
+            requestToken = new OAuth1RequestToken( props.getString( PROPERTY_REQUEST_TOKEN, null ),
+                                                   props.getString( PROPERTY_REQUEST_SECRET, null ) );
 
         } else if ( props.contains( PROPERTY_ACCESS_TOKEN ) && props.contains( PROPERTY_ACCESS_SECRET ) ) {
-            accessToken = new Token( props.getString( PROPERTY_ACCESS_TOKEN, null ), props.getString( PROPERTY_ACCESS_SECRET, null ) );
+            accessToken = new OAuth1AccessToken( props.getString( PROPERTY_ACCESS_TOKEN, null ),
+                                                 props.getString( PROPERTY_ACCESS_SECRET, null ) );
         }
 
         token = props.getString( PROPERTY_TOKEN, null );
@@ -78,7 +79,7 @@ class OAuthHandler
     {
         if ( requestToken != null ) {
             props.putString( PROPERTY_REQUEST_TOKEN, requestToken.getToken() );
-            props.putString( PROPERTY_REQUEST_SECRET, requestToken.getSecret() );
+            props.putString( PROPERTY_REQUEST_SECRET, requestToken.getTokenSecret() );
         } else {
             props.remove( PROPERTY_REQUEST_TOKEN );
             props.remove( PROPERTY_REQUEST_SECRET );
@@ -86,7 +87,7 @@ class OAuthHandler
 
         if ( accessToken != null ) {
             props.putString( PROPERTY_ACCESS_TOKEN, accessToken.getToken() );
-            props.putString( PROPERTY_ACCESS_SECRET, accessToken.getSecret() );
+            props.putString( PROPERTY_ACCESS_SECRET, accessToken.getTokenSecret() );
         } else {
             props.remove( PROPERTY_ACCESS_TOKEN );
             props.remove( PROPERTY_ACCESS_SECRET );
@@ -116,24 +117,44 @@ class OAuthHandler
         service.signRequest( accessToken, request );
     }
 
-    String retrieveAuthorizationUrl()
-            throws OAuthException
+    Response execute( OAuthRequest request )
+            throws IOException
     {
-        requestToken = service.getRequestToken();
-        String authorizationUrl = service.getAuthorizationUrl( requestToken );
+        try {
+            return service.execute( request );
+        } catch ( InterruptedException | ExecutionException ex ) {
+            throw new IOException( "Error executing request", ex );
+        }
+    }
 
-        save();
-        return authorizationUrl;
+    String retrieveAuthorizationUrl()
+            throws IOException
+    {
+        try {
+            requestToken = service.getRequestToken();
+            String authorizationUrl = service.getAuthorizationUrl( requestToken );
+
+            save();
+            return authorizationUrl;
+
+        } catch ( InterruptedException | ExecutionException ex ) {
+            throw new IOException( "Error getting authorization URL", ex );
+        }
     }
 
     void retrieveAccessToken( String verifier, String token )
-            throws OAuthException
+            throws IOException
     {
-        accessToken = service.getAccessToken( requestToken, new Verifier( verifier ) );
+        try {
+            accessToken = service.getAccessToken( requestToken, verifier );
 
-        this.token = token;
-        requestToken = null; // Invalidate
-        save();
+            this.token = token;
+            requestToken = null; // Invalidate
+            save();
+
+        } catch ( InterruptedException | ExecutionException ex ) {
+            throw new IOException( "Error getting access token", ex );
+        }
     }
 
     public void clear()
@@ -142,6 +163,13 @@ class OAuthHandler
         accessToken = null;
         token = null;
         save();
+    }
+
+    @Override
+    public void close()
+            throws IOException
+    {
+        service.close();
     }
 
 }

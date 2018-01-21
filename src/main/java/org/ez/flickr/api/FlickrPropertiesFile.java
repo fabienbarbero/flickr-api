@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Simple implentation of {@link FlickrProperties} which store the data in a file.
+ * Simple implementation of {@link FlickrProperties} which store the data in a file.
  *
  * @author Fabien Barbero
  */
