@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.fabienbarbero</groupId>
     <artifactId>flickr-api</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>Flickr API</name>
     <url>https://github.com/fabienbarbero/flickr-api</url>
     <description>A Java library to access Flickr API (works with Android too!)</description>
@@ -21,7 +20,8 @@
         <url>https://github.com/fabienbarbero/flickr-api</url>
         <connection>scm:git:git://github.com/fabienbarbero/flickr-api.git</connection>
         <developerConnection>scm:git:git@github.com:fabienbarbero/flickr-api.git</developerConnection>
-    </scm>
+      <tag>flickr-api-1.1</tag>
+  </scm>
 
     <distributionManagement>
         <snapshotRepository>
