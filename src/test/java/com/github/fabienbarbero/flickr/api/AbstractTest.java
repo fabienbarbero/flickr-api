@@ -17,10 +17,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import org.junit.Before;
 
 /**
- *
  * @author Fabien Barbero
  */
 public abstract class AbstractTest
@@ -35,6 +35,9 @@ public abstract class AbstractTest
         // System.setProperty("flickr.api.debug", "true");
 
         File props = new File( System.getProperty( "user.home" ), ".flickr-api/flickr.conf" );
+        if ( !props.getParentFile().exists() ) {
+            props.getParentFile().mkdirs();
+        }
         flickr = new Flickr( "b8b463e052bb34563b8bd2e14cd02365", "177c21b07922c7f4", "http://localhost", "delete", props );
     }
 

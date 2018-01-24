@@ -111,6 +111,7 @@ public final class Flickr
      * Get the authorization URL used to allow the access to the application
      *
      * @return The authorization URL to open in the browser
+     * @throws FlickrException If the authorization URL retrieve fails
      */
     public String getAuthorizationUrl()
             throws FlickrException
@@ -124,7 +125,9 @@ public final class Flickr
 
     /**
      * Verify the token returned in the callback URL. This URL is formed like
-     * '[callbackUrl]?oauth_verifier=...&oauth_token=...'.
+     * <pre>
+     *     [callbackUrl]?oauth_verifier=...{@literal &}oauth_token=
+     * </pre>
      *
      * @param url The callback URL with the authorization parameters to verify
      * @throws FlickrException Error getting the user information

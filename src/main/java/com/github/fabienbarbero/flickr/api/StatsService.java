@@ -64,7 +64,7 @@ public class StatsService
      *
      * @param date Stats will be returned for this date
      * @return The views
-     * @throws FlickrException
+     * @throws FlickrException Error getting the views
      */
     public TotalViews getTotalViews( Date date )
             throws FlickrException
