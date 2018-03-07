@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Contains the location informations of a photo
+ * Contains the location information of a photo
  *
  * @author Fabien Barbero
  */

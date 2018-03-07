@@ -14,7 +14,7 @@
 package com.github.fabienbarbero.flickr.api;
 
 import com.github.fabienbarbero.flickr.api.entities.BaseUser;
-import com.github.fabienbarbero.flickr.api.entities.UserInfos;
+import com.github.fabienbarbero.flickr.api.entities.UserInfo;
 import com.github.scribejava.core.model.OAuthConstants;
 
 import java.io.File;
@@ -173,7 +173,7 @@ public final class Flickr
      * @return The user identifier
      * @throws FlickrException Error getting the user info
      */
-    public UserInfos getUser()
+    public UserInfo getUser()
             throws FlickrException
     {
         String userId = props.getString( PROP_USER_ID, null );

@@ -16,7 +16,7 @@ package com.github.fabienbarbero.flickr.api;
 import com.github.fabienbarbero.flickr.api.entities.CameraBrand;
 import com.github.fabienbarbero.flickr.api.entities.CameraBrandModel;
 import com.github.fabienbarbero.flickr.api.entities.Group;
-import com.github.fabienbarbero.flickr.api.entities.GroupInfos;
+import com.github.fabienbarbero.flickr.api.entities.GroupInfo;
 import com.github.fabienbarbero.flickr.api.entities.Member;
 import com.github.fabienbarbero.flickr.api.entities.Paginated;
 import com.github.fabienbarbero.flickr.api.entities.Photo;
@@ -62,12 +62,12 @@ public class VariousTest
         assertTrue( group.getPhotos() > 0 );
 //            assertTrue(isAccessible(group.getCover()));
 
-        GroupInfos groupInfos = flickr.getGroupsService().getGroupInfos( group );
-        assertNotNull( groupInfos );
-        assertNotNull( groupInfos.getDescription() );
-        assertNotNull( groupInfos.getName() );
-        assertNotNull( groupInfos.getRules() );
-        assertTrue( groupInfos.getMembers() > 0 );
+        GroupInfo groupInfo = flickr.getGroupsService().getGroupInfo( group );
+        assertNotNull( groupInfo );
+        assertNotNull( groupInfo.getDescription() );
+        assertNotNull( groupInfo.getName() );
+        assertNotNull( groupInfo.getRules() );
+        assertTrue( groupInfo.getMembers() > 0 );
 
         Paginated<Photo> photos = flickr.getGroupsService().getGroupPhotos( group, 50, 1 );
         assertFalse( photos.isEmpty() );

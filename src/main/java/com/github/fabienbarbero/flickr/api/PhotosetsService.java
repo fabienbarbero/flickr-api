@@ -21,8 +21,8 @@ import com.github.fabienbarbero.flickr.api.entities.Paginated;
 import com.github.fabienbarbero.flickr.api.entities.PhotosResponse;
 import com.github.fabienbarbero.flickr.api.entities.Photo;
 import com.github.fabienbarbero.flickr.api.entities.Photoset;
-import com.github.fabienbarbero.flickr.api.entities.PhotosetInfos;
-import com.github.fabienbarbero.flickr.api.entities.PhotosetInfosResponse;
+import com.github.fabienbarbero.flickr.api.entities.PhotosetInfo;
+import com.github.fabienbarbero.flickr.api.entities.PhotosetInfoResponse;
 import com.github.fabienbarbero.flickr.api.entities.PhotosetResponse;
 import com.github.fabienbarbero.flickr.api.entities.PhotosetsResponse;
 import com.github.fabienbarbero.flickr.api.entities.VoidResponse;
@@ -86,12 +86,12 @@ public class PhotosetsService
      * @return The photoset
      * @throws FlickrException Error getting the set
      */
-    public PhotosetInfos getInfos( Photoset photoset )
+    public PhotosetInfo getInfo( Photoset photoset )
             throws FlickrException
     {
         CommandArguments args = new CommandArguments( "flickr.photosets.getInfo" );
         args.addParam( "photoset_id", photoset.getId() );
-        return doGet( args, PhotosetInfosResponse.class ).getInfos();
+        return doGet( args, PhotosetInfoResponse.class ).getInfo();
     }
 
     /**

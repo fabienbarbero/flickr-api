@@ -21,7 +21,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class GroupInfos
+public class GroupInfo
         implements IdObject
 {
 
@@ -32,7 +32,7 @@ public class GroupInfos
     private final String blast;
     private final String id;
 
-    GroupInfos( JSONObject json )
+    GroupInfo( JSONObject json )
             throws JSONException
     {
         id = json.getString( "id" );

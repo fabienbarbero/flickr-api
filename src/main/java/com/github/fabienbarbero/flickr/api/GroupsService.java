@@ -14,8 +14,8 @@
 package com.github.fabienbarbero.flickr.api;
 
 import com.github.fabienbarbero.flickr.api.entities.Group;
-import com.github.fabienbarbero.flickr.api.entities.GroupInfos;
-import com.github.fabienbarbero.flickr.api.entities.GroupInfosResponse;
+import com.github.fabienbarbero.flickr.api.entities.GroupInfo;
+import com.github.fabienbarbero.flickr.api.entities.GroupInfoResponse;
 import com.github.fabienbarbero.flickr.api.entities.Paginated;
 import com.github.fabienbarbero.flickr.api.entities.GroupsResponse;
 import com.github.fabienbarbero.flickr.api.entities.Member;
@@ -59,17 +59,17 @@ public class GroupsService
      * Get information about a group.
      *
      * @param group The group
-     * @return The group informations
-     * @throws FlickrException Error getting the informations
+     * @return The group information
+     * @throws FlickrException Error getting the information
      */
-    public GroupInfos getGroupInfos( Group group )
+    public GroupInfo getGroupInfo( Group group )
             throws FlickrException
     {
         Locale locale = Locale.getDefault();
         CommandArguments args = new CommandArguments( "flickr.groups.getInfo" );
         args.addParam( "group_id", group.getId() );
         args.addParam( "lang", locale.getCountry().toLowerCase() + "-" + locale.getLanguage() );
-        return doGet( args, GroupInfosResponse.class ).getInfos();
+        return doGet( args, GroupInfoResponse.class ).getInfo();
     }
 
     /**

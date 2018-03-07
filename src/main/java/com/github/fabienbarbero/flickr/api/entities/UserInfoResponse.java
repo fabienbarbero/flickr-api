@@ -24,9 +24,9 @@ public class UserInfoResponse
         extends JSONResponse
 {
 
-    private UserInfos userinfo;
+    private UserInfo userinfo;
 
-    public UserInfos getUserInfo()
+    public UserInfo getUserInfo()
     {
         return userinfo;
     }
@@ -35,7 +35,7 @@ public class UserInfoResponse
     protected void readObject( JSONObject json )
             throws JSONException
     {
-        userinfo = new UserInfos( json.getJSONObject( "person" ) );
+        userinfo = new UserInfo( json.getJSONObject( "person" ) );
     }
 
 }

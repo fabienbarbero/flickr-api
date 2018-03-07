@@ -17,7 +17,7 @@ import com.github.fabienbarbero.flickr.api.entities.Contact;
 import com.github.fabienbarbero.flickr.api.entities.Paginated;
 import com.github.fabienbarbero.flickr.api.entities.Photo;
 import com.github.fabienbarbero.flickr.api.entities.User;
-import com.github.fabienbarbero.flickr.api.entities.UserInfos;
+import com.github.fabienbarbero.flickr.api.entities.UserInfo;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class UsersTest
         extends AbstractTest
 {
 
-    private UserInfos caller;
+    private UserInfo caller;
 
     @Override
     public void setUp()
@@ -58,7 +58,7 @@ public class UsersTest
             throws Exception
     {
         // People
-        UserInfos userInfo = flickr.getPeopleService().getUserInfo( caller );
+        UserInfo userInfo = flickr.getPeopleService().getUserInfo( caller );
         assertNotNull( userInfo );
         assertNotNull( userInfo.getAvatar() );
         assertNotNull( userInfo.getId() );

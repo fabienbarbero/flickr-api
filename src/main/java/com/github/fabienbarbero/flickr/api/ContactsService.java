@@ -19,7 +19,7 @@ import com.github.fabienbarbero.flickr.api.entities.ContactsResponse;
 import com.github.fabienbarbero.flickr.api.entities.Paginated;
 
 /**
- * Service used to get the contacts informations.
+ * Service used to get the contacts information.
  *
  * @author Fabien Barbero
  */

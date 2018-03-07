@@ -22,7 +22,7 @@ import com.github.fabienbarbero.flickr.api.utils.JSONUtils;
  *
  * @author Fabien Barbero
  */
-public class UserInfos
+public class UserInfo
         implements BaseUser
 {
 
@@ -39,7 +39,7 @@ public class UserInfos
     private final UserPhotosInfo photosInfo;
     private final Avatar avatar;
 
-    UserInfos( JSONObject json )
+    UserInfo( JSONObject json )
             throws JSONException
     {
         id = json.getString( "nsid" );
@@ -105,9 +105,9 @@ public class UserInfos
     }
 
     /**
-     * Get the informations about the user's photos.
+     * Get the information about the user's photos.
      *
-     * @return The photos informations.
+     * @return The photos information.
      */
     public UserPhotosInfo getPhotosInfo()
     {

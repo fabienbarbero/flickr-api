@@ -20,7 +20,7 @@ import com.github.fabienbarbero.flickr.api.entities.Paginated;
 import com.github.fabienbarbero.flickr.api.entities.PhotosResponse;
 import com.github.fabienbarbero.flickr.api.entities.Photo;
 import com.github.fabienbarbero.flickr.api.entities.User;
-import com.github.fabienbarbero.flickr.api.entities.UserInfos;
+import com.github.fabienbarbero.flickr.api.entities.UserInfo;
 import com.github.fabienbarbero.flickr.api.entities.UserInfoResponse;
 import com.github.fabienbarbero.flickr.api.entities.UserResponse;
 import java.util.List;
@@ -85,13 +85,13 @@ public class PeopleService
     }
 
     /**
-     * Get the user informations
+     * Get the user information
      *
      * @param user The user
-     * @return The user informations
-     * @throws FlickrException Error getting the informations
+     * @return The user information
+     * @throws FlickrException Error getting the information
      */
-    public UserInfos getUserInfo( BaseUser user )
+    public UserInfo getUserInfo( BaseUser user )
             throws FlickrException
     {
         CommandArguments args = new CommandArguments( "flickr.people.getInfo" );
@@ -99,7 +99,7 @@ public class PeopleService
         return doGet( args, UserInfoResponse.class ).getUserInfo();
     }
 
-    public UserInfos getUserInfo( String userId )
+    public UserInfo getUserInfo( String userId )
             throws FlickrException
     {
         CommandArguments args = new CommandArguments( "flickr.people.getInfo" );

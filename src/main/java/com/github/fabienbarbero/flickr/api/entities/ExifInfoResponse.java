@@ -20,22 +20,27 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class GroupInfosResponse
+public class ExifInfoResponse
         extends JSONResponse
 {
 
-    private GroupInfos infos;
+    private ExifInfo info;
 
     @Override
     protected void readObject( JSONObject json )
             throws JSONException
     {
-        infos = new GroupInfos( json.getJSONObject( "group" ) );
+        info = new ExifInfo( json.getJSONObject( "photo" ) );
     }
 
-    public GroupInfos getInfos()
+    /**
+     * Get the exif info
+     *
+     * @return The info
+     */
+    public ExifInfo getExifInfo()
     {
-        return infos;
+        return info;
     }
 
 }

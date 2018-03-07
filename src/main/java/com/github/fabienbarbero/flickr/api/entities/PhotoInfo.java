@@ -26,7 +26,7 @@ import org.json.JSONObject;
  *
  * @author Fabien Barbero
  */
-public class PhotoInfos
+public class PhotoInfo
         implements Serializable
 {
 
@@ -46,7 +46,7 @@ public class PhotoInfos
     private final String license;
     private final PhotoLocation location;
 
-    PhotoInfos( JSONObject json )
+    PhotoInfo( JSONObject json )
             throws JSONException
     {
         owner = new Owner( json.getJSONObject( "owner" ) );
@@ -126,9 +126,9 @@ public class PhotoInfos
     }
 
     /**
-     * Get the editability informations of the photo
+     * Get the editability information of the photo
      *
-     * @return The informations
+     * @return The information
      */
     public PhotoEditability getEditability()
     {
@@ -156,9 +156,9 @@ public class PhotoInfos
     }
 
     /**
-     * Get the editability informations of the photo
+     * Get the editability information of the photo
      *
-     * @return The informations
+     * @return The information
      */
     public PhotoEditability getPublicEditability()
     {

@@ -13,26 +13,11 @@
  */
 package com.github.fabienbarbero.flickr.api;
 
-import com.github.fabienbarbero.flickr.api.entities.BasePhoto;
+import com.github.fabienbarbero.flickr.api.entities.*;
+
 import java.util.List;
-import com.github.fabienbarbero.flickr.api.entities.BaseUser;
-import com.github.fabienbarbero.flickr.api.entities.Comment;
-import com.github.fabienbarbero.flickr.api.entities.CommentResponse;
-import com.github.fabienbarbero.flickr.api.entities.CommentsResponse;
-import com.github.fabienbarbero.flickr.api.entities.ExifInfos;
-import com.github.fabienbarbero.flickr.api.entities.ExifInfosResponse;
-import com.github.fabienbarbero.flickr.api.entities.License;
-import com.github.fabienbarbero.flickr.api.entities.LicensesResponse;
-import com.github.fabienbarbero.flickr.api.entities.Paginated;
-import com.github.fabienbarbero.flickr.api.entities.PhotosResponse;
-import com.github.fabienbarbero.flickr.api.entities.Photo;
-import com.github.fabienbarbero.flickr.api.entities.PhotoPermissions;
-import com.github.fabienbarbero.flickr.api.entities.PhotoInfos;
-import com.github.fabienbarbero.flickr.api.entities.PhotoInfosResponse;
-import com.github.fabienbarbero.flickr.api.entities.PhotoSize;
-import com.github.fabienbarbero.flickr.api.entities.PhotoSizesResponse;
-import com.github.fabienbarbero.flickr.api.entities.PhotoTag;
-import com.github.fabienbarbero.flickr.api.entities.VoidResponse;
+
+import com.github.fabienbarbero.flickr.api.entities.PhotoInfo;
 
 /**
  * Service used to access the photos.
@@ -124,15 +109,15 @@ public class PhotosService
      * Get information about a photo. The calling user must have permission to view the photo.
      *
      * @param photo The photo
-     * @return The photo informations
-     * @throws FlickrException Error getting the informations
+     * @return The photo information
+     * @throws FlickrException Error getting the information
      */
-    public PhotoInfos getInfos( BasePhoto photo )
+    public PhotoInfo getInfo( BasePhoto photo )
             throws FlickrException
     {
         CommandArguments args = new CommandArguments( "flickr.photos.getInfo" );
         args.addParam( "photo_id", photo.getId() );
-        return doGet( args, PhotoInfosResponse.class ).getInfos();
+        return doGet( args, PhotoInfoResponse.class ).getInfo();
     }
 
     /**
@@ -211,15 +196,15 @@ public class PhotosService
      * photo.
      *
      * @param photo The photo
-     * @return The exif informations
-     * @throws FlickrException Error getting the exif informations
+     * @return The exif information
+     * @throws FlickrException Error getting the exif information
      */
-    public ExifInfos getExif( BasePhoto photo )
+    public ExifInfo getExif( BasePhoto photo )
             throws FlickrException
     {
         CommandArguments args = new CommandArguments( "flickr.photos.getExif" );
         args.addParam( "photo_id", photo.getId() );
-        return doGet( args, ExifInfosResponse.class ).getExifInfos();
+        return doGet( args, ExifInfoResponse.class ).getExifInfo();
     }
 
     /**

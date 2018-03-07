@@ -21,12 +21,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Simple implementation of {@link FlickrProperties} which store the data in a file.
+ * Simple implementation of {@link AbstractFlickrProperties} which store the data in a file.
  *
  * @author Fabien Barbero
  */
 public class FlickrPropertiesFile
-        extends FlickrProperties
+        extends AbstractFlickrProperties
 {
 
     private final File file;

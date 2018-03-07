@@ -21,18 +21,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Represents the exif informations of a photo
+ * Represents the exif information of a photo
  *
  * @author Fabien Barbero
  */
-public class ExifInfos
+public class ExifInfo
         implements Serializable
 {
 
     private final String camera;
     private final List<ExifEntry> entries = new ArrayList<ExifEntry>();
 
-    ExifInfos( JSONObject json )
+    ExifInfo( JSONObject json )
             throws JSONException
     {
         camera = json.getString( "camera" );

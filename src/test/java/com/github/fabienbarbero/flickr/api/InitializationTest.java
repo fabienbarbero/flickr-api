@@ -13,7 +13,7 @@
  */
 package com.github.fabienbarbero.flickr.api;
 
-import com.github.fabienbarbero.flickr.api.entities.UserInfos;
+import com.github.fabienbarbero.flickr.api.entities.UserInfo;
 import javax.swing.JOptionPane;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class InitializationTest
         }
 
         // Auth
-        UserInfos caller = flickr.getUser();
+        UserInfo caller = flickr.getUser();
         assertNotNull( caller );
         assertNotNull( caller.getPhotosInfo().getFirstDate() );
         assertTrue( caller.getPhotosInfo().getCount() > 0 );

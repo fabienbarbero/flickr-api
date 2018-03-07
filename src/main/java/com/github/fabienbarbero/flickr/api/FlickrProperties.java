@@ -13,100 +13,23 @@
  */
 package com.github.fabienbarbero.flickr.api;
 
-import com.github.fabienbarbero.flickr.api.utils.IOUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
-
 /**
  * This class handle the configuration read and storage.
  *
  * @author Fabien Barbero
  */
-public abstract class FlickrProperties
+public interface FlickrProperties
 {
 
-    private final Properties props;
+    boolean contains( String key );
 
-    public FlickrProperties()
-    {
-        this.props = new Properties();
-    }
+    String getString( String key, String def );
 
-    final boolean contains( String key )
-    {
-        return props.containsKey( key );
-    }
+    void putString( String key, String value );
 
-    final String getString( String key, String def )
-    {
-        return props.getProperty( key, def );
-    }
+    void remove( String key );
 
-    final void putString( String key, String value )
-    {
-        props.setProperty( key, value );
-    }
+    void commit();
 
-    final void remove( String key )
-    {
-        props.remove( key );
-    }
-
-    final void load()
-    {
-        if ( isConfigExists() ) {
-            InputStream is = null;
-            try {
-                is = getInputStream();
-                props.load( is );
-
-            } catch ( IOException ex ) {
-                throw new UnsupportedOperationException( "Error reading flickr properties", ex );
-            } finally {
-                IOUtils.closeQuietly( is );
-            }
-        }
-    }
-
-    final void commit()
-    {
-        OutputStream os = null;
-        try {
-            os = getOutputStream();
-            props.store( os, "Flickr configuration" );
-
-        } catch ( IOException ex ) {
-            throw new UnsupportedOperationException( "Error saving configuration", ex );
-        } finally {
-            IOUtils.closeQuietly( os );
-        }
-    }
-
-    /**
-     * Indicates if the configuration has already been defined
-     *
-     * @return true if the configuration has already been defined
-     */
-    protected abstract boolean isConfigExists();
-
-    /**
-     * Open an InputStream to read the configuration
-     *
-     * @return The stream
-     * @throws IOException Error opening the stream
-     */
-    protected abstract InputStream getInputStream()
-            throws IOException;
-
-    /**
-     * Open an OutputStream to write the configuration
-     *
-     * @return The stream
-     * @throws IOException Error opening the stream
-     */
-    protected abstract OutputStream getOutputStream()
-            throws IOException;
-
+    void load();
 }

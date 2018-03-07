@@ -13,16 +13,9 @@
  */
 package com.github.fabienbarbero.flickr.api;
 
-import com.github.fabienbarbero.flickr.api.entities.ExifInfos;
-import com.github.fabienbarbero.flickr.api.entities.License;
-import com.github.fabienbarbero.flickr.api.entities.Paginated;
-import com.github.fabienbarbero.flickr.api.entities.Photo;
-import com.github.fabienbarbero.flickr.api.entities.PhotoInfos;
-import com.github.fabienbarbero.flickr.api.entities.PhotoPermissions;
-import com.github.fabienbarbero.flickr.api.entities.PhotoSize;
-import com.github.fabienbarbero.flickr.api.entities.Photoset;
-import com.github.fabienbarbero.flickr.api.entities.PhotosetInfos;
-import com.github.fabienbarbero.flickr.api.entities.UserInfos;
+import com.github.fabienbarbero.flickr.api.entities.*;
+import com.github.fabienbarbero.flickr.api.entities.PhotoInfo;
+
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -35,7 +28,7 @@ public class PhotosTest
         extends AbstractTest
 {
 
-    private UserInfos caller;
+    private UserInfo caller;
 
     @Override
     public void setUp()
@@ -76,12 +69,12 @@ public class PhotosTest
         assertTrue( set.getPhotosCount() > 0 );
 //        assertTrue(set.getCountViews() > 0);
 
-        PhotosetInfos photosetInfos = flickr.getPhotosetsService().getInfos( set );
-        assertNotNull( photosetInfos );
-        assertNotNull( photosetInfos.getCreateDate() );
-        assertNotNull( photosetInfos.getDescription() );
-        assertNotNull( photosetInfos.getId() );
-        assertNotNull( photosetInfos.getUpdateDate() );
+        PhotosetInfo photosetInfo = flickr.getPhotosetsService().getInfo( set );
+        assertNotNull( photosetInfo );
+        assertNotNull( photosetInfo.getCreateDate() );
+        assertNotNull( photosetInfo.getDescription() );
+        assertNotNull( photosetInfo.getId() );
+        assertNotNull( photosetInfo.getUpdateDate() );
 
         flickr.getPhotosetsService().getComments( set );
 
@@ -98,23 +91,23 @@ public class PhotosTest
         assertFalse( photos.isEmpty() );
         Photo photo = photos.get( 0 );
 
-        PhotoInfos photoInfos = flickr.getPhotosService().getInfos( photo );
-        assertNotNull( photoInfos );
-        assertNotNull( photoInfos.getDates().getLastUpdateDate() );
-        assertNotNull( photoInfos.getDates().getPostedDate() );
-        assertNotNull( photoInfos.getDates().getTakenDate() );
-        assertNotNull( photoInfos.getDescription() );
-        assertNotNull( photoInfos.getEditability() );
-        assertNotNull( photoInfos.getLicense() );
-        assertNotNull( photoInfos.getOwner().getId() );
-        assertNotNull( photoInfos.getOwner().getRealName() );
-        assertNotNull( photoInfos.getOwner().getUserName() );
-        assertNotNull( photoInfos.getPublicEditability() );
-        assertNotNull( photoInfos.getTitle() );
-        assertNotNull( photoInfos.getUploadedDate() );
-        assertNotNull( photoInfos.getUsage() );
-        assertNotNull( photoInfos.getVisibility() );
-//        assertTrue(photoInfos.getViews() > 0);
+        PhotoInfo photoInfo = flickr.getPhotosService().getInfo( photo );
+        assertNotNull( photoInfo );
+        assertNotNull( photoInfo.getDates().getLastUpdateDate() );
+        assertNotNull( photoInfo.getDates().getPostedDate() );
+        assertNotNull( photoInfo.getDates().getTakenDate() );
+        assertNotNull( photoInfo.getDescription() );
+        assertNotNull( photoInfo.getEditability() );
+        assertNotNull( photoInfo.getLicense() );
+        assertNotNull( photoInfo.getOwner().getId() );
+        assertNotNull( photoInfo.getOwner().getRealName() );
+        assertNotNull( photoInfo.getOwner().getUserName() );
+        assertNotNull( photoInfo.getPublicEditability() );
+        assertNotNull( photoInfo.getTitle() );
+        assertNotNull( photoInfo.getUploadedDate() );
+        assertNotNull( photoInfo.getUsage() );
+        assertNotNull( photoInfo.getVisibility() );
+//        assertTrue(photoInfo.getViews() > 0);
 
         PhotoPermissions access = flickr.getPhotosService().getPermissions( photo );
         assertNotNull( access );
@@ -132,10 +125,10 @@ public class PhotosTest
         List<License> licenses = flickr.getPhotosService().getLicenses();
         assertFalse( licenses.isEmpty() );
 
-        ExifInfos exifInfos = flickr.getPhotosService().getExif( photo );
-        assertNotNull( exifInfos );
-        assertNotNull( exifInfos.getCamera() );
-        assertFalse( exifInfos.getEntries().isEmpty() );
+        ExifInfo exifInfo = flickr.getPhotosService().getExif( photo );
+        assertNotNull( exifInfo );
+        assertNotNull( exifInfo.getCamera() );
+        assertFalse( exifInfo.getEntries().isEmpty() );
 
         flickr.getPhotosService().getComments( photo );
     }

@@ -19,11 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Represents the informations of a photoset
+ * Represents the information of a photoset
  *
  * @author Fabien Barbero
  */
-public class PhotosetInfos
+public class PhotosetInfo
         implements IdObject
 {
 
@@ -36,7 +36,7 @@ public class PhotosetInfos
     private final String description;
     private final String owner;
 
-    PhotosetInfos( JSONObject json )
+    PhotosetInfo( JSONObject json )
             throws JSONException
     {
         id = json.getString( "id" );

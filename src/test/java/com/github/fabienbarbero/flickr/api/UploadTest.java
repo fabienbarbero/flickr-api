@@ -13,7 +13,7 @@
  */
 package com.github.fabienbarbero.flickr.api;
 
-import com.github.fabienbarbero.flickr.api.entities.PhotoInfos;
+import com.github.fabienbarbero.flickr.api.entities.PhotoInfo;
 import com.github.fabienbarbero.flickr.api.entities.UploadedPhoto;
 import java.io.File;
 import org.junit.Test;
@@ -35,14 +35,14 @@ public class UploadTest
         UploadedPhoto photo = flickr.getUploadService().uploadPhoto( photoFile, "test", null );
         assertNotNull( photo );
 
-        PhotoInfos infos = flickr.getPhotosService().getInfos( photo );
+        PhotoInfo infos = flickr.getPhotosService().getInfo( photo );
         assertEquals( "test", infos.getTitle() );
 
         // Delete photo
         flickr.getPhotosService().deletePhoto( photo );
 
         try {
-            flickr.getPhotosService().getInfos( photo );
+            flickr.getPhotosService().getInfo( photo );
             fail( "Photo no longer exists" );
         } catch ( FlickrException ex ) {
             assertEquals( FlickrErrorCode.not_found, ex.getErrorCode() );
