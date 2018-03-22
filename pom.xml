@@ -3,7 +3,7 @@
 
     <groupId>com.github.fabienbarbero</groupId>
     <artifactId>flickr-api</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <name>Flickr API</name>
     <url>https://github.com/fabienbarbero/flickr-api</url>
     <description>A Java library to access Flickr API (works with Android too!)</description>
@@ -20,7 +20,7 @@
         <url>https://github.com/fabienbarbero/flickr-api</url>
         <connection>scm:git:git://github.com/fabienbarbero/flickr-api.git</connection>
         <developerConnection>scm:git:git@github.com:fabienbarbero/flickr-api.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>flickr-api-1.2</tag>
   </scm>
 
     <distributionManagement>
