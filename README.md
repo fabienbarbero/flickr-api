@@ -12,7 +12,7 @@ You can use the following dependency in your project :
 <dependency>
     <groupId>com.github.fabienbarbero</groupId>
     <artifactId>flickr-api</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
  
