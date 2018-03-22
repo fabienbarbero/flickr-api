@@ -1,12 +1,11 @@
-Flickr API
-==========
+# Flickr API
 
 Flickr API is a Java / android API implementation to access the Flickr web services defined [here](https://www.flickr.com/services/api/). The API uses only the REST-JSON requests to have the minimum payload size (which is useful with android device which do not have a high speed network access).
 
-Getting started
-===============
 
-You can use the following dependency in your project :
+## Import in your projects
+
+### For simple Java apps
 
 ```xml
 <dependency>
@@ -15,7 +14,23 @@ You can use the following dependency in your project :
     <version>1.2</version>
 </dependency>
 ```
- 
+
+### For android apps
+
+We must exclude the base httpClient dependencies to use the android implementation.
+```
+dependencies {
+    compile ('com.github.fabienbarbero:flickr-api:1.2') {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    ...
+}
+```
+
+
+## Getting started
+
 The calls to Flickr are quiet easy:
 
 ```java
@@ -43,8 +58,7 @@ Paginated<Photo> photos = flickr.getPhotosService().getRecentlyUpdated(50, 0);
 ...
 ```
 
-Features
-========
+## Features
 
 The library do not supports all Flickr features. Here are the supported :
 
