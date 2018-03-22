@@ -67,6 +67,12 @@ public class LoginResponse
             return username;
         }
 
+        @Override
+        public String getName()
+        {
+            return username;
+        }
+
     }
 
 }

@@ -14,12 +14,13 @@
 package com.github.fabienbarbero.flickr.api.entities;
 
 import com.github.fabienbarbero.flickr.api.utils.URLUtils;
+
 import java.io.Serializable;
 import java.net.URL;
+
 import org.json.JSONObject;
 
 /**
- *
  * @author Fabien Barbero
  */
 public class Avatar
@@ -72,6 +73,16 @@ public class Avatar
         } else {
             return DEFAULT_AVATAR;
         }
+    }
+
+    /**
+     * Indicates if the avatar has been defined
+     *
+     * @return true if defined
+     */
+    public boolean isSet()
+    {
+        return iconServer > 0 && iconFarm != null;
     }
 
 }

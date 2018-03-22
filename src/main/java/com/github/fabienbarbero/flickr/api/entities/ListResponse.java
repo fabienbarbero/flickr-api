@@ -16,16 +16,17 @@ package com.github.fabienbarbero.flickr.api.entities;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- *
  * @author Fabien Barbero
  */
 public abstract class ListResponse<T>
         extends JSONResponse
+        implements Iterable<T>
 {
 
     private List<T> values;
@@ -43,6 +44,12 @@ public abstract class ListResponse<T>
                 values.add( unmarshall( array.getJSONObject( i ) ) );
             }
         }
+    }
+
+    @Override
+    public Iterator<T> iterator()
+    {
+        return values.iterator();
     }
 
     private <T> T find( JSONObject json, Class<T> clazz )

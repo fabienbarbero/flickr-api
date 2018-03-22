@@ -14,12 +14,12 @@
 package com.github.fabienbarbero.flickr.api.entities;
 
 import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.github.fabienbarbero.flickr.api.utils.JSONUtils;
 
 /**
- *
  * @author Fabien Barbero
  */
 public class Person
@@ -56,6 +56,12 @@ public class Person
 
     @Override
     public String getUserName()
+    {
+        return username;
+    }
+
+    @Override
+    public String getName()
     {
         return username;
     }

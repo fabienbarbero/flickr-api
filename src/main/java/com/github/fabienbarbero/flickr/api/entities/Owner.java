@@ -73,6 +73,16 @@ public class Owner
     }
 
     @Override
+    public String getName()
+    {
+        if ( realname != null && !realname.isEmpty() ) {
+            return realname;
+        } else {
+            return username;
+        }
+    }
+
+    @Override
     public String getId()
     {
         return id;

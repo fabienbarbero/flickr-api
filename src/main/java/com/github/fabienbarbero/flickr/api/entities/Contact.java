@@ -99,6 +99,16 @@ public class Contact
         return username;
     }
 
+    @Override
+    public String getName()
+    {
+        if ( realname != null && !realname.isEmpty() ) {
+            return realname;
+        } else {
+            return username;
+        }
+    }
+
     /**
      * Get the location of the contact
      *

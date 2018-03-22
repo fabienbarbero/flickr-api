@@ -15,6 +15,7 @@ package com.github.fabienbarbero.flickr.api.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +27,7 @@ import org.json.JSONObject;
  * @author Fabien Barbero
  */
 public class ExifInfo
-        implements Serializable
+        implements Serializable, Iterable<ExifEntry>
 {
 
     private final String camera;
@@ -77,6 +78,12 @@ public class ExifInfo
             }
         }
         return null;
+    }
+
+    @Override
+    public Iterator<ExifEntry> iterator()
+    {
+        return entries.iterator();
     }
 
 }

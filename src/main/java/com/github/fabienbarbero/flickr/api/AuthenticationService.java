@@ -16,6 +16,8 @@ package com.github.fabienbarbero.flickr.api;
 import com.github.fabienbarbero.flickr.api.entities.BaseUser;
 import com.github.fabienbarbero.flickr.api.entities.LoginResponse;
 
+import java.util.Arrays;
+
 /**
  * http://www.flickr.com/services/api/auth.spec.html http://www.flickr.com/services/api/auth.howto.web.html
  *
@@ -39,4 +41,7 @@ final class AuthenticationService
 
     }
 
+    public static void main(String[] args) {
+
+    }
 }

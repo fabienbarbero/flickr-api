@@ -17,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- *
  * @author Fabien Barbero
  */
 public class User
@@ -44,6 +43,12 @@ public class User
 
     @Override
     public String getUserName()
+    {
+        return username;
+    }
+
+    @Override
+    public String getName()
     {
         return username;
     }

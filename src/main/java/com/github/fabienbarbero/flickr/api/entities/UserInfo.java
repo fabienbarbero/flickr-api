@@ -147,6 +147,16 @@ public class UserInfo
     }
 
     @Override
+    public String getName()
+    {
+        if ( realName != null && !realName.isEmpty() ) {
+            return realName;
+        } else {
+            return userName;
+        }
+    }
+
+    @Override
     public String toString()
     {
         return userName;

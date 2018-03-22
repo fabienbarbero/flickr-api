@@ -161,7 +161,7 @@ public class ExifEntry
     }
 
     /**
-     * Get the exif tag (see the contants TAG_*)
+     * Get the exif tag (see the constants TAG_*)
      *
      * @return The tag
      */

@@ -27,7 +27,7 @@ public class Commentator
 
     private final String id;
     private final String name;
-    private final String realName;
+    private final String realname;
     private final Avatar avatar;
 
     Commentator( JSONObject json )
@@ -35,7 +35,7 @@ public class Commentator
     {
         id = json.getString( "author" );
         name = json.getString( "authorname" );
-        realName = json.getString( "realname" );
+        realname = json.getString( "realname" );
         avatar = new Avatar( json, id );
     }
 
@@ -52,13 +52,23 @@ public class Commentator
     @Override
     public String getRealName()
     {
-        return realName;
+        return realname;
     }
 
     @Override
     public String getUserName()
     {
         return name;
+    }
+
+    @Override
+    public String getName()
+    {
+        if ( realname != null && !realname.isEmpty() ) {
+            return realname;
+        } else {
+            return name;
+        }
     }
 
     @Override
